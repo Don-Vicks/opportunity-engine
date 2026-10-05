@@ -14,14 +14,19 @@ function ago(d: Date, now: Date) {
 export function formatDigest(items: Opportunity[], errors: string[], now = new Date()): string {
   const date = now.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
   if (!items.length) return `🎯 Daily Opportunities — ${date}\n\nNothing new cleared your filters today.` + footer(errors);
-  const lines = [`🎯 Daily Opportunities — ${date}`, ""];
-  items.forEach((o, i) => {
-    const meta = [`${o.type === "job" ? "Rate" : "Prize"}: ${o.prizeLabel}`];
-    if (o.deadline) meta.push(`Deadline: ${Math.max(0, Math.round(daysUntil(o.deadline, now)))} days`);
-    else if (o.postedAt) meta.push(`Posted: ${ago(o.postedAt, now)}`);
-    meta.push(`Match: ${matchLabel(o.score)}`);
-    lines.push(`${i + 1}. [${TAG[o.type]}] ${o.title}`, `   ${meta.join(" | ")}`, `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
-  });
+  const lines = [`🎯 New Opportunities — ${date}`, ""];
+  for (const t of ["job", "freelance", "bounty", "hackathon", "grant", "other"]) {
+    const list = items.filter((o) => o.type === t);
+    if (!list.length) continue;
+    lines.push(`== ${TAG[t].toUpperCase()} (${list.length}) ==`, "");
+    list.forEach((o, i) => {
+      const meta = [`${o.type === "job" ? "Rate" : "Prize"}: ${o.prizeLabel}`];
+      if (o.deadline) meta.push(`Deadline: ${Math.max(0, Math.round(daysUntil(o.deadline, now)))} days`);
+      else if (o.postedAt) meta.push(`Posted: ${ago(o.postedAt, now)}`);
+      meta.push(`Match: ${matchLabel(o.score)}`);
+      lines.push(`${i + 1}. ${o.title}`, `   ${meta.join(" | ")}`, `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
+    });
+  }
   lines.push("— End of digest —");
   return lines.join("\n") + footer(errors);
 }
@@ -44,24 +49,38 @@ function deadlineLabel(d: Date, now: Date): string {
 
 export function formatTelegram(items: Opportunity[], errors: string[], now = new Date()): string {
   const date = now.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
-  const head = `🎯 <b>Daily Opportunities</b>\n<i>${esc(date)}</i>`;
+  const head = `🎯 <b>New Opportunities</b>\n<i>${esc(date)}</i>`;
   const warn = errors.length ? `\n\n⚠️ <i>Sources failed: ${esc(errors.join(", "))}</i>` : "";
   if (!items.length) return `${head}\n\nNothing new cleared your filters today. 🌙${warn}`;
 
-  const blocks = items.map((o, i) => {
-    const m = matchLabel(o.score);
-    const parts = [o.prizeLabel !== "n/a" ? `${o.type === "job" ? "💵" : "💰"} <b>${esc(o.prizeLabel)}</b>` : null];
-    if (o.deadline) parts.push(deadlineLabel(o.deadline, now));
-    else if (o.postedAt) parts.push(`🕒 ${ago(o.postedAt, now)}`);
-    parts.push(`${MATCH_ICON[m]} ${m}`);
-    return [
-      `${NUM[i] ?? `${i + 1}.`} ${ICON[o.type]} <b>${esc(o.title)}</b>`,
-      `<i>${esc(TAG[o.type])} · ${esc(o.source)}</i>`,
-      parts.filter(Boolean).join("  ·  "),
-      linkLine(o),
-    ].join("\n");
-  });
-  return `${head}\n\n${blocks.join("\n\n")}\n\n<i>— ${items.length} picks · end of digest —</i>${warn}`;
+  const SECTION: Record<string, string> = {
+    job: "💼 JOBS", freelance: "🛠 FREELANCE & CONTRACTS", bounty: "💰 BOUNTIES", hackathon: "🏆 HACKATHONS", grant: "🎁 GRANTS", other: "📌 OTHER",
+  };
+  const order = Object.keys(SECTION);
+  const groups = order
+    .map((t) => ({ t, list: items.filter((o) => o.type === t) }))
+    .filter((g) => g.list.length);
+
+  const blocks: string[] = [];
+  for (const g of groups) {
+    g.list.forEach((o, i) => {
+      const m = matchLabel(o.score);
+      const parts = [o.prizeLabel !== "n/a" ? `${o.type === "job" ? "💵" : "💰"} <b>${esc(o.prizeLabel)}</b>` : null];
+      if (o.deadline) parts.push(deadlineLabel(o.deadline, now));
+      else if (o.postedAt) parts.push(`🕒 ${ago(o.postedAt, now)}`);
+      parts.push(`${MATCH_ICON[m]} ${m}`);
+      const card = [
+        `${NUM[i] ?? `${i + 1}.`} <b>${esc(o.title)}</b>`,
+        `<i>${esc(o.source)}</i>`,
+        parts.filter(Boolean).join("  ·  "),
+        linkLine(o),
+      ].join("\n");
+      // header rides with the first card so a message split never strands it
+      blocks.push(i === 0 ? `<b>${SECTION[g.t]}  ·  ${g.list.length}</b>\n━━━━━━━━━━━━━━\n${card}` : card);
+    });
+  }
+  const summary = groups.map((g) => `${g.list.length} ${g.t === "freelance" ? "freelance" : g.t + (g.list.length > 1 ? "s" : "")}`).join(" · ");
+  return `${head}\n\n${blocks.join("\n\n")}\n\n<i>— ${summary} —</i>${warn}`;
 }
 
 const hostOf = (u: string) => { try { return new URL(u).host.replace(/^www\./, ""); } catch { return ""; } };
