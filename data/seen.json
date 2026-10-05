@@ -1,66 +1,234 @@
 {
- "superteam:8be5c8b1-7763-42df-931d-89bd54ee2d7a": "2026-10-05T18:52:40.113Z",
- "superteam:73dce3a4-26f5-4f69-8315-786483c59a89": "2026-10-05T18:52:40.113Z",
- "superteam:00360512-10ed-4910-97be-b68563a8efc6": "2026-10-05T18:52:40.113Z",
- "superteam:3c12a2d7-88af-40cb-add1-79546e76b8a2": "2026-10-05T18:52:40.113Z",
- "superteam:5f02bd4a-3670-48ae-9882-3f72759bfba3": "2026-10-05T18:52:40.113Z",
- "superteam:c5209d7b-7078-43fc-b0f5-0c567cdfc998": "2026-10-05T18:52:40.113Z",
- "devpost:29114": "2026-10-05T18:52:40.113Z",
- "devpost:31515": "2026-10-05T18:52:40.113Z",
- "devpost:30588": "2026-10-05T18:52:40.113Z",
- "remoteok:1137399": "2026-10-05T18:52:40.113Z",
- "remoteok:1137405": "2026-10-05T18:56:24.055Z",
- "wwr:https://weworkremotely.com/remote-jobs/bondex-fullstack-web3-engineer-solidity-rust-typescript": "2026-10-05T18:56:24.055Z",
- "remoteok:1137410": "2026-10-05T18:56:24.055Z",
- "wwr:https://weworkremotely.com/remote-jobs/proxify-ab-senior-backend-developer-node-js-nest-js-3": "2026-10-05T18:56:24.055Z",
- "wwr:https://weworkremotely.com/remote-jobs/proxify-ab-senior-fullstack-developer-react-js-node-js-4": "2026-10-05T18:56:24.055Z",
- "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-net-full-stack-developer-1": "2026-10-05T18:56:24.055Z",
- "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-java-react-developer": "2026-10-05T18:56:24.055Z",
- "superteam:b8fe03a2-01ac-4879-be1a-e58a5496927f": "2026-10-05T18:56:24.055Z",
- "superteam:e867df57-23b1-4aba-8c23-94fa387b1b3c": "2026-10-05T18:56:24.055Z",
- "superteam:41ff3544-80aa-4649-98ee-acbc33994bd8": "2026-10-05T18:56:24.055Z",
- "superteam:a9f07acf-6ea5-4b45-91f4-685fb1cc864a": "2026-10-05T18:56:24.055Z",
- "superteam:74ca9eb1-3602-4efb-bc46-2754dd8fcd32": "2026-10-05T18:56:24.055Z",
- "devpost:30858": "2026-10-05T18:56:24.055Z",
- "devpost:31481": "2026-10-05T18:56:24.055Z",
- "devpost:31096": "2026-10-05T18:56:24.055Z",
- "devpost:30992": "2026-10-05T18:56:24.055Z",
- "devpost:31503": "2026-10-05T18:56:24.055Z",
- "jobicy:154448": "2026-10-05T19:01:05.554Z",
- "hn:49928677": "2026-10-05T19:01:05.554Z",
- "wn:https://www.workingnomads.com/job/go/1843248/": "2026-10-05T19:01:05.554Z",
- "wn:https://www.workingnomads.com/job/go/1843234/": "2026-10-05T19:01:05.554Z",
- "jobicy:150127": "2026-10-05T19:01:05.554Z",
- "jobicy:149976": "2026-10-05T19:01:05.554Z",
- "jobicy:154552": "2026-10-05T19:01:05.554Z",
- "hn:49928066": "2026-10-05T19:01:05.554Z",
- "remotive:2091140": "2026-10-05T19:01:05.554Z",
- "himalayas:https://himalayas.app/companies/trytalenthackers/jobs/frontend-developer-nigeria": "2026-10-05T19:01:05.554Z",
- "jobicy:152547": "2026-10-05T19:01:05.554Z",
- "superteam:f717adef-b408-46bd-a545-89da31f4dd54": "2026-10-05T19:01:05.554Z",
- "superteam:ad7dfc28-cb9b-4448-a111-426619506fe1": "2026-10-05T19:01:05.554Z",
- "superteam:f97f2d43-4f0c-49cc-9d81-9efeace44d87": "2026-10-05T19:01:05.554Z",
- "superteam:1f63114b-1bf0-4fbe-8db6-282f2bec10c5": "2026-10-05T19:01:05.554Z",
- "devpost:30984": "2026-10-05T19:01:05.554Z",
- "devpost:31052": "2026-10-05T19:01:05.554Z",
- "devpost:30790": "2026-10-05T19:01:05.554Z",
- "devpost:31054": "2026-10-05T19:01:05.554Z",
- "devpost:29411": "2026-10-05T19:01:05.554Z",
- "devpost:31400": "2026-10-05T19:07:09.063Z",
- "devpost:30447": "2026-10-05T19:07:09.063Z",
- "devpost:31302": "2026-10-05T19:07:09.063Z",
- "devpost:31024": "2026-10-05T19:07:09.063Z",
- "devpost:31562": "2026-10-05T19:07:09.063Z",
- "devfolio:wild-bugs": "2026-10-05T19:14:57.698Z",
- "devfolio:winter-of-code-4": "2026-10-05T19:14:57.698Z",
- "devfolio:hackodisha-6a": "2026-10-05T19:14:57.698Z",
- "devfolio:codestorm-futureforge": "2026-10-05T19:14:57.698Z",
- "stgrant:solana-foundation-nigeria-grants": "2026-10-05T19:14:57.698Z",
- "stgrant:touching-grass-nigeria": "2026-10-05T19:14:57.698Z",
- "stgrant:agentic-engineering": "2026-10-05T19:14:57.698Z",
- "evergreen:solana-foundation:2026-10": "2026-10-05T19:14:57.698Z",
- "evergreen:superteam-grants:2026-10": "2026-10-05T19:14:57.698Z",
- "evergreen:ethereum-esp:2026-10": "2026-10-05T19:14:57.698Z",
- "evergreen:web3-foundation:2026-10": "2026-10-05T19:14:57.698Z",
- "evergreen:optimism:2026-10": "2026-10-05T19:14:57.698Z"
+ "superteam:8be5c8b1-7763-42df-931d-89bd54ee2d7a": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "superteam:73dce3a4-26f5-4f69-8315-786483c59a89": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "superteam:00360512-10ed-4910-97be-b68563a8efc6": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "superteam:3c12a2d7-88af-40cb-add1-79546e76b8a2": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "superteam:5f02bd4a-3670-48ae-9882-3f72759bfba3": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "superteam:c5209d7b-7078-43fc-b0f5-0c567cdfc998": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "devpost:29114": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "devpost:31515": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "devpost:30588": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "remoteok:1137399": {
+  "t": "2026-10-05T18:52:40.113Z"
+ },
+ "remoteok:1137405": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/bondex-fullstack-web3-engineer-solidity-rust-typescript": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "remoteok:1137410": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/proxify-ab-senior-backend-developer-node-js-nest-js-3": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/proxify-ab-senior-fullstack-developer-react-js-node-js-4": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-net-full-stack-developer-1": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-java-react-developer": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "superteam:b8fe03a2-01ac-4879-be1a-e58a5496927f": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "superteam:e867df57-23b1-4aba-8c23-94fa387b1b3c": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "superteam:41ff3544-80aa-4649-98ee-acbc33994bd8": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "superteam:a9f07acf-6ea5-4b45-91f4-685fb1cc864a": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "superteam:74ca9eb1-3602-4efb-bc46-2754dd8fcd32": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "devpost:30858": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "devpost:31481": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "devpost:31096": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "devpost:30992": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "devpost:31503": {
+  "t": "2026-10-05T18:56:24.055Z"
+ },
+ "jobicy:154448": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "hn:49928677": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "wn:https://www.workingnomads.com/job/go/1843248/": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "wn:https://www.workingnomads.com/job/go/1843234/": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "jobicy:150127": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "jobicy:149976": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "jobicy:154552": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "hn:49928066": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "remotive:2091140": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "himalayas:https://himalayas.app/companies/trytalenthackers/jobs/frontend-developer-nigeria": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "jobicy:152547": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "superteam:f717adef-b408-46bd-a545-89da31f4dd54": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "superteam:ad7dfc28-cb9b-4448-a111-426619506fe1": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "superteam:f97f2d43-4f0c-49cc-9d81-9efeace44d87": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "superteam:1f63114b-1bf0-4fbe-8db6-282f2bec10c5": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "devpost:30984": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "devpost:31052": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "devpost:30790": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "devpost:31054": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "devpost:29411": {
+  "t": "2026-10-05T19:01:05.554Z"
+ },
+ "devpost:31400": {
+  "t": "2026-10-05T19:07:09.063Z"
+ },
+ "devpost:30447": {
+  "t": "2026-10-05T19:07:09.063Z"
+ },
+ "devpost:31302": {
+  "t": "2026-10-05T19:07:09.063Z"
+ },
+ "devpost:31024": {
+  "t": "2026-10-05T19:07:09.063Z"
+ },
+ "devpost:31562": {
+  "t": "2026-10-05T19:07:09.063Z"
+ },
+ "devfolio:wild-bugs": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "devfolio:winter-of-code-4": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "devfolio:hackodisha-6a": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "devfolio:codestorm-futureforge": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "stgrant:solana-foundation-nigeria-grants": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "stgrant:touching-grass-nigeria": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "stgrant:agentic-engineering": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "evergreen:solana-foundation:2026-10": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "evergreen:superteam-grants:2026-10": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "evergreen:ethereum-esp:2026-10": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "evergreen:web3-foundation:2026-10": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "evergreen:optimism:2026-10": {
+  "t": "2026-10-05T19:14:57.698Z"
+ },
+ "cantina:00992789-fcd1-4bda-862e-463b0c73faa9": {
+  "t": "2026-10-05T19:48:05.194Z",
+  "o": {
+   "title": "OKX Labs bug bounty (OKX)",
+   "url": "https://cantina.xyz/bounties/00992789-fcd1-4bda-862e-463b0c73faa9",
+   "prizeLabel": "up to $1,000,000",
+   "type": "bounty",
+   "source": "Cantina"
+  }
+ },
+ "cantina:d77405e5-99ce-4ba5-846c-885820b030e1": {
+  "t": "2026-10-05T19:48:05.194Z",
+  "o": {
+   "title": "Midas Bug Bounty (Midas.app)",
+   "url": "https://cantina.xyz/bounties/d77405e5-99ce-4ba5-846c-885820b030e1",
+   "prizeLabel": "up to $500,000",
+   "type": "bounty",
+   "source": "Cantina"
+  }
+ },
+ "cantina:6a6ef71c-383d-4357-85c1-a0d1dbb6659b": {
+  "t": "2026-10-05T19:48:05.194Z",
+  "o": {
+   "title": "Paxos Bug Bounty (Paxos)",
+   "url": "https://cantina.xyz/bounties/6a6ef71c-383d-4357-85c1-a0d1dbb6659b",
+   "prizeLabel": "n/a",
+   "type": "bounty",
+   "source": "Cantina"
+  }
+ },
+ "evergreen:nlnet:2026-10": {
+  "t": "2026-10-05T19:48:05.194Z",
+  "o": {
+   "title": "NLnet Foundation — Open Source Funding",
+   "url": "https://nlnet.nl/propose/",
+   "prizeLabel": "rolling",
+   "type": "grant",
+   "source": "Grant Programs"
+  }
+ }
 }
