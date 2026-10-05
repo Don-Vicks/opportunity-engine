@@ -1,5 +1,10 @@
 /** Sends HTML-formatted text (caller must escape). Splits on blank lines to stay under 4096 chars. */
 export async function sendTelegram(token: string, chatId: string, text: string): Promise<void> {
+  if (!/^\d{6,12}:[A-Za-z0-9_-]{30,}$/.test(token)) {
+    throw new Error(
+      `TELEGRAM_BOT_TOKEN looks malformed (length ${token.length}, expected like 123456789:AA... with no spaces). Re-set the secret.`,
+    );
+  }
   const chunks: string[] = [];
   let cur = "";
   for (const block of text.split("\n\n")) {

@@ -25,9 +25,12 @@ export function loadConfig(path = "config.yaml"): Config {
   return ConfigSchema.parse(parse(readFileSync(path, "utf8")));
 }
 
+/** Secrets pasted into UIs often carry whitespace, quotes or a "bot" prefix. */
+const clean = (v?: string) => v?.trim().replace(/^["']|["']$/g, "").replace(/^bot(?=\d)/i, "").trim() || undefined;
+
 export const env = {
-  tgToken: process.env.TELEGRAM_BOT_TOKEN,
-  tgChat: process.env.TELEGRAM_CHAT_ID,
+  tgToken: clean(process.env.TELEGRAM_BOT_TOKEN),
+  tgChat: clean(process.env.TELEGRAM_CHAT_ID),
   gmailUser: process.env.GMAIL_USER,
   gmailPass: process.env.GMAIL_APP_PASSWORD,
   emailTo: process.env.EMAIL_TO,
