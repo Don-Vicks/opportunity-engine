@@ -3,7 +3,7 @@ import { registry } from "./sources/index.js";
 import { keep } from "./filter.js";
 import { rank } from "./ranking.js";
 import { loadSeen, saveSent, lastSent } from "./store.js";
-import { formatDigest } from "./delivery/format.js";
+import { formatDigest, formatTelegram } from "./delivery/format.js";
 import { sendTelegram } from "./delivery/telegram.js";
 import { sendEmail } from "./delivery/email.js";
 import type { Opportunity, RawOpp } from "./schema.js";
@@ -56,7 +56,7 @@ async function main() {
   if (dry) { console.log("\n" + message); return; }
 
   let delivered = false;
-  if (env.tgToken && env.tgChat) { await sendTelegram(env.tgToken, env.tgChat, message); delivered = true; }
+  if (env.tgToken && env.tgChat) { await sendTelegram(env.tgToken, env.tgChat, formatTelegram(items, errors, now)); delivered = true; }
   if (env.gmailUser && env.gmailPass && env.emailTo) {
     await sendEmail(env.gmailUser, env.gmailPass, env.emailTo, "Daily Opportunities", message);
     delivered = true;

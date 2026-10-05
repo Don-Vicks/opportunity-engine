@@ -1,4 +1,4 @@
-/** Telegram sends plain text (no parse_mode), so no escaping pitfalls. Splits at 4096 chars. */
+/** Sends HTML-formatted text (caller must escape). Splits on blank lines to stay under 4096 chars. */
 export async function sendTelegram(token: string, chatId: string, text: string): Promise<void> {
   const chunks: string[] = [];
   let cur = "";
@@ -11,9 +11,13 @@ export async function sendTelegram(token: string, chatId: string, text: string):
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text: chunk, disable_web_page_preview: true }),
+      body: JSON.stringify({ chat_id: chatId, text: chunk, parse_mode: "HTML", disable_web_page_preview: true }),
       signal: AbortSignal.timeout(20_000),
     });
-    if (!res.ok) throw new Error(`Telegram ${res.status}: ${(await res.text()).replace(token, "***")}`);
+    if (!res.ok) {
+      const hint = res.status === 404 || res.status === 401 ? " (bot token invalid or revoked — check the TELEGRAM_BOT_TOKEN secret)"
+        : res.status === 400 ? " (check TELEGRAM_CHAT_ID, and that you sent the bot /start)" : "";
+      throw new Error(`Telegram ${res.status}: ${(await res.text()).replace(token, "***")}${hint}`);
+    }
   }
 }
