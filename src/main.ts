@@ -3,7 +3,10 @@ import { registry } from "./sources/index.js";
 import { keep } from "./filter.js";
 import { rank } from "./ranking.js";
 import { resolveApplyUrls } from "./resolve.js";
-import { loadSeen, saveSent } from "./store.js";
+import { loadSeen, saveSent, dueReminders, markReminded, readHealth, writeHealth, readPrefs, writeState } from "./store.js";
+import { updateHealth, type SourceResult } from "./health.js";
+import { pollCommands } from "./telegram-commands.js";
+import { weeklyDue, buildWeekly } from "./weekly.js";
 import { formatDigest, formatTelegram } from "./delivery/format.js";
 import { sendTelegram } from "./delivery/telegram.js";
 import { sendEmail } from "./delivery/email.js";
@@ -25,43 +28,71 @@ function pickTop(ranked: Opportunity[], n: number, caps: Record<string, number>)
 }
 
 const dry = process.argv.includes("--dry-run");
-const force = process.argv.includes("--force");
+const tgReady = !!(env.tgToken && env.tgChat);
 
 async function main() {
   const cfg = loadConfig();
   const now = new Date();
 
+  // 1. owner commands (/mute, /boost) sent to the bot since the last run
+  const prefs = !dry && tgReady ? await pollCommands(env.tgToken!, env.tgChat!).catch((e) => { console.error("commands:", e.message); return readPrefs(); }) : readPrefs();
+
+  // 2. fetch
   const active = Object.entries(registry).filter(([k]) => cfg.sources[k]);
   const results = await Promise.allSettled(active.map(([, s]) => s.fetch()));
   const raw: RawOpp[] = [];
-  const errors: string[] = [];
+  const report: SourceResult[] = [];
   results.forEach((r, i) => {
     const name = active[i][1].name;
-    if (r.status === "fulfilled") { raw.push(...r.value); console.log(`${name}: ${r.value.length} items`); }
-    else { errors.push(name); console.error(`${name} FAILED: ${r.reason}`); }
+    if (r.status === "fulfilled") { raw.push(...r.value); report.push({ name, count: r.value.length }); console.log(`${name}: ${r.value.length} items`); }
+    else { report.push({ name, error: String(r.reason?.message ?? r.reason) }); console.error(`${name} FAILED: ${r.reason}`); }
   });
+  if (!raw.length && report.every((r) => r.error)) throw new Error("All sources failed");
 
-  if (!raw.length && errors.length === active.length) throw new Error("All sources failed");
+  // 3. source health (alerts once per outage, and once on recovery)
+  const { health, alerts } = updateHealth(readHealth(), report, now);
+
+  // 4. filter, rank, pick
   const seen = loadSeen(now);
   const unique = [...new Map(raw.map((o) => [`${o.source}|${o.title.toLowerCase().trim()}`, o])).values()];
-  const candidates = unique.filter((o) => keep(o, cfg, seen, now));
-  const items = pickTop(rank(candidates, cfg.profile, now).filter((o) => o.score >= cfg.digest.minScore), cfg.digest.maxResults, cfg.digest.maxPerType);
+  const candidates = unique.filter((o) => keep(o, cfg, seen, now, prefs));
+  const items = pickTop(rank(candidates, cfg.profile, now, prefs).filter((o) => o.score >= cfg.digest.minScore), cfg.digest.maxResults, cfg.digest.maxPerType);
   console.log(`${raw.length} fetched → ${candidates.length} after filter → ${items.length} delivered`);
 
   await resolveApplyUrls(items);
   console.log(`${items.filter((o) => o.applyUrl).length}/${items.length} have a direct apply link`);
-  const message = formatDigest(items, errors, now);
-  if (dry) { console.log("\n" + message); return; }
-  if (!items.length && !cfg.digest.sendWhenEmpty) { console.log("Nothing new; staying quiet."); return; }
 
+  // 5. last-call reminders + weekly summary
+  const reminders = dueReminders(now);
+  const weekKey = weeklyDue(now);
+
+  if (dry) {
+    console.log("\n" + formatDigest(items, [], now, reminders));
+    if (weekKey || process.argv.includes("--weekly")) console.log("\n" + buildWeekly(now).replace(/<[^>]+>/g, ""));
+    if (alerts.length) console.log("\nALERTS:\n" + alerts.join("\n"));
+    return;
+  }
+
+  // 6. deliver
+  const sendDigest = items.length || reminders.length || cfg.digest.sendWhenEmpty;
   let delivered = false;
-  if (env.tgToken && env.tgChat) { await sendTelegram(env.tgToken, env.tgChat, formatTelegram(items, errors, now)); delivered = true; }
-  if (env.gmailUser && env.gmailPass && env.emailTo) {
-    await sendEmail(env.gmailUser, env.gmailPass, env.emailTo, "Daily Opportunities", message);
+  if (tgReady) {
+    if (sendDigest) await sendTelegram(env.tgToken!, env.tgChat!, formatTelegram(items, [], now, reminders));
+    if (weekKey) await sendTelegram(env.tgToken!, env.tgChat!, buildWeekly(now));
+    for (const a of alerts) await sendTelegram(env.tgToken!, env.tgChat!, a);
+    delivered = true;
+  }
+  if (env.gmailUser && env.gmailPass && env.emailTo && sendDigest) {
+    await sendEmail(env.gmailUser, env.gmailPass, env.emailTo, "New Opportunities", formatDigest(items, [], now, reminders));
     delivered = true;
   }
   if (!delivered) throw new Error("No delivery channel configured (set TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID)");
-  saveSent(items, now);
+
+  // 7. persist only after successful delivery
+  if (items.length) saveSent(items, now);
+  markReminded(reminders.map((r) => r.id));
+  writeHealth(health);
+  writeState({ ...(items.length ? { lastSent: now.toISOString() } : {}), ...(weekKey ? { lastWeekly: weekKey } : {}) });
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

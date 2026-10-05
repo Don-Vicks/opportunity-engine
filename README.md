@@ -42,3 +42,11 @@ Listings link back to the original source (required by RemoteOK/Remotive/Jobicy 
 **Direct apply links:** where possible the digest links straight to the employer/ATS (Greenhouse, Lever, Ashby, Notion forms, company careers pages) and keeps a small "via <source>" link for attribution. Found by (1) scanning each listing's own description, (2) following Working Nomads' redirect, (3) reading Remotive's page. WWR, Himalayas, Jobicy and RemoteOK block bots or apply via JavaScript, so those fall back to the listing link.
 
 **X / Twitter:** not supported. Its API has no free read access and scraping violates its terms and is blocked. Mastodon hashtag feeds (#hiring etc.) are the open substitute. To watch X yourself, create an X List of hiring accounts and turn on notifications.
+
+## Automation extras
+- **⏰ Last call:** anything already sent whose deadline is within 48h (and was sent >12h ago) is re-surfaced once, at the top of the next message.
+- **🩺 Source health:** if a source fails 3 runs in a row or returns nothing for ~24h you get one alert (and one "back" message on recovery). State in `data/health.json`.
+- **📊 Weekly summary:** Mondays after 08:00 WAT — counts by type, best sources, top picks, deadlines in the next 7 days.
+- **Tune from Telegram** (only your chat is obeyed; applied on the next run, ≤3h):
+  `/mute <word>` · `/unmute <word>` · `/boost <word>` · `/unboost <word>` · `/prefs` · `/help`. Stored in `data/prefs.json`.
+- Preview locally: `npm run dry` (add `-- --weekly` to see the summary).

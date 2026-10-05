@@ -1,11 +1,14 @@
 import type { Config } from "./config.js";
 import type { RawOpp } from "./schema.js";
+import { hasWord } from "./prefs.js";
+import type { Prefs } from "./store.js";
 import { daysUntil, regionOk, looksClosed, isTechTitle } from "./helpers.js";
 
-export function keep(o: RawOpp, cfg: Config, seen: Set<string>, now = new Date()): boolean {
+export function keep(o: RawOpp, cfg: Config, seen: Set<string>, now = new Date(), prefs?: Prefs): boolean {
   const p = cfg.profile;
   if (seen.has(o.id)) return false;
   const title = o.title.toLowerCase();
+  if (prefs?.mute.length && hasWord(title, prefs.mute)) return false;
   if (p.excludeKeywords.some((k) => title.includes(k.toLowerCase()))) return false;
   if (p.regionFilter && !regionOk(o.region)) return false;
   if (looksClosed(`${o.title} ${o.snippet}`)) return false; // already filled / client chosen

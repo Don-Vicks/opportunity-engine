@@ -36,4 +36,5 @@ sources:
   superteamgrants: true   # rolling Superteam grants (chapter grants limited to Nigeria + global)
   devfolio: true          # online hackathons
   evergreen: true         # monthly reminder of standing grant programmes (Solana Fdn, EF ESP, W3F, ...)
+  cantina: true           # live security bounties touching Rust/Solana only
   reddit: true        # r/forhire [Hiring]; may be blocked from CI IPs

@@ -1,6 +1,7 @@
 import type { Opportunity } from "../schema.js";
 import { daysUntil } from "../helpers.js";
 import { matchLabel } from "../ranking.js";
+import type { Reminder } from "../store.js";
 
 const TAG: Record<string, string> = {
   hackathon: "Hackathon", job: "Job", freelance: "Freelance", bounty: "Bounty", grant: "Grant", other: "Other",
@@ -11,10 +12,14 @@ function ago(d: Date, now: Date) {
   return days <= 0 ? "today" : `${days}d ago`;
 }
 
-export function formatDigest(items: Opportunity[], errors: string[], now = new Date()): string {
+export function formatDigest(items: Opportunity[], errors: string[], now = new Date(), reminders: Reminder[] = []): string {
   const date = now.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
-  if (!items.length) return `🎯 Daily Opportunities — ${date}\n\nNothing new cleared your filters today.` + footer(errors);
+  if (!items.length && !reminders.length) return `🎯 Daily Opportunities — ${date}\n\nNothing new cleared your filters today.` + footer(errors);
   const lines = [`🎯 New Opportunities — ${date}`, ""];
+  if (reminders.length) {
+    lines.push(`== LAST CALL (${reminders.length}) ==`, "");
+    for (const r of reminders) lines.push(`• ${r.lite.title} — closes in ${hoursLeft(r.deadline, now)}h`, `  → ${r.lite.applyUrl ?? r.lite.url}`, "");
+  }
   for (const t of ["job", "freelance", "bounty", "hackathon", "grant", "other"]) {
     const list = items.filter((o) => o.type === t);
     if (!list.length) continue;
@@ -47,11 +52,11 @@ function deadlineLabel(d: Date, now: Date): string {
   return days <= 2 ? `⚠️ ${days}d left` : `⏳ ${days}d left`;
 }
 
-export function formatTelegram(items: Opportunity[], errors: string[], now = new Date()): string {
+export function formatTelegram(items: Opportunity[], errors: string[], now = new Date(), reminders: Reminder[] = []): string {
   const date = now.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
   const head = `🎯 <b>New Opportunities</b>\n<i>${esc(date)}</i>`;
   const warn = errors.length ? `\n\n⚠️ <i>Sources failed: ${esc(errors.join(", "))}</i>` : "";
-  if (!items.length) return `${head}\n\nNothing new cleared your filters today. 🌙${warn}`;
+  if (!items.length && !reminders.length) return `${head}\n\nNothing new cleared your filters today. 🌙${warn}`;
 
   const SECTION: Record<string, string> = {
     job: "💼 JOBS", freelance: "🛠 FREELANCE & CONTRACTS", bounty: "💰 BOUNTIES", hackathon: "🏆 HACKATHONS", grant: "🎁 GRANTS", other: "📌 OTHER",
@@ -79,8 +84,9 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
       blocks.push(i === 0 ? `<b>${SECTION[g.t]}  ·  ${g.list.length}</b>\n━━━━━━━━━━━━━━\n${card}` : card);
     });
   }
+  if (reminders.length) blocks.unshift(...reminderBlocks(reminders, now));
   const summary = groups.map((g) => `${g.list.length} ${g.t === "freelance" ? "freelance" : g.t + (g.list.length > 1 ? "s" : "")}`).join(" · ");
-  return `${head}\n\n${blocks.join("\n\n")}\n\n<i>— ${summary} —</i>${warn}`;
+  return `${head}\n\n${blocks.join("\n\n")}\n\n<i>— ${summary || "reminders only"} —</i>${warn}`;
 }
 
 const hostOf = (u: string) => { try { return new URL(u).host.replace(/^www\./, ""); } catch { return ""; } };
@@ -91,4 +97,24 @@ function linkLine(o: Opportunity): string {
     return `🚀 <a href="${esc(o.applyUrl)}">Apply directly</a> <i>(${esc(hostOf(o.applyUrl))})</i>  ·  <a href="${esc(o.url)}">via ${esc(o.source)}</a>`;
   }
   return `🔗 <a href="${esc(o.url)}">Open listing</a>`;
+}
+
+const hoursLeft = (d: Date, now: Date) => Math.max(1, Math.round((d.getTime() - now.getTime()) / 3_600_000));
+
+/** "Last call" cards for already-sent items whose deadline is close. First card carries the header. */
+function reminderBlocks(rs: Reminder[], now: Date): string[] {
+  return rs.map((r, i) => {
+    const h = hoursLeft(r.deadline, now);
+    const left = h >= 24 ? `${Math.round(h / 24)}d ${h % 24 ? `${h % 24}h ` : ""}left`.replace("1d 0h", "1d") : `${h}h left`;
+    const link = r.lite.applyUrl
+      ? `🚀 <a href="${esc(r.lite.applyUrl)}">Apply directly</a> <i>(${esc(hostOf(r.lite.applyUrl))})</i>`
+      : `🔗 <a href="${esc(r.lite.url)}">Open listing</a>`;
+    const card = [
+      `${ICON[r.lite.type]} <b>${esc(r.lite.title)}</b>`,
+      `<i>${esc(TAG[r.lite.type])} · ${esc(r.lite.source)}</i>`,
+      `⚠️ <b>Closes in ${left}</b>${r.lite.prizeLabel !== "n/a" ? `  ·  💰 ${esc(r.lite.prizeLabel)}` : ""}`,
+      link,
+    ].join("\n");
+    return i === 0 ? `<b>⏰ LAST CALL  ·  ${rs.length}</b>\n<i>Sent earlier, closing soon</i>\n━━━━━━━━━━━━━━\n${card}` : card;
+  });
 }

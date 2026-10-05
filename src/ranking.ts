@@ -1,6 +1,8 @@
 import type { Config } from "./config.js";
 import type { Effort, Opportunity, RawOpp } from "./schema.js";
 import { daysUntil, normSkill } from "./helpers.js";
+import { hasWord } from "./prefs.js";
+import type { Prefs } from "./store.js";
 
 type Profile = Config["profile"];
 const EFFORT: Record<Effort, number> = { low: 1, medium: 2, high: 3 };
@@ -45,8 +47,11 @@ export function score(o: RawOpp, p: Profile, now = new Date()): number {
 export const matchLabel = (s: number) =>
   s >= 0.75 ? "Very High" : s >= 0.6 ? "High" : s >= 0.45 ? "Medium" : "Low";
 
-export function rank(raw: RawOpp[], p: Profile, now = new Date()): Opportunity[] {
+export function rank(raw: RawOpp[], p: Profile, now = new Date(), prefs?: Prefs): Opportunity[] {
   return raw
-    .map((o) => ({ ...o, score: score(o, p, now), foundAt: now }))
+    .map((o) => {
+      const boosted = prefs?.boost.length && hasWord(`${o.title} ${o.snippet}`, prefs.boost) ? 0.15 : 0;
+      return { ...o, score: Math.min(1, score(o, p, now) + boosted), foundAt: now };
+    })
     .sort((a, b) => b.score - a.score);
 }
