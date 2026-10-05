@@ -13,14 +13,14 @@ profile:
     hackathon: 1000
     bounty: 300
     freelance: 500
-    grant: 1000
+    grant: 200
     job: 60000                   # per year (jobs with no listed salary still pass)
   # Titles containing these are dropped (content/social bounties etc.)
   excludeKeywords: [twitter, tweet, thread, "x post", video, meme, translate, ambassador, "content creat", "write a post", "create content", "create x", "social quest"]
 digest:
   maxResults: 30                 # long digests are split across several Telegram messages
   minScore: 0.35
-  maxPerType: { job: 20, freelance: 6, hackathon: 5, bounty: 5, grant: 3, other: 2 }
+  maxPerType: { job: 20, freelance: 6, hackathon: 5, bounty: 5, grant: 8, other: 2 }
   sendWhenEmpty: false           # runs every 3h; stay quiet if nothing new
 sources:
   remoteok: true
@@ -33,4 +33,7 @@ sources:
   jobicy: true
   hnhiring: true
   mastodon: true      # open stand-in for X (X has no free read API)
+  superteamgrants: true   # rolling Superteam grants (chapter grants limited to Nigeria + global)
+  devfolio: true          # online hackathons
+  evergreen: true         # monthly reminder of standing grant programmes (Solana Fdn, EF ESP, W3F, ...)
   reddit: true        # r/forhire [Hiring]; may be blocked from CI IPs
