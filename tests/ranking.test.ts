@@ -26,6 +26,11 @@ describe("filter", () => {
   it("drops onsite when remoteOnly", () => expect(keep({ ...base, location: "Lagos" }, cfg, new Set(), now)).toBe(false));
   it("drops far deadlines", () =>
     expect(keep({ ...base, deadline: new Date("2027-03-01") }, cfg, new Set(), now)).toBe(false));
+  it("jobs need a role skill", () => {
+    const job = { ...base, type: "job" as const, amountUsd: null, deadline: null, skills: ["python"] };
+    expect(keep(job, cfg, new Set(), now)).toBe(false);
+    expect(keep({ ...job, skills: ["nestjs"] }, cfg, new Set(), now)).toBe(true);
+  });
   it("keeps a good one", () => expect(keep(base, cfg, new Set(), now)).toBe(true));
 });
 

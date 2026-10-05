@@ -15,10 +15,10 @@ TELEGRAM_BOT_TOKEN=... TELEGRAM_CHAT_ID=... npm start -- --force
 2. Push this repo to GitHub (private is fine).
 3. Repo → Settings → Secrets and variables → Actions: add `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
    Optional email: `GMAIL_USER`, `GMAIL_APP_PASSWORD` (Google app password), `EMAIL_TO`.
-4. Actions tab → **daily-digest** → Run workflow to test. Cron is 07:00 UTC (08:00 WAT).
+4. Actions tab → **daily-digest** → Run workflow to test. Cron runs every 3 hours; only new items are sent.
 
 ## Configure
-Edit `config.yaml`: skills, types, per-type minimums, remote-only, max results, min score, `frequencyDays` (1/2/7), source flags.
+Edit `config.yaml`: skills, types, per-type minimums, remote-only, max results, min score, source flags.
 
 ## Add a source
 Create `src/sources/foo.ts` exporting a `Source` (`name`, `fetch(): Promise<RawOpp[]>`), register it in `src/sources/index.ts`, add `foo: true` to `config.yaml`.

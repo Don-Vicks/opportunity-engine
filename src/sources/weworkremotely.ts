@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import type { Source, RawOpp } from "../schema.js";
 import { getText } from "../http.js";
-import { snippet, extractSkills, SKILL_VOCAB } from "../helpers.js";
+import { snippet, stripHtml, extractSkills, SKILL_VOCAB } from "../helpers.js";
 
 const FEEDS = [
   "https://weworkremotely.com/categories/remote-programming-jobs.rss",
@@ -19,11 +19,10 @@ export const weworkremotely: Source = {
       const xml = parser.parse(await getText(feed));
       const items = [xml?.rss?.channel?.item ?? []].flat();
       for (const it of items) {
-        const text = `${it.title} ${it.description ?? ""}`;
         const contract = /contract|freelance/i.test(String(it.title)) || it.type === "Contract";
         out.push({
           id: `wwr:${it.guid?.["#text"] ?? it.guid ?? it.link}`,
-          title: String(it.title),
+          title: stripHtml(String(it.title)),
           type: contract ? "freelance" : "job",
           source: "WeWorkRemotely",
           url: String(it.link),
@@ -31,7 +30,7 @@ export const weworkremotely: Source = {
           prizeLabel: "n/a",
           deadline: null,
           location: "remote",
-          skills: extractSkills(text, SKILL_VOCAB),
+          skills: extractSkills(String(it.title), SKILL_VOCAB, stripHtml(String(it.description ?? ""))),
           snippet: snippet(String(it.description ?? "")),
           effort: contract ? "medium" : "high",
           postedAt: it.pubDate ? new Date(it.pubDate) : null,

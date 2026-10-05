@@ -5,17 +5,20 @@ import { z } from "zod";
 const Effort = z.enum(["low", "medium", "high"]);
 const ConfigSchema = z.object({
   profile: z.object({
+    roleSkills: z.array(z.string()).min(1),
     skills: z.array(z.string()).min(1),
     preferredTypes: z.array(z.string()),
     remoteOnly: z.boolean(),
     availableEffort: Effort,
     deadlineWindowDays: z.number().positive(),
     minPrizeUsd: z.record(z.number()),
+    excludeKeywords: z.array(z.string()).default([]),
   }),
   digest: z.object({
     maxResults: z.number().int().positive(),
     minScore: z.number().min(0).max(1),
-    frequencyDays: z.number().int().positive(),
+    sendWhenEmpty: z.boolean(),
+    maxPerType: z.record(z.number()),
   }),
   sources: z.record(z.boolean()),
 });

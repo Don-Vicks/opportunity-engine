@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, SKILL_VOCAB } from "../helpers.js";
 
 interface Row {
   id?: string; position?: string; company?: string; tags?: string[]; description?: string;
@@ -23,7 +23,7 @@ export const remoteok: Source = {
         prizeLabel: max > 0 ? `$${Math.round(max / 1000)}k/yr` : "n/a",
         deadline: null,
         location: "remote",
-        skills: (r.tags ?? []).map(normSkill),
+        skills: [...new Set([...(r.tags ?? []).map(normSkill), ...extractSkills(r.position ?? "", SKILL_VOCAB, stripHtml(r.description ?? ""))])],
         snippet: snippet(r.description ?? ""),
         effort: "high",
         postedAt: r.epoch ? new Date(r.epoch * 1000) : null,
