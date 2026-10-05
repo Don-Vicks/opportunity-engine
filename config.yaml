@@ -6,6 +6,7 @@ profile:
   skills: [nextjs, react, expo, express, nestjs, rust, typescript, node, solana, anchor, web3]
   preferredTypes: [job, freelance, hackathon, bounty, grant]
   remoteOnly: true               # drops anything that isn't remote (onsite/hybrid)
+  regionFilter: true             # drops region-locked roles (US only, EU only, ...); keeps worldwide/Africa/WAT-friendly
   availableEffort: medium        # low | medium | high
   deadlineWindowDays: 45
   minPrizeUsd:
@@ -17,12 +18,17 @@ profile:
   # Titles containing these are dropped (content/social bounties etc.)
   excludeKeywords: [twitter, tweet, thread, "x post", video, meme, translate, ambassador, "content creat", "write a post", "create content", "create x", "social quest"]
 digest:
-  maxResults: 25                 # long digests are split across several Telegram messages
+  maxResults: 30                 # long digests are split across several Telegram messages
   minScore: 0.35
-  maxPerType: { job: 15, freelance: 6, hackathon: 5, bounty: 5, grant: 3, other: 2 }
+  maxPerType: { job: 20, freelance: 6, hackathon: 5, bounty: 5, grant: 3, other: 2 }
   sendWhenEmpty: false           # runs every 3h; stay quiet if nothing new
 sources:
   remoteok: true
   weworkremotely: true
   devpost: true
   superteam: true
+  remotive: true
+  himalayas: true
+  workingnomads: true
+  jobicy: true
+  hnhiring: true

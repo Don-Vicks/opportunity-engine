@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { loadConfig } from "../src/config.js";
 import { score, urgencyScore, compScore } from "../src/ranking.js";
+import { regionOk, parseSalaryUsd, looksClosed, restrictiveRegion, isTechTitle } from "../src/helpers.js";
 import { keep } from "../src/filter.js";
 import { parseDevpostEnd, parsePrize } from "../src/sources/devpost.js";
 import type { RawOpp } from "../src/schema.js";
@@ -27,7 +28,7 @@ describe("filter", () => {
   it("drops far deadlines", () =>
     expect(keep({ ...base, deadline: new Date("2027-03-01") }, cfg, new Set(), now)).toBe(false));
   it("jobs need a role skill", () => {
-    const job = { ...base, type: "job" as const, amountUsd: null, deadline: null, skills: ["python"] };
+    const job = { ...base, title: "Senior Developer", type: "job" as const, amountUsd: null, deadline: null, skills: ["python"] };
     expect(keep(job, cfg, new Set(), now)).toBe(false);
     expect(keep({ ...job, skills: ["nestjs"] }, cfg, new Set(), now)).toBe(true);
   });
@@ -40,4 +41,21 @@ describe("devpost parsers", () => {
   it("handles cross-year", () => expect(parseDevpostEnd("Dec 20, 2026 - Jan 15, 2027")?.toISOString()).toBe("2027-01-15T23:59:59.000Z"));
   it("parses prize", () => expect(parsePrize("$<span data-currency-value>12,500</span>")).toBe(12500));
   it("zero prize is null", () => expect(parsePrize("$<span data-currency-value>0</span>")).toBeNull());
+});
+
+describe("region", () => {
+  it.each(["", "Remote", "Anywhere", "Worldwide", "Anywhere in the World", "EMEA", "Nigeria", "Africa", "Time zone: CET (+/- 3 hours)"])(
+    "allows %j", (r) => expect(regionOk(r)).toBe(true));
+  it.each(["USA", "Remote - US", "North America Only", "Europe, LATAM, APAC, the U.S., Canada", "Ireland", "USA, Canada, USA timezones", "Philippines, Guatemala, South Africa"])(
+    "blocks %j", (r) => expect(regionOk(r)).toBe(false));
+  it("HN header", () => {
+    expect(restrictiveRegion("Acme | SWE | REMOTE (US only)")).not.toBe("");
+    expect(restrictiveRegion("Acme | SWE | REMOTE worldwide")).toBe("");
+  });
+});
+
+describe("helpers", () => {
+  it("salary", () => { expect(parseSalaryUsd("$20k -$35k")).toBe(35000); expect(parseSalaryUsd("$50/hour")).toBeNull(); });
+  it("closed", () => { expect(looksClosed("This position has been filled")).toBe(true); expect(looksClosed("Senior Dev")).toBe(false); });
+  it("tech title", () => { expect(isTechTitle("Senior Rust Engineer")).toBe(true); expect(isTechTitle("Account Director")).toBe(false); });
 });

@@ -19,6 +19,7 @@ export const superteam: Source = {
       );
       for (const r of rows) {
         if (r.status && r.status !== "OPEN") continue;
+        if ((r as { isWinnersAnnounced?: boolean }).isWinnersAnnounced) continue; // already awarded
         // Only stablecoin rewards can be trusted as USD; others stay unknown.
         const usd = r.rewardAmount && STABLE.has((r.token ?? "").toUpperCase()) ? r.rewardAmount : null;
         const t: OppType = r.type === "project" ? "freelance" : r.type === "hackathon" ? "hackathon" : "bounty";

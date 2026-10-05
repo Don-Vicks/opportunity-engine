@@ -12,6 +12,8 @@ export interface Opportunity {
   prizeLabel: string;
   deadline: Date | null;
   location: string;
+  /** Free-text region the candidate must be in (e.g. "USA only"); empty/undefined = unrestricted */
+  region?: string;
   skills: string[];
   snippet: string;
   effort: Effort | null;

@@ -9,6 +9,7 @@ const ConfigSchema = z.object({
     skills: z.array(z.string()).min(1),
     preferredTypes: z.array(z.string()),
     remoteOnly: z.boolean(),
+    regionFilter: z.boolean().default(true),
     availableEffort: Effort,
     deadlineWindowDays: z.number().positive(),
     minPrizeUsd: z.record(z.number()),

@@ -23,6 +23,7 @@ export const remoteok: Source = {
         prizeLabel: max > 0 ? `$${Math.round(max / 1000)}k/yr` : "n/a",
         deadline: null,
         location: "remote",
+        region: r.location ?? "",
         skills: [...new Set([...(r.tags ?? []).map(normSkill), ...extractSkills(r.position ?? "", SKILL_VOCAB, stripHtml(r.description ?? ""))])],
         snippet: snippet(r.description ?? ""),
         effort: "high",

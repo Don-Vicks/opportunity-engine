@@ -30,6 +30,7 @@ export const weworkremotely: Source = {
           prizeLabel: "n/a",
           deadline: null,
           location: "remote",
+          region: stripHtml(String(it.region ?? "")),
           skills: extractSkills(String(it.title), SKILL_VOCAB, stripHtml(String(it.description ?? ""))),
           snippet: snippet(String(it.description ?? "")),
           effort: contract ? "medium" : "high",

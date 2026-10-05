@@ -30,3 +30,11 @@ Create `src/sources/foo.ts` exporting a `Source` (`name`, `fetch(): Promise<RawO
 `0.4·skills + 0.3·compensation + 0.2·urgency + 0.1·effort`. Unknown amounts score a neutral 0.3. At most half the digest is any one type.
 
 RemoteOK's API terms require linking back to remoteok.com when displaying their listings; links in the digest point there.
+
+## Sources
+RemoteOK, We Work Remotely, Remotive, Himalayas, Working Nomads, Jobicy, HN "Who is hiring?" (jobs); Devpost, Superteam Earn (hackathons/bounties).
+Listings link back to the original source (required by RemoteOK/Remotive/Jobicy terms).
+
+**Region filter:** with `regionFilter: true`, roles restricted to specific countries/regions (US only, Europe only, etc.) are dropped. Only worldwide, Africa, EMEA, WAT-friendly timezones, or unrestricted listings pass.
+
+**LinkedIn:** deliberately not scraped. It prohibits automated scraping and blocks datacenter IPs, so it would fail on GitHub Actions. Use LinkedIn's own job alerts instead.
