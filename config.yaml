@@ -1,0 +1,22 @@
+# Personal settings. Secrets (Telegram/Gmail) come from env vars, never from here.
+profile:
+  skills: [rust, typescript, solana, anchor, react, nextjs, web3, node]
+  preferredTypes: [hackathon, bounty, freelance, job, grant]
+  remoteOnly: true
+  availableEffort: medium        # low | medium | high
+  deadlineWindowDays: 45         # ignore deadlines further out than this
+  minPrizeUsd:                   # minimum to be considered, per type
+    hackathon: 1000
+    bounty: 300
+    freelance: 500
+    grant: 1000
+    job: 60000                   # per year
+digest:
+  maxResults: 10
+  minScore: 0.35
+  frequencyDays: 1               # 1 daily, 2 every 2 days, 7 weekly
+sources:
+  remoteok: true
+  weworkremotely: true
+  devpost: true
+  superteam: true

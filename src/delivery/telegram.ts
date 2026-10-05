@@ -1,0 +1,19 @@
+/** Telegram sends plain text (no parse_mode), so no escaping pitfalls. Splits at 4096 chars. */
+export async function sendTelegram(token: string, chatId: string, text: string): Promise<void> {
+  const chunks: string[] = [];
+  let cur = "";
+  for (const block of text.split("\n\n")) {
+    if ((cur + "\n\n" + block).length > 3900 && cur) { chunks.push(cur); cur = block; }
+    else cur = cur ? `${cur}\n\n${block}` : block;
+  }
+  if (cur) chunks.push(cur);
+  for (const chunk of chunks) {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text: chunk, disable_web_page_preview: true }),
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) throw new Error(`Telegram ${res.status}: ${(await res.text()).replace(token, "***")}`);
+  }
+}
