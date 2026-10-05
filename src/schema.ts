@@ -7,6 +7,8 @@ export interface Opportunity {
   type: OppType;
   source: string;
   url: string;
+  /** Direct link to the employer/ATS application page when we can find one */
+  applyUrl?: string;
   /** Normalised to USD where known; jobs are yearly. null = unknown */
   amountUsd: number | null;
   prizeLabel: string;

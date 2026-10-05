@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill, stripHtml, extractSkills, SKILL_VOCAB } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
 
 interface Row {
   id?: string; position?: string; company?: string; tags?: string[]; description?: string;
@@ -19,6 +19,7 @@ export const remoteok: Source = {
         type: "job",
         source: "RemoteOK",
         url: r.url ?? "https://remoteok.com",
+        applyUrl: findApplyUrl(r.description ?? "", ["remoteok.com"]),
         amountUsd: max > 0 ? max : null,
         prizeLabel: max > 0 ? `$${Math.round(max / 1000)}k/yr` : "n/a",
         deadline: null,

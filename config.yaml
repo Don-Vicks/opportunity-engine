@@ -32,3 +32,5 @@ sources:
   workingnomads: true
   jobicy: true
   hnhiring: true
+  mastodon: true      # open stand-in for X (X has no free read API)
+  reddit: true        # r/forhire [Hiring]; may be blocked from CI IPs

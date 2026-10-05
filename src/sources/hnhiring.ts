@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { stripHtml, extractSkills, restrictiveRegion, SKILL_VOCAB } from "../helpers.js";
+import { stripHtml, extractSkills, restrictiveRegion, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
 
 interface Hit { objectID: string; comment_text?: string; parent_id?: number; created_at?: string; story_id?: number }
 
@@ -29,6 +29,7 @@ export const hnhiring: Source = {
         type: /contract|freelance/i.test(head) ? "freelance" : "job",
         source: "HN Who's Hiring",
         url: `https://news.ycombinator.com/item?id=${c.objectID}`,
+        applyUrl: findApplyUrl(c.comment_text, ["ycombinator.com"], true),
         amountUsd: null,
         prizeLabel: "n/a",
         deadline: null,

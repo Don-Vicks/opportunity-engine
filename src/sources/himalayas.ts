@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, stripHtml, extractSkills, SKILL_VOCAB } from "../helpers.js";
+import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
 
 interface Job {
   title: string; companyName: string; employmentType?: string; minSalary?: number | null; maxSalary?: number | null;
@@ -28,6 +28,7 @@ export const himalayas: Source = {
           type: contract ? "freelance" : "job",
           source: "Himalayas",
           url: j.applicationLink,
+          applyUrl: findApplyUrl(j.description ?? "", ["himalayas.app"]),
           amountUsd: usd || null,
           prizeLabel: usd ? `$${Math.round(usd / 1000)}k/yr` : "n/a",
           deadline: null,

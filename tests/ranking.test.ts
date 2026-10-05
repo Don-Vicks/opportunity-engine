@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { loadConfig } from "../src/config.js";
 import { score, urgencyScore, compScore } from "../src/ranking.js";
-import { regionOk, parseSalaryUsd, looksClosed, restrictiveRegion, isTechTitle } from "../src/helpers.js";
+import { findApplyUrl, regionOk, parseSalaryUsd, looksClosed, restrictiveRegion, isTechTitle } from "../src/helpers.js";
 import { keep } from "../src/filter.js";
 import { parseDevpostEnd, parsePrize } from "../src/sources/devpost.js";
 import type { RawOpp } from "../src/schema.js";
@@ -58,4 +58,16 @@ describe("helpers", () => {
   it("salary", () => { expect(parseSalaryUsd("$20k -$35k")).toBe(35000); expect(parseSalaryUsd("$50/hour")).toBeNull(); });
   it("closed", () => { expect(looksClosed("This position has been filled")).toBe(true); expect(looksClosed("Senior Dev")).toBe(false); });
   it("tech title", () => { expect(isTechTitle("Senior Rust Engineer")).toBe(true); expect(isTechTitle("Account Director")).toBe(false); });
+});
+
+describe("findApplyUrl", () => {
+  it("finds ATS anchor", () =>
+    expect(findApplyUrl('<p>About us</p><a href="https://boards.greenhouse.io/acme/jobs/123?utm_source=x">Apply here</a>', ["remoteok.com"]))
+      .toBe("https://boards.greenhouse.io/acme/jobs/123"));
+  it("decodes escaped RSS html", () =>
+    expect(findApplyUrl("&lt;a href=&quot;https://jobs.lever.co/acme/abc&quot;&gt;Apply now&lt;/a&gt;", [])).toBe("https://jobs.lever.co/acme/abc"));
+  it("ignores own site and socials", () =>
+    expect(findApplyUrl('<a href="https://remoteok.com/l/1">Apply</a> <a href="https://twitter.com/acme">Apply</a>', ["remoteok.com"])).toBeUndefined());
+  it("finds bare url after Apply", () =>
+    expect(findApplyUrl("Apply: https://acme.com/careers/rust-engineer", [])).toBe("https://acme.com/careers/rust-engineer"));
 });

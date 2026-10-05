@@ -83,3 +83,45 @@ export function parseSalaryUsd(text?: string | number | null): number | null {
 
 const CLOSED = /(no longer accepting|position (has been |is )?filled|applications? (are |is )?closed|\[closed\]|already filled|has been filled|client (has )?(been )?(selected|hired|chosen))/i;
 export const looksClosed = (text: string) => CLOSED.test(text);
+
+// ---------- direct apply links ----------
+const ATS = /(greenhouse\.io|lever\.co|ashbyhq\.com|workable\.com|smartrecruiters\.com|breezy\.hr|bamboohr\.com|recruitee\.com|personio\.(com|de)|teamtailor\.com|gem\.com|jobvite\.com|icims\.com|workday(jobs)?\.com|myworkdayjobs\.com|rippling\.com|dover\.com|pinpointhq\.com|join\.com|homerun\.co|notion\.site|tally\.so|typeform\.com|airtable\.com|forms\.gle|docs\.google\.com\/forms|jobs?\.[a-z0-9-]+\.[a-z]+|careers?\.[a-z0-9-]+\.[a-z]+|wellfound\.com\/(jobs|l)\/)/i;
+const NOT_APPLY = /(linkedin\.com\/(company|in|school)|twitter\.com|x\.com|facebook\.com|instagram\.com|youtube\.com|youtu\.be|t\.me|discord\.|glassdoor|crunchbase|\.(png|jpe?g|gif|svg|webp)(\?|$)|mailto:|\/privacy|\/terms)/i;
+
+export const decodeEntities = (s: string) =>
+  s.replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, "&");
+
+export function cleanUrl(u: string): string {
+  try {
+    const x = new URL(u);
+    for (const k of [...x.searchParams.keys()]) if (/^(utm_|ref$|source$|gh_src$|src$|fbclid|gclid)/i.test(k)) x.searchParams.delete(k);
+    return x.toString().replace(/[).,;]+$/, "");
+  } catch { return u; }
+}
+
+/**
+ * Best-guess employer/ATS application URL inside a listing's HTML/text.
+ * Scores ATS domains, "apply" anchor text and apply-ish paths; ignores the source site itself.
+ */
+export function findApplyUrl(raw: string, ownHosts: string[] = [], lenient = false): string | undefined {
+  const html = /&lt;a\s|&lt;p&gt;/i.test(raw) ? decodeEntities(raw) : raw;
+  const cands = new Map<string, number>();
+  const add = (url: string, ctx: string) => {
+    if (!/^https?:\/\//i.test(url) || NOT_APPLY.test(url)) return;
+    let host = "";
+    try { host = new URL(url).host.toLowerCase(); } catch { return; }
+    if (ownHosts.some((h) => host === h || host.endsWith("." + h))) return;
+    let sc = lenient ? 2 : 0; // lenient: free-text posts where any employer link is the apply target
+    if (ATS.test(url)) sc += 10;
+    if (/apply|application|interested/i.test(ctx)) sc += 5;
+    if (/apply|job|career|position|opening|hiring|vacanc/i.test(new URL(url).pathname)) sc += 2;
+    if (sc > 0) cands.set(cleanUrl(url), Math.max(sc, cands.get(cleanUrl(url)) ?? 0));
+  };
+  for (const m of html.matchAll(/<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) add(decodeEntities(m[1]), stripHtml(m[2]));
+  const text = html.replace(/<[^>]+>/g, " ");
+  for (const m of text.matchAll(/https?:\/\/[^\s<>"')]+/g)) add(m[0], text.slice(Math.max(0, m.index! - 60), m.index));
+  const best = [...cands].sort((a, b) => b[1] - a[1])[0];
+  return best && best[1] >= (lenient ? 2 : 5) ? best[0] : undefined;
+}

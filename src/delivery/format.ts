@@ -20,7 +20,7 @@ export function formatDigest(items: Opportunity[], errors: string[], now = new D
     if (o.deadline) meta.push(`Deadline: ${Math.max(0, Math.round(daysUntil(o.deadline, now)))} days`);
     else if (o.postedAt) meta.push(`Posted: ${ago(o.postedAt, now)}`);
     meta.push(`Match: ${matchLabel(o.score)}`);
-    lines.push(`${i + 1}. [${TAG[o.type]}] ${o.title}`, `   ${meta.join(" | ")}`, `   → ${o.url}`, "");
+    lines.push(`${i + 1}. [${TAG[o.type]}] ${o.title}`, `   ${meta.join(" | ")}`, `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
   });
   lines.push("— End of digest —");
   return lines.join("\n") + footer(errors);
@@ -58,8 +58,18 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
       `${NUM[i] ?? `${i + 1}.`} ${ICON[o.type]} <b>${esc(o.title)}</b>`,
       `<i>${esc(TAG[o.type])} · ${esc(o.source)}</i>`,
       parts.filter(Boolean).join("  ·  "),
-      `🔗 <a href="${esc(o.url)}">Open listing</a>`,
+      linkLine(o),
     ].join("\n");
   });
   return `${head}\n\n${blocks.join("\n\n")}\n\n<i>— ${items.length} picks · end of digest —</i>${warn}`;
+}
+
+const hostOf = (u: string) => { try { return new URL(u).host.replace(/^www\./, ""); } catch { return ""; } };
+
+/** Direct apply link first (with its domain), listing/source link second so attribution stays intact. */
+function linkLine(o: Opportunity): string {
+  if (o.applyUrl) {
+    return `🚀 <a href="${esc(o.applyUrl)}">Apply directly</a> <i>(${esc(hostOf(o.applyUrl))})</i>  ·  <a href="${esc(o.url)}">via ${esc(o.source)}</a>`;
+  }
+  return `🔗 <a href="${esc(o.url)}">Open listing</a>`;
 }

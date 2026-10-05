@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import type { Source, RawOpp } from "../schema.js";
 import { getText } from "../http.js";
-import { snippet, stripHtml, extractSkills, SKILL_VOCAB } from "../helpers.js";
+import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
 
 const FEEDS = [
   "https://weworkremotely.com/categories/remote-programming-jobs.rss",
@@ -26,6 +26,7 @@ export const weworkremotely: Source = {
           type: contract ? "freelance" : "job",
           source: "WeWorkRemotely",
           url: String(it.link),
+          applyUrl: findApplyUrl(String(it.description ?? ""), ["weworkremotely.com"]),
           amountUsd: null,
           prizeLabel: "n/a",
           deadline: null,

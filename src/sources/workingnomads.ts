@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill, stripHtml, extractSkills, SKILL_VOCAB } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
 
 interface Job {
   url: string; title: string; description?: string; company_name?: string; category_name?: string;
@@ -19,6 +19,7 @@ export const workingnomads: Source = {
         type: /contract|freelance/i.test(j.title) ? "freelance" : "job",
         source: "Working Nomads",
         url: j.url,
+        applyUrl: findApplyUrl(j.description ?? "", ["workingnomads.com"]),
         amountUsd: null,
         prizeLabel: "n/a",
         deadline: null,

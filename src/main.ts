@@ -2,6 +2,7 @@ import { loadConfig, env } from "./config.js";
 import { registry } from "./sources/index.js";
 import { keep } from "./filter.js";
 import { rank } from "./ranking.js";
+import { resolveApplyUrls } from "./resolve.js";
 import { loadSeen, saveSent } from "./store.js";
 import { formatDigest, formatTelegram } from "./delivery/format.js";
 import { sendTelegram } from "./delivery/telegram.js";
@@ -47,6 +48,8 @@ async function main() {
   const items = pickTop(rank(candidates, cfg.profile, now).filter((o) => o.score >= cfg.digest.minScore), cfg.digest.maxResults, cfg.digest.maxPerType);
   console.log(`${raw.length} fetched → ${candidates.length} after filter → ${items.length} delivered`);
 
+  await resolveApplyUrls(items);
+  console.log(`${items.filter((o) => o.applyUrl).length}/${items.length} have a direct apply link`);
   const message = formatDigest(items, errors, now);
   if (dry) { console.log("\n" + message); return; }
   if (!items.length && !cfg.digest.sendWhenEmpty) { console.log("Nothing new; staying quiet."); return; }

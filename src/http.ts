@@ -26,3 +26,12 @@ export async function get(url: string, retries = 2): Promise<Response> {
 }
 export const getJson = async <T>(url: string) => (await get(url)).json() as Promise<T>;
 export const getText = async (url: string) => (await get(url)).text();
+
+/** Follow ONE redirect hop and return its Location (used for tracking links like workingnomads /job/go/). */
+export async function redirectTarget(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { headers: { "User-Agent": UA }, redirect: "manual", signal: AbortSignal.timeout(15_000) });
+    const loc = res.headers.get("location");
+    return loc ? new URL(loc, url).toString() : null;
+  } catch { return null; }
+}

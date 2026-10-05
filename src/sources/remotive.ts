@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill, stripHtml, extractSkills, parseSalaryUsd, SKILL_VOCAB } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, parseSalaryUsd, SKILL_VOCAB } from "../helpers.js";
 
 interface Job {
   id: number; url: string; title: string; company_name: string; tags?: string[]; job_type?: string;
@@ -20,6 +20,7 @@ export const remotive: Source = {
         type: freelance ? "freelance" : "job",
         source: "Remotive",
         url: j.url,
+        applyUrl: findApplyUrl(j.description ?? "", ["remotive.com", "remotive.io"]),
         amountUsd: usd,
         prizeLabel: j.salary?.trim() || "n/a",
         deadline: null,
