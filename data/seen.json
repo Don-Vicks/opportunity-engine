@@ -240,5 +240,56 @@
    "type": "job",
    "source": "Jobicy"
   }
+ },
+ "jobicy:152574": {
+  "t": "2026-10-06T09:36:49.158Z",
+  "o": {
+   "title": "Solution Engineer @ RelationalAI",
+   "url": "https://jobicy.com/jobs/152574-solution-engineer-3",
+   "prizeLabel": "$200k/yr",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:154682": {
+  "t": "2026-10-06T09:36:49.158Z",
+  "o": {
+   "title": "Senior Application Security Engineer @ Beyond Finance",
+   "url": "https://jobicy.com/jobs/154682-senior-application-security-engineer-3",
+   "prizeLabel": "$165k/yr",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/launchdarkly-backend-engineer-multiple-positions": {
+  "t": "2026-10-06T09:36:49.158Z",
+  "o": {
+   "title": "LaunchDarkly: Backend Engineer (Multiple Positions)",
+   "url": "https://weworkremotely.com/remote-jobs/launchdarkly-backend-engineer-multiple-positions",
+   "applyUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdYb_7upYMtdRVXzvXGHGfQw0pU2FNma-6Rwp-I6NjKm7SYNw/viewform",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/digitalforms/jobs/lead-personalization-data-architect": {
+  "t": "2026-10-06T09:36:49.158Z",
+  "o": {
+   "title": "Lead Personalization & Data Architect @ Digital Forms",
+   "url": "https://himalayas.app/companies/digitalforms/jobs/lead-personalization-data-architect",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Himalayas"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/digitalforms/jobs/mobile-developer-react-native": {
+  "t": "2026-10-06T09:36:49.158Z",
+  "o": {
+   "title": "Mobile Developer (React Native) @ Digital Forms",
+   "url": "https://himalayas.app/companies/digitalforms/jobs/mobile-developer-react-native",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Himalayas"
+  }
  }
 }
