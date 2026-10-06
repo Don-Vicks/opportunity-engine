@@ -291,5 +291,48 @@
    "type": "freelance",
    "source": "Himalayas"
   }
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-angular-full-stack-developer": {
+  "t": "2026-10-06T17:36:39.277Z",
+  "o": {
+   "title": "Lemon.io: Senior Angular Full-stack Developer",
+   "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-angular-full-stack-developer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
+ },
+ "superteam:e0417bca-59c8-44ca-adcc-0f3033d9abe9": {
+  "t": "2026-10-06T17:36:39.277Z",
+  "d": "2026-10-18T09:59:59.000Z",
+  "o": {
+   "title": "Colosseum: Founder Support - Talk to 5 Users (Superteam Netherlands)",
+   "url": "https://earn.superteam.fun/listing/colosseum-founder-support-talk-to-5-users",
+   "prizeLabel": "1,000 USDG",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
+ },
+ "superteam:f814a2f2-dd3e-44f9-996f-ce8e8333c155": {
+  "t": "2026-10-06T17:36:39.277Z",
+  "d": "2026-10-14T20:59:59.000Z",
+  "o": {
+   "title": "Develop Solana web3 Project MVP & Pitch for KNUBA UNI Vibeathon (Superteam Ukraine)",
+   "url": "https://earn.superteam.fun/listing/develop-solana-web3-project-mvp-and-pitch-for-knuba-uni-vibeathon",
+   "prizeLabel": "500 USDC",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
+ },
+ "superteam:0e403583-36b6-42c1-a4be-f23a53f083e5": {
+  "t": "2026-10-06T17:36:39.277Z",
+  "d": "2026-10-08T20:59:59.000Z",
+  "o": {
+   "title": "Develop Solana web3 Project MVP & Pitch for IFK UNI Vibeathon (Superteam Ukraine)",
+   "url": "https://earn.superteam.fun/listing/develop-solana-web3-project-mvp-and-pitch-for-ifk-uni-vibeathon",
+   "prizeLabel": "500 USDC",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  }
 }
