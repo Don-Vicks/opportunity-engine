@@ -334,5 +334,15 @@
    "type": "bounty",
    "source": "Superteam Earn"
   }
+ },
+ "himalayas:https://himalayas.app/companies/cyberarrow/jobs/front-end-developer-react-js-remote": {
+  "t": "2026-10-06T22:01:20.162Z",
+  "o": {
+   "title": "Front-end Developer React.js [Remote] @ CyberArrow",
+   "url": "https://himalayas.app/companies/cyberarrow/jobs/front-end-developer-react-js-remote",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
  }
 }
