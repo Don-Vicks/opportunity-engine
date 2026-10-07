@@ -366,5 +366,15 @@
    "type": "hackathon",
    "source": "Devfolio"
   }
+ },
+ "himalayas:https://himalayas.app/companies/consensys-io/jobs/staff-software-engineer-perpetuals": {
+  "t": "2026-10-07T20:19:33.120Z",
+  "o": {
+   "title": "Staff Software Engineer: Perpetuals @ Consensys",
+   "url": "https://himalayas.app/companies/consensys-io/jobs/staff-software-engineer-perpetuals",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
  }
 }
