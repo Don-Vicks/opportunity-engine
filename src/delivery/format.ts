@@ -3,6 +3,8 @@ import { daysUntil } from "../helpers.js";
 import { matchLabel } from "../ranking.js";
 import type { Reminder } from "../store.js";
 
+const FIT_TEXT = { qualified: "Qualified", stretch: "Stretch", not_a_fit: "Not a fit" };
+const FIT_ICON = { qualified: "🟢", stretch: "🟠", not_a_fit: "🔴" };
 const TAG: Record<string, string> = {
   hackathon: "Hackathon", job: "Job", freelance: "Freelance", bounty: "Bounty", grant: "Grant", other: "Other",
 };
@@ -29,7 +31,8 @@ export function formatDigest(items: Opportunity[], errors: string[], now = new D
       if (o.deadline) meta.push(`Deadline: ${Math.max(0, Math.round(daysUntil(o.deadline, now)))} days`);
       else if (o.postedAt) meta.push(`Posted: ${ago(o.postedAt, now)}`);
       meta.push(`Match: ${matchLabel(o.score)}`);
-      lines.push(`${i + 1}. ${o.title}`, `   ${meta.join(" | ")}`, `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
+      if (o.fit) meta.push(`Fit: ${FIT_TEXT[o.fit.verdict]}`);
+      lines.push(`${i + 1}. ${o.title}`, `   ${meta.join(" | ")}`, ...(o.fit?.reason ? [`   ${o.fit.reason}`] : []), `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
     });
   }
   lines.push("— End of digest —");
@@ -78,6 +81,7 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
         `${NUM[i] ?? `${i + 1}.`} <b>${esc(o.title)}</b>`,
         `<i>${esc(o.source)}</i>`,
         parts.filter(Boolean).join("  ·  "),
+        ...(o.fit ? [`${FIT_ICON[o.fit.verdict]} <b>${FIT_TEXT[o.fit.verdict]}</b>${o.fit.reason ? ` — ${esc(o.fit.reason)}` : ""}`] : []),
         linkLine(o),
       ].join("\n");
       // header rides with the first card so a message split never strands it

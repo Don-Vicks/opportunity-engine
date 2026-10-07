@@ -3,7 +3,7 @@ export const stripHtml = (s: string) =>
     .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")
     .replace(/\s+/g, " ").trim();
 
-export const snippet = (s: string, n = 160) => {
+export const snippet = (s: string, n = 450) => {
   const t = stripHtml(s);
   return t.length > n ? t.slice(0, n - 1) + "…" : t;
 };

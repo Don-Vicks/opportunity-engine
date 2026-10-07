@@ -15,6 +15,18 @@ profile:
     freelance: 500
     grant: 200
     job: 60000                   # per year (jobs with no listed salary still pass)
+  # Your strongest area: listings touching these rank higher
+  focusSkills: [node, express, nestjs, typescript]
+  experience:
+    years: 4                     # professional experience
+    allowSenior: true            # keep "Senior ..." titles (Staff/Principal/Lead/Architect are always dropped)
+    maxYearsRequired: 5          # drop jobs asking for more than this many years
+  # Fed to the AI fit check. Fill in real projects/results for sharper verdicts.
+  portfolio:
+    strongest: "Backend (Node.js, Express, NestJS, TypeScript)"
+    summary: ""                  # 2-3 sentences: what you build and for whom
+    projects: []                 # e.g. "Payments API on NestJS + Postgres, 20k users"
+    achievements: []             # e.g. "2nd place Solana hackathon 2025"
   # Titles containing these are dropped (content/social bounties etc.)
   excludeKeywords: [twitter, tweet, thread, "x post", video, meme, translate, ambassador, "content creat", "write a post", "create content", "create x", "social quest"]
 digest:
@@ -22,6 +34,9 @@ digest:
   minScore: 0.35
   maxPerType: { job: 20, freelance: 6, hackathon: 5, bounty: 5, grant: 8, other: 2 }
   sendWhenEmpty: false           # runs every 3h; stay quiet if nothing new
+ai:
+  enabled: true                  # needs GROQ_API_KEY and/or OPENROUTER_API_KEY (Groq first, OpenRouter fallback)
+  mode: label                    # label = tag only | hide = drop "not a fit" | strict = keep only "qualified"
 sources:
   remoteok: true
   weworkremotely: true
