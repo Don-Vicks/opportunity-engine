@@ -41,7 +41,7 @@ export function extractSkills(title: string, vocab: string[], body = "", minBody
 export const SKILL_VOCAB = [
   "expo", "nestjs", "rust", "typescript", "javascript", "solana", "anchor", "react", "nextjs", "node", "web3",
   "python", "go", "golang", "java", "swift", "kotlin", "solidity", "ethereum", "evm", "smart contract",
-  "frontend", "backend", "fullstack", "full-stack", "devops", "ai", "ml", "llm", "design", "wasm", "defi",
+  "laravel", "php", "stellar", "soroban", "frontend", "backend", "fullstack", "full-stack", "devops", "ai", "ml", "llm", "design", "wasm", "defi",
 ];
 
 export const daysUntil = (d: Date, now = new Date()) => (d.getTime() - now.getTime()) / 86_400_000;
