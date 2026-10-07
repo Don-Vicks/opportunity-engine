@@ -24,7 +24,8 @@ profile:
   # Fed to the AI fit check. Fill in real projects/results for sharper verdicts.
   portfolio:
     strongest: "Backend (Node.js, Express, NestJS, TypeScript)"
-    summary: ""                  # 2-3 sentences: what you build and for whom
+    summary: "Backend-first full-stack TypeScript developer. Has built with Solana but only at working level, not expert: Solana-core, protocol, Anchor-heavy or security-audit roles should be 'stretch' at best; general web3 dApp/backend/frontend work is fine."
+    # (add what you build and for whom here)
     projects: []                 # e.g. "Payments API on NestJS + Postgres, 20k users"
     achievements: []             # e.g. "2nd place Solana hackathon 2025"
   # Titles containing these are dropped (content/social bounties etc.)
