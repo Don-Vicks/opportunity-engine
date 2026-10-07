@@ -333,7 +333,8 @@
    "prizeLabel": "500 USDC",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "himalayas:https://himalayas.app/companies/cyberarrow/jobs/front-end-developer-react-js-remote": {
   "t": "2026-10-06T22:01:20.162Z",
@@ -343,6 +344,27 @@
    "prizeLabel": "n/a",
    "type": "job",
    "source": "Himalayas"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/talent-journey/jobs/junior-frontend-developer-future-position": {
+  "t": "2026-10-07T12:19:12.912Z",
+  "o": {
+   "title": "Junior Frontend Developer - Future Position @ Talent Journey",
+   "url": "https://himalayas.app/companies/talent-journey/jobs/junior-frontend-developer-future-position",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "devfolio:arkiv": {
+  "t": "2026-10-07T12:19:12.912Z",
+  "d": "2026-10-18T22:59:00.000Z",
+  "o": {
+   "title": "Arkiv: Global Tour Stop 🌍",
+   "url": "https://arkiv.devfolio.co",
+   "prizeLabel": "n/a",
+   "type": "hackathon",
+   "source": "Devfolio"
   }
  }
 }
