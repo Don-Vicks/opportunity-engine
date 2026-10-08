@@ -8,6 +8,9 @@ export const snippet = (s: string, n = 450) => {
   return t.length > n ? t.slice(0, n - 1) + "…" : t;
 };
 
+/** Full plain-text description, capped; the 450-char snippet cuts off requirements like "5+ years". */
+export const detail = (s: string, n = 3000) => stripHtml(s).slice(0, n);
+
 const ALIASES: Record<string, string> = {
   ts: "typescript", js: "javascript", rs: "rust", "next.js": "nextjs", next: "nextjs",
   reactjs: "react", "react native": "expo", "react-native": "expo", reactnative: "expo", "expo.js": "expo",
@@ -66,6 +69,17 @@ export function regionOk(region?: string): boolean {
 const NG = /((?<!outside |except |excluding |not in )\b(nigeria\w*|lagos|abuja)\b|\bwat\b|west africa|(?<!south )\bafrica\b)/i;
 /** True when the listing itself names Nigeria / Africa / WAT (not merely "worldwide"). */
 export const nigeriaFriendly = (...texts: (string | undefined)[]) => NG.test(texts.filter(Boolean).join(" "));
+
+/**
+ * Residency / work-authorisation requirements in the body ("must be based in the US", "US citizens only").
+ * Returns the matched phrase, or null. Skipped when the text also welcomes Africa/Nigeria/worldwide.
+ */
+const RESIDENCY = /((must|need to|required to|have to)\s+(be\s+)?(located|based|reside|resident|live|living)\s+(in|within)\s+(the\s+)?(us|usa|u\.s\.a?\.?|united states|uk|united kingdom|canada|eu|europe|european union)\b|\b(us|u\.s\.|united states|uk|canadian|eu)\s+(citizens?|residents?)\b|(authori[sz]ed|eligible|right)\s+to\s+work\s+in\s+(the\s+)?(us|usa|u\.s\.|united states|uk|united kingdom|canada|eu|european union)\b|(us|usa|u\.s\.)[- ]based\s+(candidates|applicants|only))/i;
+export function residencyBlock(text: string): string | null {
+  const m = text.match(RESIDENCY);
+  if (!m || NG.test(text) || /(worldwide|anywhere in the world|global(ly)? remote)/i.test(text)) return null;
+  return m[0];
+}
 
 /** For free-text headers (HN): returns the text only if it clearly restricts by region, else "" */
 export const restrictiveRegion = (head: string): string =>

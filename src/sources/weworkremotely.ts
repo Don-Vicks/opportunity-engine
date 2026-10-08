@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import type { Source, RawOpp } from "../schema.js";
 import { getText } from "../http.js";
-import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
+import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB, detail } from "../helpers.js";
 
 const FEEDS = [
   "https://weworkremotely.com/categories/remote-programming-jobs.rss",
@@ -34,6 +34,7 @@ export const weworkremotely: Source = {
           region: stripHtml(String(it.region ?? "")),
           skills: extractSkills(String(it.title), SKILL_VOCAB, stripHtml(String(it.description ?? ""))),
           snippet: snippet(String(it.description ?? "")),
+          detail: detail(String(it.description ?? "")),
           effort: contract ? "medium" : "high",
           postedAt: it.pubDate ? new Date(it.pubDate) : null,
         });

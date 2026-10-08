@@ -18,6 +18,8 @@ export interface Opportunity {
   region?: string;
   skills: string[];
   snippet: string;
+  /** Full listing text (capped) when the source provides it; used for filtering and the AI fit check, never stored */
+  detail?: string;
   effort: Effort | null;
   postedAt: Date | null;
   score: number;

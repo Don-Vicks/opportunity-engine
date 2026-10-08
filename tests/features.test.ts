@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { saveSent, dueReminders, markReminded, loadSeen, loadSeenMap } from "../src/store.js";
@@ -182,4 +182,31 @@ describe("Nigeria tag and Stellar", () => {
     expect(nigeriaFriendly("", "", "not open to candidates outside Nigeria")).toBe(false);
   });
   it("treats Soroban as Stellar", () => { expect(normSkill("soroban")).toBe("stellar"); });
+});
+
+import { residencyBlock } from "../src/helpers.js";
+describe("full-description filtering", () => {
+  const cfg = loadConfig();
+  const now = new Date("2026-10-08T00:00:00Z");
+  const job = (over: Partial<RawOpp>): RawOpp => ({
+    id: "j1", title: "Backend Engineer @ Acme", type: "job", source: "S", url: "https://x.co/j", amountUsd: null, prizeLabel: "n/a",
+    deadline: null, location: "remote", region: "", skills: ["nestjs"], snippet: "We build payments.", effort: "medium", postedAt: null, ...over,
+  });
+  it("drops a job whose years requirement is only in the full text", () => {
+    expect(keep(job({}), cfg, new Set(), now)).toBe(true);
+    expect(keep(job({ detail: "We build payments. You have 9+ years of experience with distributed systems." }), cfg, new Set(), now)).toBe(false);
+  });
+  it("drops residency-locked jobs but not ones that welcome Africa/worldwide", () => {
+    expect(residencyBlock("Candidates must be based in the US.")).toBeTruthy();
+    expect(residencyBlock("You must be authorized to work in the United States")).toBeTruthy();
+    expect(residencyBlock("US-based candidates only, but we also welcome Africa")).toBeNull();
+    expect(residencyBlock("We hire worldwide. Our HQ is in the US.")).toBeNull();
+    expect(keep(job({ detail: "Applicants must be located in the United States." }), cfg, new Set(), now)).toBe(false);
+  });
+  it("does not store detail in history", () => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    const o = { ...opp("d", null, now, "job"), detail: "long text" };
+    saveSent([o], now);
+    expect(readFileSync(join(process.env.DATA_DIR, "history.jsonl"), "utf8")).not.toContain("long text");
+  });
 });

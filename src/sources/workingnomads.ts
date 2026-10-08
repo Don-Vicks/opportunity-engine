@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB, detail } from "../helpers.js";
 
 interface Job {
   url: string; title: string; description?: string; company_name?: string; category_name?: string;
@@ -30,6 +30,7 @@ export const workingnomads: Source = {
           ...extractSkills(j.title, SKILL_VOCAB, stripHtml(j.description ?? "")),
         ])],
         snippet: snippet(j.description ?? ""),
+        detail: detail(j.description ?? ""),
         effort: "high",
         postedAt: j.pub_date ? new Date(j.pub_date) : null,
       }));

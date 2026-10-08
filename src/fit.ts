@@ -5,7 +5,8 @@ type Fit = NonNullable<Opportunity["fit"]>;
 type Post = (url: string, key: string, body: unknown) => Promise<string>;
 export interface Providers { groqKey?: string; openrouterKey?: string }
 
-const BATCH = 12;
+const BATCH = 8;
+const TEXT_CAP = 1500;
 
 export function systemPrompt(p: Config["profile"]): string {
   const pf = p.portfolio;
@@ -73,7 +74,7 @@ const post: Post = async (url, key, body) => {
 export function listingPayload(items: Opportunity[]) {
   return items.map((o, i) => ({
     i, type: o.type, title: o.title, source: o.source, pay: o.prizeLabel, region: o.region || undefined,
-    skills: o.skills, text: o.snippet,
+    skills: o.skills, text: (o.detail ?? o.snippet).slice(0, TEXT_CAP),
   }));
 }
 

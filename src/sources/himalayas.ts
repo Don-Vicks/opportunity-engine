@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
+import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB, detail } from "../helpers.js";
 
 interface Job {
   title: string; companyName: string; employmentType?: string; minSalary?: number | null; maxSalary?: number | null;
@@ -36,6 +36,7 @@ export const himalayas: Source = {
           region: (j.locationRestrictions ?? []).join(", "),
           skills: extractSkills(j.title, SKILL_VOCAB, body),
           snippet: snippet(body),
+          detail: detail(body),
           effort: contract ? "medium" : "high",
           postedAt: j.pubDate ? new Date(Number(j.pubDate) * 1000) : null,
         });
