@@ -268,3 +268,24 @@ describe("pitch and letter", () => {
     expect(none).toBeNull();
   });
 });
+
+import { calendarUrl } from "../src/delivery/format.js";
+describe("calendar link", () => {
+  const now = new Date("2026-10-08T00:00:00Z");
+  it("builds a 30-minute Google Calendar block ending at the deadline", () => {
+    const u = new URL(calendarUrl("Arkiv & Friends: Hack", new Date("2026-10-18T22:59:00Z"), "https://x.co/a?b=1&c=2"));
+    expect(u.origin + u.pathname).toBe("https://calendar.google.com/calendar/render");
+    expect(u.searchParams.get("action")).toBe("TEMPLATE");
+    expect(u.searchParams.get("dates")).toBe("20261018T222900Z/20261018T225900Z");
+    expect(u.searchParams.get("text")).toBe("⏰ Deadline: Arkiv & Friends: Hack");
+    expect(u.searchParams.get("details")).toBe("Apply: https://x.co/a?b=1&c=2");
+  });
+  it("shows the link only on cards that have a deadline, with & escaped for Telegram HTML", () => {
+    const withD = formatTelegram([opp("a", 100, now, "hackathon")], [], now);
+    expect(withD).toContain("Add deadline to calendar");
+    expect(withD).toContain("action=TEMPLATE&amp;text=");
+    expect(withD).not.toMatch(/href="[^"]*&(?!amp;)/);
+    const noD = formatTelegram([opp("b", null, now, "job")], [], now);
+    expect(noD).not.toContain("calendar");
+  });
+});
