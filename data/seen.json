@@ -638,5 +638,27 @@
    "type": "grant",
    "source": "Grant Programs"
   }
+ },
+ "wn:https://www.workingnomads.com/job/go/1925654/": {
+  "t": "2026-10-08T18:10:35.647Z",
+  "o": {
+   "title": "Senior Backend Developer (Node.js / Nest.js) @ Proxify",
+   "url": "https://www.workingnomads.com/job/go/1925654/",
+   "applyUrl": "https://career.proxify.io/apply",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Working Nomads"
+  }
+ },
+ "wn:https://www.workingnomads.com/job/go/1925629/": {
+  "t": "2026-10-08T18:10:35.647Z",
+  "o": {
+   "title": "Senior Fullstack Developer (React.js / Node.js) @ Proxify",
+   "url": "https://www.workingnomads.com/job/go/1925629/",
+   "applyUrl": "https://career.proxify.io/apply",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Working Nomads"
+  }
  }
 }
