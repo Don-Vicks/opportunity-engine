@@ -5,28 +5,33 @@ import type { Prefs } from "./store.js";
 import { overLevel } from "./seniority.js";
 import { daysUntil, regionOk, looksClosed, isTechTitle, residencyBlock } from "./helpers.js";
 
-export function keep(o: RawOpp, cfg: Config, seen: Set<string>, now = new Date(), prefs?: Prefs): boolean {
+/** Why a listing is dropped, or null if it passes. The reason is a short stable label used in run logs. */
+export function rejectReason(o: RawOpp, cfg: Config, seen: Set<string>, now = new Date(), prefs?: Prefs): string | null {
   const p = cfg.profile;
-  if (seen.has(o.id)) return false;
+  const job = o.type === "job" || o.type === "freelance";
+  if (seen.has(o.id)) return "already sent";
   const title = o.title.toLowerCase();
-  if (prefs?.mute.length && hasWord(title, prefs.mute)) return false;
-  if (p.excludeKeywords.some((k) => title.includes(k.toLowerCase()))) return false;
-  if (p.regionFilter && !regionOk(o.region)) return false;
-  if (looksClosed(`${o.title} ${o.snippet}`)) return false; // already filled / client chosen
-  if (!p.preferredTypes.includes(o.type)) return false;
-  if (p.remoteOnly && o.location !== "remote") return false;
-  if (o.postedAt && -daysUntil(o.postedAt, now) > 30) return false; // stale posting
+  if (prefs?.mute.length && hasWord(title, prefs.mute)) return "muted";
+  if (p.excludeKeywords.some((k) => title.includes(k.toLowerCase()))) return "excluded keyword";
+  if (p.regionFilter && !regionOk(o.region)) return "region-locked";
+  if (looksClosed(`${o.title} ${o.snippet}`)) return "closed/filled";
+  if (!p.preferredTypes.includes(o.type)) return "type not wanted";
+  if (p.remoteOnly && o.location !== "remote") return "not remote";
+  if (o.postedAt && -daysUntil(o.postedAt, now) > 30) return "stale (>30d)";
   if (o.deadline) {
     const d = daysUntil(o.deadline, now);
-    if (d < 1 || d > p.deadlineWindowDays) return false;
+    if (d < 1 || d > p.deadlineWindowDays) return "deadline outside window";
   }
   // Known amounts must meet the minimum; unknown amounts pass (ranking handles them).
   const min = p.minPrizeUsd[o.type] ?? 0;
-  if (o.amountUsd != null && o.amountUsd < min) return false;
-  if ((o.type === "job" || o.type === "freelance") && !isTechTitle(o.title)) return false;
+  if (o.amountUsd != null && o.amountUsd < min) return "below minimum pay";
+  if (job && !isTechTitle(o.title)) return "not a tech title";
   // Roles must mention one of the target stacks
-  if ((o.type === "job" || o.type === "freelance") && !o.skills.some((s) => p.roleSkills.includes(s))) return false;
-  if ((o.type === "job" || o.type === "freelance") && overLevel(o.title, o.detail ?? o.snippet, p.experience)) return false;
-  if (p.regionFilter && (o.type === "job" || o.type === "freelance") && residencyBlock(o.detail ?? o.snippet)) return false; // "must be based in the US" etc.
-  return true;
+  if (job && !o.skills.some((s) => p.roleSkills.includes(s))) return "no target skill";
+  if (job && overLevel(o.title, o.detail ?? o.snippet, p.experience)) return "too senior";
+  if (p.regionFilter && job && residencyBlock(o.detail ?? o.snippet)) return "residency requirement"; // "must be based in the US" etc.
+  return null;
 }
+
+export const keep = (o: RawOpp, cfg: Config, seen: Set<string>, now = new Date(), prefs?: Prefs): boolean =>
+  rejectReason(o, cfg, seen, now, prefs) === null;

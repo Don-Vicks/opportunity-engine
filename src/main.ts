@@ -1,6 +1,6 @@
 import { loadConfig, env } from "./config.js";
 import { registry } from "./sources/index.js";
-import { keep } from "./filter.js";
+import { rejectReason } from "./filter.js";
 import { rank } from "./ranking.js";
 import { assessFit, applyFitMode } from "./fit.js";
 import { resolveApplyUrls } from "./resolve.js";
@@ -54,9 +54,15 @@ async function main() {
   const { health, alerts } = updateHealth(readHealth(), report, now);
 
   // 4. filter, rank, pick
-  const seen = loadSeen(now);
+  const seen = process.env.IGNORE_SEEN === "1" ? new Set<string>() : loadSeen(now); // IGNORE_SEEN=1: re-send items for testing
   const unique = [...new Map(raw.map((o) => [`${o.source}|${o.title.toLowerCase().trim()}`, o])).values()];
-  const candidates = unique.filter((o) => keep(o, cfg, seen, now, prefs));
+  const why: Record<string, number> = {};
+  const candidates = unique.filter((o) => {
+    const r = rejectReason(o, cfg, seen, now, prefs);
+    if (r) why[r] = (why[r] ?? 0) + 1;
+    return r === null;
+  });
+  console.log("Dropped by filter:", Object.entries(why).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k}=${v}`).join(", ") || "none");
   let items = pickTop(rank(candidates, cfg.profile, now, prefs).filter((o) => o.score >= cfg.digest.minScore), cfg.digest.maxResults, cfg.digest.maxPerType);
   if (cfg.ai.enabled && items.length) {
     await assessFit(items, cfg, { groqKey: env.groqKey, openrouterKey: env.openrouterKey });
