@@ -12,7 +12,7 @@ const ALIASES: Record<string, string> = {
   ts: "typescript", js: "javascript", rs: "rust", "next.js": "nextjs", next: "nextjs",
   reactjs: "react", "react native": "expo", "react-native": "expo", reactnative: "expo", "expo.js": "expo",
   "express.js": "express", expressjs: "express", "nest.js": "nestjs", nest: "nestjs", "next js": "nextjs", "react.js": "react", "node.js": "node", nodejs: "node",
-  blockchain: "web3", crypto: "web3", defi: "web3", smartcontract: "web3", "smart contracts": "web3",
+  soroban: "stellar", blockchain: "web3", crypto: "web3", defi: "web3", smartcontract: "web3", "smart contracts": "web3",
 };
 export const normSkill = (s: string) => {
   const k = s.toLowerCase().trim();
@@ -61,6 +61,11 @@ export function regionOk(region?: string): boolean {
   if (!r || REGION_GENERIC.test(r)) return true;
   return REGION_OK.test(r);
 }
+
+// ---------- Nigeria-friendly (explicitly open to / aimed at Nigerians) ----------
+const NG = /((?<!outside |except |excluding |not in )\b(nigeria\w*|lagos|abuja)\b|\bwat\b|west africa|(?<!south )\bafrica\b)/i;
+/** True when the listing itself names Nigeria / Africa / WAT (not merely "worldwide"). */
+export const nigeriaFriendly = (...texts: (string | undefined)[]) => NG.test(texts.filter(Boolean).join(" "));
 
 /** For free-text headers (HN): returns the text only if it clearly restricts by region, else "" */
 export const restrictiveRegion = (head: string): string =>

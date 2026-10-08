@@ -18,13 +18,13 @@ profile:
   # Your strongest area: listings touching these rank higher
   focusSkills: [node, express, nestjs, typescript, laravel]
   experience:
-    years: 3                     # professional since Aug 2023 (Senior/CTO titles held at small companies)
+    years: 5                     # coding since ~2020-21; paid roles since 2023
     allowSenior: true            # keep "Senior ..." titles (Staff/Principal/Lead/Architect are always dropped)
-    maxYearsRequired: 5          # drop jobs asking for more than this many years
+    maxYearsRequired: 6          # drop jobs asking for more than this many years
   # Fed to the AI fit check. Fill in real projects/results for sharper verdicts.
   portfolio:
     strongest: "Backend and full-stack product engineering (NestJS, Node, Laravel, PostgreSQL/MySQL, React/Next.js, Expo)"
-    summary: "Victor Shallangwa, full-stack engineer since 2023 (Nigeria, remote). Backend and payments/transaction systems are the strength. Solana is working-level: shipped several Solana products and completed Ackee's School of Solana, but is not a protocol or security expert. Rust is being learned (used in side projects), not professional-grade. Open to full-time, contract and partnerships."
+    summary: "Victor Shallangwa, full-stack engineer, coding since ~2020-21 and in paid roles since 2023 (Nigeria, remote). Backend and payments/transaction systems are the strength. Solana is working-level: shipped several Solana products and completed Ackee's School of Solana, but is not a protocol or security expert. Rust is being learned (used in side projects), not professional-grade. Open to full-time, contract and partnerships."
     projects:
       - "AgTrail (day job): digital identity/traceability platform for African agriculture; React 19, TypeScript, Node, PostgreSQL, offline sync"
       - "Solara Pay: non-custodial payroll disbursement protocol on Solana ($600+ paid out, bulk batching, webhook reconciliation)"

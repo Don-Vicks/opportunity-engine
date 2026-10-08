@@ -165,3 +165,16 @@ describe("AI fit", () => {
     expect(applyFitMode([a, b, c], "strict").map((o) => o.id)).toEqual(["a"]);
   });
 });
+
+import { nigeriaFriendly, normSkill } from "../src/helpers.js";
+describe("Nigeria tag and Stellar", () => {
+  it("flags Nigeria/Africa/WAT but not worldwide, South Africa or exclusions", () => {
+    expect(nigeriaFriendly("Nigeria", "")).toBe(true);
+    expect(nigeriaFriendly("", "Backend Engineer (Africa)")).toBe(true);
+    expect(nigeriaFriendly("", "", "Open to candidates in WAT timezone")).toBe(true);
+    expect(nigeriaFriendly("Worldwide", "Backend Engineer")).toBe(false);
+    expect(nigeriaFriendly("South Africa only", "")).toBe(false);
+    expect(nigeriaFriendly("", "", "not open to candidates outside Nigeria")).toBe(false);
+  });
+  it("treats Soroban as Stellar", () => { expect(normSkill("soroban")).toBe("stellar"); });
+});

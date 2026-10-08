@@ -7,6 +7,7 @@ import type { Source, RawOpp } from "../schema.js";
  */
 const PROGRAMS = [
   { slug: "solana-foundation", name: "Solana Foundation Grants", url: "https://solana.org/grants-funding", skills: ["solana", "rust", "web3"], note: "Rolling grants + convertible grants for Solana ecosystem projects" },
+  { slug: "stellar-community-fund", name: "Stellar Community Fund", url: "https://communityfund.stellar.org/", skills: ["stellar", "rust", "web3", "typescript"], note: "Funding for Stellar and Soroban builders; rolling rounds" },
   { slug: "superteam-grants", name: "Superteam Earn — All Grants", url: "https://earn.superteam.fun/grants", skills: ["solana", "web3"], note: "Instagrants and chapter grants (incl. Nigeria)" },
   { slug: "ethereum-esp", name: "Ethereum Foundation — Ecosystem Support Program", url: "https://esp.ethereum.foundation/", skills: ["web3", "rust", "typescript"], note: "Open grants for Ethereum public goods and tooling" },
   { slug: "web3-foundation", name: "Web3 Foundation Grants (Polkadot)", url: "https://web3.foundation/grants/", skills: ["rust", "web3"], note: "Open-source Polkadot/Substrate development grants" },
