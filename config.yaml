@@ -47,7 +47,7 @@ digest:
   maxPerType: { job: 20, freelance: 6, hackathon: 5, bounty: 5, grant: 8, other: 2 }
   sendWhenEmpty: false           # runs every 3h; stay quiet if nothing new
 ai:
-  enabled: true                  # needs GROQ_API_KEY and/or OPENROUTER_API_KEY (Groq first, OpenRouter fallback)
+  enabled: true                  # needs GROQ_API_KEY and/or OPENROUTER_API_KEY (Groq first, OpenRouter fallback; models are auto-picked from what each serves)
   mode: label                    # label = tag only | hide = drop "not a fit" | strict = keep only "qualified"
 sources:
   remoteok: true

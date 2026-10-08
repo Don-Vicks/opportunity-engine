@@ -108,7 +108,7 @@ describe("weekly summary window", () => {
 });
 
 import { overLevel, yearsRequired } from "../src/seniority.js";
-import { parseFits, assessFit, applyFitMode } from "../src/fit.js";
+import { parseFits, assessFit, applyFitMode, pickModel } from "../src/fit.js";
 
 describe("level gate", () => {
   const cfg = loadConfig();
@@ -147,15 +147,20 @@ describe("AI fit", () => {
       calls.push(url);
       if (url.includes("groq")) throw new Error("HTTP 429");
       return '{"results":[{"i":0,"verdict":"qualified","reason":"ok"},{"i":1,"verdict":"stretch","reason":"gap"}]}';
-    });
+    }, async () => []);
     expect(calls).toHaveLength(2);
     expect(items.map((o) => o.fit?.verdict)).toEqual(["qualified", "stretch"]);
   });
   it("never throws and leaves items unlabeled when all providers fail", async () => {
     const items = [mk("a")];
-    await assessFit(items, cfg, { groqKey: "g" }, async () => { throw new Error("down"); });
+    await assessFit(items, cfg, { groqKey: "g" }, async () => { throw new Error("down"); }, async () => { throw new Error("no list"); });
     expect(items[0].fit).toBeUndefined();
     expect(applyFitMode(items, "strict")).toHaveLength(1);
+  });
+  it("picks a served model and survives retired ones", () => {
+    expect(pickModel(["a", "b"], ["x", "b"])).toBe("b");
+    expect(pickModel(["google/gemma-4-31b-it:free"], ["meta/old:free"], [/gemma.*:free$/])).toBe("google/gemma-4-31b-it:free");
+    expect(pickModel([], ["x", "y"])).toBe("x");
   });
   it("modes filter by verdict", () => {
     const [a, b, c] = [mk("a"), mk("b"), mk("c")];

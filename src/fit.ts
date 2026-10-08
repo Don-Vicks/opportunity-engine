@@ -39,6 +39,25 @@ export function parseFits(text: string): Map<number, Fit> {
   return out;
 }
 
+type ListModels = (url: string, key: string) => Promise<string[]>;
+
+const listModels: ListModels = async (url, key) => {
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${key}` }, signal: AbortSignal.timeout(20_000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return ((await res.json()) as { data?: { id: string }[] }).data?.map((m) => m.id) ?? [];
+};
+
+/** First preferred model the provider actually serves; models get retired, so never trust a hardcoded name. */
+export function pickModel(available: string[], preferred: string[], anyOf: RegExp[] = []): string {
+  const have = new Set(available);
+  const hit = preferred.find((m) => have.has(m));
+  if (hit) return hit;
+  for (const re of anyOf) { const m = available.find((id) => re.test(id)); if (m) return m; }
+  return preferred[0];
+}
+
+const GROQ_FALLBACK = ["openai/gpt-oss-120b", "openai/gpt-oss-20b", "llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+
 const post: Post = async (url, key, body) => {
   const res = await fetch(url, {
     method: "POST",
@@ -46,7 +65,7 @@ const post: Post = async (url, key, body) => {
     body: JSON.stringify(body),
     signal: AbortSignal.timeout(45_000),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 200)}`);
   const j = (await res.json()) as { choices?: { message?: { content?: string } }[] };
   return j.choices?.[0]?.message?.content ?? "";
 };
@@ -62,10 +81,16 @@ export function listingPayload(items: Opportunity[]) {
  * Attach a qualified/stretch/not_a_fit verdict to each item. Tries Groq, then OpenRouter, per batch.
  * Never throws: on any failure the items simply stay unlabeled.
  */
-export async function assessFit(items: Opportunity[], cfg: Config, keys: Providers, send: Post = post): Promise<void> {
+export async function assessFit(items: Opportunity[], cfg: Config, keys: Providers, send: Post = post, list: ListModels = listModels): Promise<void> {
   const chain: { name: string; url: string; key: string; model: string }[] = [];
-  if (keys.groqKey) chain.push({ name: "groq", url: "https://api.groq.com/openai/v1/chat/completions", key: keys.groqKey, model: cfg.ai.groqModel });
-  if (keys.openrouterKey) chain.push({ name: "openrouter", url: "https://openrouter.ai/api/v1/chat/completions", key: keys.openrouterKey, model: cfg.ai.openrouterModel });
+  const add = async (name: string, base: string, key: string, preferred: string[], anyOf: RegExp[] = []) => {
+    const available = await list(`${base}/models`, key).catch((e) => { console.warn(`AI fit (${name}) model list failed: ${e.message}`); return []; });
+    const model = pickModel(available, preferred, anyOf);
+    console.log(`AI fit: ${name} → ${model}`);
+    chain.push({ name, url: `${base}/chat/completions`, key, model });
+  };
+  if (keys.groqKey) await add("groq", "https://api.groq.com/openai/v1", keys.groqKey, [cfg.ai.groqModel, ...GROQ_FALLBACK]);
+  if (keys.openrouterKey) await add("openrouter", "https://openrouter.ai/api/v1", keys.openrouterKey, [cfg.ai.openrouterModel], [/(gemma|llama|qwen|gpt-oss).*:free$/]);
   if (!chain.length) { console.warn("AI fit: no GROQ_API_KEY / OPENROUTER_API_KEY set, skipping"); return; }
 
   const system = systemPrompt(cfg.profile);
