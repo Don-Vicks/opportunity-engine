@@ -106,3 +106,75 @@ describe("weekly summary window", () => {
     expect(weeklyDue(new Date("2026-10-06T10:00:00Z"), undefined)).toBeNull(); // Tuesday
   });
 });
+
+import { overLevel, yearsRequired } from "../src/seniority.js";
+import { parseFits, assessFit, applyFitMode } from "../src/fit.js";
+
+describe("level gate", () => {
+  const cfg = loadConfig();
+  const exp = cfg.profile.experience;
+  it("drops staff/principal/lead/architect titles", () => {
+    for (const t of ["Staff Software Engineer: Perpetuals @ Consensys", "Principal Engineer", "Tech Lead, Backend", "Lead Backend Engineer", "Solutions Architect"])
+      expect(overLevel(t, "", exp)).toBeTruthy();
+  });
+  it("keeps junior/mid/senior titles when allowed", () => {
+    for (const t of ["Junior Frontend Developer", "Backend Engineer", "Senior NestJS Developer"]) expect(overLevel(t, "", exp)).toBeNull();
+    expect(overLevel("Senior NestJS Developer", "", { ...exp, allowSenior: false })).toBeTruthy();
+  });
+  it("reads years of experience", () => {
+    expect(yearsRequired("We want 7+ years of experience with Node")).toBe(7);
+    expect(yearsRequired("5-8 years of professional backend experience")).toBe(5);
+    expect(yearsRequired("Experience: 6 years")).toBe(6);
+    expect(yearsRequired("We have been in business for 10 years")).toBeNull();
+    expect(overLevel("Backend Engineer", "Requires 8+ years of experience", exp)).toMatch(/8/);
+    expect(overLevel("Backend Engineer", "3+ years of experience", exp)).toBeNull();
+  });
+});
+
+describe("AI fit", () => {
+  const cfg = loadConfig();
+  const mk = (id: string) => ({ ...opp(id, null, new Date()), type: "job" as const });
+  it("parses fenced / noisy replies and ignores bad verdicts", () => {
+    const m = parseFits('Sure!\n```json\n{"results":[{"i":0,"verdict":"Not-a-fit","reason":"Needs 10y"},{"i":1,"verdict":"maybe","reason":"x"}]}\n```');
+    expect(m.get(0)).toEqual({ verdict: "not_a_fit", reason: "Needs 10y" });
+    expect(m.has(1)).toBe(false);
+    expect(parseFits("garbage").size).toBe(0);
+  });
+  it("falls back from Groq to OpenRouter and labels items", async () => {
+    const items = [mk("a"), mk("b")];
+    const calls: string[] = [];
+    await assessFit(items, cfg, { groqKey: "g", openrouterKey: "o" }, async (url) => {
+      calls.push(url);
+      if (url.includes("groq")) throw new Error("HTTP 429");
+      return '{"results":[{"i":0,"verdict":"qualified","reason":"ok"},{"i":1,"verdict":"stretch","reason":"gap"}]}';
+    });
+    expect(calls).toHaveLength(2);
+    expect(items.map((o) => o.fit?.verdict)).toEqual(["qualified", "stretch"]);
+  });
+  it("never throws and leaves items unlabeled when all providers fail", async () => {
+    const items = [mk("a")];
+    await assessFit(items, cfg, { groqKey: "g" }, async () => { throw new Error("down"); });
+    expect(items[0].fit).toBeUndefined();
+    expect(applyFitMode(items, "strict")).toHaveLength(1);
+  });
+  it("modes filter by verdict", () => {
+    const [a, b, c] = [mk("a"), mk("b"), mk("c")];
+    a.fit = { verdict: "qualified", reason: "" }; b.fit = { verdict: "stretch", reason: "" }; c.fit = { verdict: "not_a_fit", reason: "" };
+    expect(applyFitMode([a, b, c], "label")).toHaveLength(3);
+    expect(applyFitMode([a, b, c], "hide").map((o) => o.id)).toEqual(["a", "b"]);
+    expect(applyFitMode([a, b, c], "strict").map((o) => o.id)).toEqual(["a"]);
+  });
+});
+
+import { nigeriaFriendly, normSkill } from "../src/helpers.js";
+describe("Nigeria tag and Stellar", () => {
+  it("flags Nigeria/Africa/WAT but not worldwide, South Africa or exclusions", () => {
+    expect(nigeriaFriendly("Nigeria", "")).toBe(true);
+    expect(nigeriaFriendly("", "Backend Engineer (Africa)")).toBe(true);
+    expect(nigeriaFriendly("", "", "Open to candidates in WAT timezone")).toBe(true);
+    expect(nigeriaFriendly("Worldwide", "Backend Engineer")).toBe(false);
+    expect(nigeriaFriendly("South Africa only", "")).toBe(false);
+    expect(nigeriaFriendly("", "", "not open to candidates outside Nigeria")).toBe(false);
+  });
+  it("treats Soroban as Stellar", () => { expect(normSkill("soroban")).toBe("stellar"); });
+});

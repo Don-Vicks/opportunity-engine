@@ -1,6 +1,6 @@
 import type { Config } from "./config.js";
 import type { Effort, Opportunity, RawOpp } from "./schema.js";
-import { daysUntil, normSkill } from "./helpers.js";
+import { daysUntil, normSkill, nigeriaFriendly } from "./helpers.js";
 import { hasWord } from "./prefs.js";
 import type { Prefs } from "./store.js";
 
@@ -38,6 +38,15 @@ export function effortScore(o: RawOpp, p: Profile): number {
   return gap <= 0 ? 1 : gap === 1 ? 0.5 : 0.1;
 }
 
+/** Extra weight when the listing is in the candidate's strongest area. */
+export function focusBoost(o: RawOpp, p: Profile): number {
+  const focus = new Set(p.focusSkills.map(normSkill));
+  return o.skills.some((s) => focus.has(normSkill(s))) ? 0.08 : 0;
+}
+
+/** Listings that name Nigeria/Africa (open to you, or aimed at you) rank a little higher. */
+export const ngBoost = (o: RawOpp) => (nigeriaFriendly(o.region, o.title, o.snippet) ? 0.1 : 0);
+
 export function score(o: RawOpp, p: Profile, now = new Date()): number {
   return +(
     skillScore(o, p) * 0.4 + compScore(o, p) * 0.3 + urgencyScore(o, now) * 0.2 + effortScore(o, p) * 0.1
@@ -51,7 +60,7 @@ export function rank(raw: RawOpp[], p: Profile, now = new Date(), prefs?: Prefs)
   return raw
     .map((o) => {
       const boosted = prefs?.boost.length && hasWord(`${o.title} ${o.snippet}`, prefs.boost) ? 0.15 : 0;
-      return { ...o, score: Math.min(1, score(o, p, now) + boosted), foundAt: now };
+      return { ...o, score: Math.min(1, score(o, p, now) + boosted + focusBoost(o, p) + ngBoost(o)), foundAt: now };
     })
     .sort((a, b) => b.score - a.score);
 }

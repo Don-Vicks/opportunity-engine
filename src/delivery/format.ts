@@ -1,8 +1,11 @@
 import type { Opportunity } from "../schema.js";
-import { daysUntil } from "../helpers.js";
+import { daysUntil, nigeriaFriendly } from "../helpers.js";
 import { matchLabel } from "../ranking.js";
 import type { Reminder } from "../store.js";
 
+const FIT_TEXT = { qualified: "Qualified", stretch: "Stretch", not_a_fit: "Not a fit" };
+const FIT_ICON = { qualified: "🟢", stretch: "🟠", not_a_fit: "🔴" };
+const isNg = (o: Opportunity) => nigeriaFriendly(o.region, o.title, o.snippet);
 const TAG: Record<string, string> = {
   hackathon: "Hackathon", job: "Job", freelance: "Freelance", bounty: "Bounty", grant: "Grant", other: "Other",
 };
@@ -29,7 +32,8 @@ export function formatDigest(items: Opportunity[], errors: string[], now = new D
       if (o.deadline) meta.push(`Deadline: ${Math.max(0, Math.round(daysUntil(o.deadline, now)))} days`);
       else if (o.postedAt) meta.push(`Posted: ${ago(o.postedAt, now)}`);
       meta.push(`Match: ${matchLabel(o.score)}`);
-      lines.push(`${i + 1}. ${o.title}`, `   ${meta.join(" | ")}`, `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
+      if (o.fit) meta.push(`Fit: ${FIT_TEXT[o.fit.verdict]}`);
+      lines.push(`${i + 1}. ${isNg(o) ? "[NG] " : ""}${o.title}`, `   ${meta.join(" | ")}`, ...(o.fit?.reason ? [`   ${o.fit.reason}`] : []), `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
     });
   }
   lines.push("— End of digest —");
@@ -75,9 +79,10 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
       else if (o.postedAt) parts.push(`🕒 ${ago(o.postedAt, now)}`);
       parts.push(`${MATCH_ICON[m]} ${m}`);
       const card = [
-        `${NUM[i] ?? `${i + 1}.`} <b>${esc(o.title)}</b>`,
+        `${NUM[i] ?? `${i + 1}.`} ${isNg(o) ? "🇳🇬 " : ""}<b>${esc(o.title)}</b>`,
         `<i>${esc(o.source)}</i>`,
         parts.filter(Boolean).join("  ·  "),
+        ...(o.fit ? [`${FIT_ICON[o.fit.verdict]} <b>${FIT_TEXT[o.fit.verdict]}</b>${o.fit.reason ? ` — ${esc(o.fit.reason)}` : ""}`] : []),
         linkLine(o),
       ].join("\n");
       // header rides with the first card so a message split never strands it

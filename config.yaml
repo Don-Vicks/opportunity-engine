@@ -1,9 +1,9 @@
 # Personal settings. Secrets (Telegram/Gmail) come from env vars, never from here.
 profile:
   # Jobs/freelance must mention at least one of these (strict role filter)
-  roleSkills: [nextjs, react, expo, express, nestjs, rust]
+  roleSkills: [nextjs, react, expo, express, nestjs, node, typescript, laravel, rust]
   # Used for ranking (and for matching hackathons/bounties/grants)
-  skills: [nextjs, react, expo, express, nestjs, rust, typescript, node, solana, anchor, web3]
+  skills: [nextjs, react, expo, express, nestjs, rust, typescript, node, laravel, php, solana, anchor, stellar, soroban, web3]
   preferredTypes: [job, freelance, hackathon, bounty, grant]
   remoteOnly: true               # drops anything that isn't remote (onsite/hybrid)
   regionFilter: true             # drops region-locked roles (US only, EU only, ...); keeps worldwide/Africa/WAT-friendly
@@ -15,6 +15,30 @@ profile:
     freelance: 500
     grant: 200
     job: 60000                   # per year (jobs with no listed salary still pass)
+  # Your strongest area: listings touching these rank higher
+  focusSkills: [node, express, nestjs, typescript, laravel]
+  experience:
+    years: 5                     # coding since ~2020-21; paid roles since 2023
+    allowSenior: true            # keep "Senior ..." titles (Staff/Principal/Lead/Architect are always dropped)
+    maxYearsRequired: 6          # drop jobs asking for more than this many years
+  # Fed to the AI fit check. Fill in real projects/results for sharper verdicts.
+  portfolio:
+    strongest: "Backend and full-stack product engineering (NestJS, Node, Laravel, PostgreSQL/MySQL, React/Next.js, Expo)"
+    summary: "Victor Shallangwa, full-stack engineer, coding since ~2020-21 and in paid roles since 2023 (Nigeria, remote). Backend and payments/transaction systems are the strength. Solana is working-level: shipped several Solana products and completed Ackee's School of Solana, but is not a protocol or security expert. Rust is being learned (used in side projects), not professional-grade. Open to full-time, contract and partnerships."
+    projects:
+      - "AgTrail (day job): digital identity/traceability platform for African agriculture; React 19, TypeScript, Node, PostgreSQL, offline sync"
+      - "Solara Pay: non-custodial payroll disbursement protocol on Solana ($600+ paid out, bulk batching, webhook reconciliation)"
+      - "FlexPay: checkout SDK for Solana merchants, any-token payments settled in USDC via Jupiter"
+      - "Vortex: Solana transaction infrastructure in Rust (Geyser gRPC, Jito)"
+      - "Stallion: bounty and hackathon platform on Stellar Soroban; AnkaraChain: RWA tokenization on Stellar (in development)"
+      - "HAWKTOK (Laravel/Vue creator marketplace with escrow, Paystack/Monnify), License Guard (Laravel/Redis), xCardGen (Next.js/NestJS), Devlog, Vacuum, Karen, Lens (Python/FastAPI)"
+    achievements:
+      - "Frontend to Full-Stack Engineer promotion in 4 months at Agrolinking (Feb 2025 to now)"
+      - "Senior Full-Stack Developer at Payguru (fintech, 2024); CTO at Sarmiephoenix Consults (2024)"
+      - "Developer Relations at SuperteamNG; supported Solana Tour"
+      - "Software Engineer on event voting/ticketing (Ghana), e-commerce developer at Endless Technologies (2023-24)"
+      - "Ackee Blockchain Security: School of Solana graduate (2024)"
+      - "BSc Software Engineering in progress (2025-2028)"
   # Titles containing these are dropped (content/social bounties etc.)
   excludeKeywords: [twitter, tweet, thread, "x post", video, meme, translate, ambassador, "content creat", "write a post", "create content", "create x", "social quest"]
 digest:
@@ -22,6 +46,9 @@ digest:
   minScore: 0.35
   maxPerType: { job: 20, freelance: 6, hackathon: 5, bounty: 5, grant: 8, other: 2 }
   sendWhenEmpty: false           # runs every 3h; stay quiet if nothing new
+ai:
+  enabled: true                  # needs GROQ_API_KEY and/or OPENROUTER_API_KEY (Groq first, OpenRouter fallback)
+  mode: label                    # label = tag only | hide = drop "not a fit" | strict = keep only "qualified"
 sources:
   remoteok: true
   weworkremotely: true

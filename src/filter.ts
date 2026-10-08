@@ -2,6 +2,7 @@ import type { Config } from "./config.js";
 import type { RawOpp } from "./schema.js";
 import { hasWord } from "./prefs.js";
 import type { Prefs } from "./store.js";
+import { overLevel } from "./seniority.js";
 import { daysUntil, regionOk, looksClosed, isTechTitle } from "./helpers.js";
 
 export function keep(o: RawOpp, cfg: Config, seen: Set<string>, now = new Date(), prefs?: Prefs): boolean {
@@ -25,5 +26,6 @@ export function keep(o: RawOpp, cfg: Config, seen: Set<string>, now = new Date()
   if ((o.type === "job" || o.type === "freelance") && !isTechTitle(o.title)) return false;
   // Roles must mention one of the target stacks
   if ((o.type === "job" || o.type === "freelance") && !o.skills.some((s) => p.roleSkills.includes(s))) return false;
+  if ((o.type === "job" || o.type === "freelance") && overLevel(o.title, o.snippet, p.experience)) return false;
   return true;
 }

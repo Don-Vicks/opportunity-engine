@@ -2,6 +2,7 @@ import { loadConfig, env } from "./config.js";
 import { registry } from "./sources/index.js";
 import { keep } from "./filter.js";
 import { rank } from "./ranking.js";
+import { assessFit, applyFitMode } from "./fit.js";
 import { resolveApplyUrls } from "./resolve.js";
 import { loadSeen, saveSent, dueReminders, markReminded, readHealth, writeHealth, readPrefs, writeState } from "./store.js";
 import { updateHealth, type SourceResult } from "./health.js";
@@ -56,7 +57,13 @@ async function main() {
   const seen = loadSeen(now);
   const unique = [...new Map(raw.map((o) => [`${o.source}|${o.title.toLowerCase().trim()}`, o])).values()];
   const candidates = unique.filter((o) => keep(o, cfg, seen, now, prefs));
-  const items = pickTop(rank(candidates, cfg.profile, now, prefs).filter((o) => o.score >= cfg.digest.minScore), cfg.digest.maxResults, cfg.digest.maxPerType);
+  let items = pickTop(rank(candidates, cfg.profile, now, prefs).filter((o) => o.score >= cfg.digest.minScore), cfg.digest.maxResults, cfg.digest.maxPerType);
+  if (cfg.ai.enabled && items.length) {
+    await assessFit(items, cfg, { groqKey: env.groqKey, openrouterKey: env.openrouterKey });
+    const before = items.length;
+    items = applyFitMode(items, cfg.ai.mode);
+    console.log(`AI fit: ${items.filter((o) => o.fit).length} labeled, ${before - items.length} hidden`);
+  }
   console.log(`${raw.length} fetched → ${candidates.length} after filter → ${items.length} delivered`);
 
   await resolveApplyUrls(items);

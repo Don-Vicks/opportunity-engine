@@ -21,6 +21,8 @@ export interface Opportunity {
   effort: Effort | null;
   postedAt: Date | null;
   score: number;
+  /** AI verdict on whether the candidate qualifies (optional; absent if AI is off/unavailable) */
+  fit?: { verdict: "qualified" | "stretch" | "not_a_fit"; reason: string };
   foundAt: Date;
 }
 
