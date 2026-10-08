@@ -66,7 +66,7 @@ const post: Post = async (url, key, body) => {
     body: JSON.stringify(body),
     signal: AbortSignal.timeout(45_000),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 200)}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 600)}`);
   const j = (await res.json()) as { choices?: { message?: { content?: string } }[] };
   return j.choices?.[0]?.message?.content ?? "";
 };

@@ -165,6 +165,9 @@ describe("AI fit", () => {
   it("waits out a stated rate limit once, then moves on", async () => {
     expect(retryAfterMs("HTTP 429 ... Please try again in 4.2s. Need 900")).toBe(4700);
     expect(retryAfterMs("HTTP 429 try again in 350ms")).toBe(850);
+    const real = 'HTTP 429 {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_x` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 7170, Requested 1500. Please try again in 5.1s. Need more tokens?"}}';
+    expect(real.length).toBeGreaterThan(200); // the hint sits past 200 chars, so error bodies must keep more than that
+    expect(retryAfterMs(real)).toBe(5600);
     expect(retryAfterMs("HTTP 429 retry shortly")).toBeNull();
     expect(retryAfterMs("try again in 10m")).toBe(25_000);
     const chain = [{ name: "groq", url: "u", key: "k", model: "openai/gpt-oss-120b" }];
