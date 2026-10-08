@@ -1,36 +1,115 @@
 {
  "superteam:8be5c8b1-7763-42df-931d-89bd54ee2d7a": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-13T06:59:00.000Z",
+  "o": {
+   "title": "Crypto World's Fair Pakistan Track (Superteam Pakistan)",
+   "url": "https://earn.superteam.fun/listing/crypto-worlds-fair-pakistan-track",
+   "prizeLabel": "5,000 USDC",
+   "type": "hackathon",
+   "source": "Superteam Earn"
+  }
  },
  "superteam:73dce3a4-26f5-4f69-8315-786483c59a89": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-11T21:59:59.000Z",
+  "o": {
+   "title": "Blockchain Hack Warsaw - Submissions (Superteam Poland)",
+   "url": "https://earn.superteam.fun/listing/blockchain-hack-warsaw-submissions",
+   "prizeLabel": "2,000 USDG",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  },
  "superteam:00360512-10ed-4910-97be-b68563a8efc6": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-11T21:59:59.000Z",
+  "o": {
+   "title": "Blockchain Hack Kraków - Submissions (Superteam Poland)",
+   "url": "https://earn.superteam.fun/listing/blockchain-hack-krakow-submissions",
+   "prizeLabel": "2,000 USDG",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  },
  "superteam:3c12a2d7-88af-40cb-add1-79546e76b8a2": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-12T16:59:00.000Z",
+  "o": {
+   "title": "Road to Colosseum | Builders Reflect & Share (Superteam Vietnam)",
+   "url": "https://earn.superteam.fun/listing/road-to-colosseum-builders-reflect-and-share",
+   "prizeLabel": "1,000 USDC",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  },
  "superteam:5f02bd4a-3670-48ae-9882-3f72759bfba3": {
   "t": "2026-10-05T18:52:40.113Z"
  },
  "superteam:c5209d7b-7078-43fc-b0f5-0c567cdfc998": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-15T20:59:59.000Z",
+  "o": {
+   "title": "Pitch & Demo Your Product at the Demo Day (Superteam Ukraine)",
+   "url": "https://earn.superteam.fun/listing/pitch-and-demo-your-product-at-online-demo-day",
+   "prizeLabel": "1,800 USDG",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  },
  "devpost:29114": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-25T23:59:59.000Z",
+  "o": {
+   "title": "IEEE ClimateChain Global Hackathon",
+   "url": "https://ieee-climatechain-hack.devpost.com/",
+   "prizeLabel": "$3,000",
+   "type": "hackathon",
+   "source": "Devpost"
+  }
  },
  "devpost:31515": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-15T23:59:59.000Z",
+  "o": {
+   "title": "CodeSprint by Elite Coders",
+   "url": "https://codesprint-by-elitecoders.devpost.com/",
+   "prizeLabel": "$30,000",
+   "type": "hackathon",
+   "source": "Devpost"
+  }
  },
  "devpost:30588": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "d": "2026-10-20T23:59:59.000Z",
+  "o": {
+   "title": "EurekaDev 2026",
+   "url": "https://eurekadev.devpost.com/",
+   "prizeLabel": "$19,122",
+   "type": "hackathon",
+   "source": "Devpost"
+  }
  },
  "remoteok:1137399": {
-  "t": "2026-10-05T18:52:40.113Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "AI agent engineer @ Sticker Mule",
+   "url": "https://remoteOK.com/remote-jobs/remote-ai-agent-engineer-sticker-mule-1137399",
+   "prizeLabel": "$250k/yr",
+   "type": "job",
+   "source": "RemoteOK"
+  }
  },
  "remoteok:1137405": {
-  "t": "2026-10-05T18:56:24.055Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Senior Shopify Developer @ Sanctuary Computer",
+   "url": "https://remoteOK.com/remote-jobs/remote-senior-shopify-developer-sanctuary-computer-1137405",
+   "applyUrl": "https://garden3d.notion.site/Senior-Shopify-Developer-3dd131fea2c78051b514d89208aa0001",
+   "prizeLabel": "$250k/yr",
+   "type": "job",
+   "source": "RemoteOK"
+  }
  },
  "wwr:https://weworkremotely.com/remote-jobs/bondex-fullstack-web3-engineer-solidity-rust-typescript": {
   "t": "2026-10-05T18:56:24.055Z"
@@ -39,13 +118,36 @@
   "t": "2026-10-05T18:56:24.055Z"
  },
  "wwr:https://weworkremotely.com/remote-jobs/proxify-ab-senior-backend-developer-node-js-nest-js-3": {
-  "t": "2026-10-05T18:56:24.055Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Proxify AB: Senior Backend Developer (Node.js / Nest.js)",
+   "url": "https://weworkremotely.com/remote-jobs/proxify-ab-senior-backend-developer-node-js-nest-js-3",
+   "applyUrl": "http://career.proxify.io/",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
  },
  "wwr:https://weworkremotely.com/remote-jobs/proxify-ab-senior-fullstack-developer-react-js-node-js-4": {
-  "t": "2026-10-05T18:56:24.055Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Proxify AB: Senior Fullstack Developer (React.js / Node.js)",
+   "url": "https://weworkremotely.com/remote-jobs/proxify-ab-senior-fullstack-developer-react-js-node-js-4",
+   "applyUrl": "http://career.proxify.io/",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
  },
  "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-net-full-stack-developer-1": {
-  "t": "2026-10-05T18:56:24.055Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Lemon.io: Senior .NET Full-stack Developer",
+   "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-net-full-stack-developer-1",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
  },
  "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-java-react-developer": {
   "t": "2026-10-05T18:56:24.055Z"
@@ -84,7 +186,15 @@
   "t": "2026-10-05T19:01:05.554Z"
  },
  "hn:49928677": {
-  "t": "2026-10-05T19:01:05.554Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Datamint | Rust Systems Engineer, Browser Security | Remote (Global) | Full-time | $120k–$170k + Equity | https:&#x2F;&…",
+   "url": "https://news.ycombinator.com/item?id=49928677",
+   "applyUrl": "https://datamint.xyz/",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "HN Who's Hiring"
+  }
  },
  "wn:https://www.workingnomads.com/job/go/1843248/": {
   "t": "2026-10-05T19:01:05.554Z"
@@ -105,7 +215,15 @@
   "t": "2026-10-05T19:01:05.554Z"
  },
  "remotive:2091140": {
-  "t": "2026-10-05T19:01:05.554Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Senior Shopify Developer @ Sanctuary Computer Inc",
+   "url": "https://remotive.com/remote-jobs/software-development/senior-shopify-developer-2091140",
+   "applyUrl": "https://garden3d.notion.site/Senior-Shopify-Developer-3dd131fea2c78051b514d89208aa0001",
+   "prizeLabel": "$80k - $150k",
+   "type": "freelance",
+   "source": "Remotive"
+  }
  },
  "himalayas:https://himalayas.app/companies/trytalenthackers/jobs/frontend-developer-nigeria": {
   "t": "2026-10-05T19:01:05.554Z"
@@ -168,28 +286,70 @@
   "t": "2026-10-05T19:14:57.698Z"
  },
  "stgrant:solana-foundation-nigeria-grants": {
-  "t": "2026-10-05T19:14:57.698Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Solana Foundation Nigeria Grants (Superteam Nigeria)",
+   "url": "https://earn.superteam.fun/grants/solana-foundation-nigeria-grants",
+   "prizeLabel": "up to $10,000",
+   "type": "grant",
+   "source": "Superteam Grants"
+  }
  },
  "stgrant:touching-grass-nigeria": {
-  "t": "2026-10-05T19:14:57.698Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "The Touching Grass Fund (Nigeria) (Superteam Nigeria)",
+   "url": "https://earn.superteam.fun/grants/touching-grass-nigeria",
+   "prizeLabel": "up to $500",
+   "type": "grant",
+   "source": "Superteam Grants"
+  }
  },
  "stgrant:agentic-engineering": {
-  "t": "2026-10-05T19:14:57.698Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Agentic Engineering Grants (Superteam)",
+   "url": "https://earn.superteam.fun/grants/agentic-engineering",
+   "prizeLabel": "$200",
+   "type": "grant",
+   "source": "Superteam Grants"
+  }
  },
  "evergreen:solana-foundation:2026-10": {
   "t": "2026-10-05T19:14:57.698Z"
  },
  "evergreen:superteam-grants:2026-10": {
-  "t": "2026-10-05T19:14:57.698Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Superteam Earn — All Grants",
+   "url": "https://earn.superteam.fun/grants",
+   "prizeLabel": "rolling",
+   "type": "grant",
+   "source": "Grant Programs"
+  }
  },
  "evergreen:ethereum-esp:2026-10": {
-  "t": "2026-10-05T19:14:57.698Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Ethereum Foundation — Ecosystem Support Program",
+   "url": "https://esp.ethereum.foundation/",
+   "prizeLabel": "rolling",
+   "type": "grant",
+   "source": "Grant Programs"
+  }
  },
  "evergreen:web3-foundation:2026-10": {
   "t": "2026-10-05T19:14:57.698Z"
  },
  "evergreen:optimism:2026-10": {
-  "t": "2026-10-05T19:14:57.698Z"
+  "t": "2026-10-08T08:24:32.888Z",
+  "o": {
+   "title": "Optimism Grants",
+   "url": "https://www.optimism.io/grants",
+   "prizeLabel": "rolling",
+   "type": "grant",
+   "source": "Grant Programs"
+  }
  },
  "cantina:00992789-fcd1-4bda-862e-463b0c73faa9": {
   "t": "2026-10-05T19:48:05.194Z",
@@ -222,7 +382,7 @@
   }
  },
  "evergreen:nlnet:2026-10": {
-  "t": "2026-10-05T19:48:05.194Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "NLnet Foundation — Open Source Funding",
    "url": "https://nlnet.nl/propose/",
@@ -252,7 +412,7 @@
   }
  },
  "jobicy:154682": {
-  "t": "2026-10-06T09:36:49.158Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "Senior Application Security Engineer @ Beyond Finance",
    "url": "https://jobicy.com/jobs/154682-senior-application-security-engineer-3",
@@ -293,7 +453,7 @@
   }
  },
  "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-angular-full-stack-developer": {
-  "t": "2026-10-06T17:36:39.277Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "Lemon.io: Senior Angular Full-stack Developer",
    "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-angular-full-stack-developer",
@@ -303,7 +463,7 @@
   }
  },
  "superteam:e0417bca-59c8-44ca-adcc-0f3033d9abe9": {
-  "t": "2026-10-06T17:36:39.277Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "d": "2026-10-18T09:59:59.000Z",
   "o": {
    "title": "Colosseum: Founder Support - Talk to 5 Users (Superteam Netherlands)",
@@ -357,7 +517,7 @@
   }
  },
  "devfolio:arkiv": {
-  "t": "2026-10-07T12:19:12.912Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "d": "2026-10-18T22:59:00.000Z",
   "o": {
    "title": "Arkiv: Global Tour Stop 🌍",
@@ -378,7 +538,7 @@
   }
  },
  "himalayas:https://himalayas.app/companies/parqet-fintech-gmbh/jobs/mobile-engineer-react-native": {
-  "t": "2026-10-08T07:25:58.016Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "Mobile Engineer (React Native) @ Parqet Fintech GmbH",
    "url": "https://himalayas.app/companies/parqet-fintech-gmbh/jobs/mobile-engineer-react-native",
@@ -398,7 +558,7 @@
   }
  },
  "himalayas:https://himalayas.app/companies/opinov8/jobs/senior-software-engineer-node-js-python": {
-  "t": "2026-10-08T07:25:58.016Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "Senior Software Engineer (Node.js/Python) @ Opinov8",
    "url": "https://himalayas.app/companies/opinov8/jobs/senior-software-engineer-node-js-python",
@@ -408,7 +568,7 @@
   }
  },
  "himalayas:https://himalayas.app/companies/opinov8/jobs/senior-software-developer-node-js-python": {
-  "t": "2026-10-08T07:25:58.016Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "Senior Software Developer (Node.js/Python) @ Opinov8",
    "url": "https://himalayas.app/companies/opinov8/jobs/senior-software-developer-node-js-python",
@@ -470,7 +630,7 @@
   }
  },
  "evergreen:stellar-community-fund:2026-10": {
-  "t": "2026-10-08T07:25:58.016Z",
+  "t": "2026-10-08T08:24:32.888Z",
   "o": {
    "title": "Stellar Community Fund",
    "url": "https://communityfund.stellar.org/",
