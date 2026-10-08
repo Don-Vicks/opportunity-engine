@@ -23,6 +23,8 @@ profile:
     maxYearsRequired: 6          # drop jobs asking for more than this many years
   # Fed to the AI fit check. Fill in real projects/results for sharper verdicts.
   portfolio:
+    name: "Victor Shallangwa"
+    site: "https://donvicks.dev"
     strongest: "Backend and full-stack product engineering (NestJS, Node, Laravel, PostgreSQL/MySQL, React/Next.js, Expo)"
     summary: "Victor Shallangwa, full-stack engineer, coding since ~2020-21 and in paid roles since 2023 (Nigeria, remote). Backend and payments/transaction systems are the strength. Solana is working-level: shipped several Solana products and completed Ackee's School of Solana, but is not a protocol or security expert. Rust is being learned (used in side projects), not professional-grade. Open to full-time, contract and partnerships."
     projects:

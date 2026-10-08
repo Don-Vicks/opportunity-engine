@@ -4,7 +4,7 @@ import { keep } from "./filter.js";
 import { rank } from "./ranking.js";
 import { assessFit, applyFitMode } from "./fit.js";
 import { resolveApplyUrls } from "./resolve.js";
-import { loadSeen, saveSent, dueReminders, markReminded, readHealth, writeHealth, readPrefs, writeState } from "./store.js";
+import { loadSeen, saveSent, saveLastDigest, dueReminders, markReminded, readHealth, writeHealth, readPrefs, writeState } from "./store.js";
 import { updateHealth, type SourceResult } from "./health.js";
 import { pollCommands } from "./telegram-commands.js";
 import { weeklyDue, buildWeekly } from "./weekly.js";
@@ -36,7 +36,7 @@ async function main() {
   const now = new Date();
 
   // 1. owner commands (/mute, /boost) sent to the bot since the last run
-  const prefs = !dry && tgReady ? await pollCommands(env.tgToken!, env.tgChat!).catch((e) => { console.error("commands:", e.message); return readPrefs(); }) : readPrefs();
+  const prefs = !dry && tgReady ? await pollCommands(env.tgToken!, env.tgChat!, cfg.ai.enabled ? { cfg, keys: { groqKey: env.groqKey, openrouterKey: env.openrouterKey } } : undefined).catch((e) => { console.error("commands:", e.message); return readPrefs(); }) : readPrefs();
 
   // 2. fetch
   const active = Object.entries(registry).filter(([k]) => cfg.sources[k]);
@@ -96,7 +96,7 @@ async function main() {
   if (!delivered) throw new Error("No delivery channel configured (set TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID)");
 
   // 7. persist only after successful delivery
-  if (items.length) saveSent(items, now);
+  if (items.length) { saveSent(items, now); saveLastDigest(items); }
   markReminded(reminders.map((r) => r.id));
   writeHealth(health);
   writeState({ ...(items.length ? { lastSent: now.toISOString() } : {}), ...(weekKey ? { lastWeekly: weekKey } : {}) });

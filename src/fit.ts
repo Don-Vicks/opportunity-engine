@@ -2,7 +2,7 @@ import type { Config } from "./config.js";
 import type { Opportunity } from "./schema.js";
 
 type Fit = NonNullable<Opportunity["fit"]>;
-type Post = (url: string, key: string, body: unknown) => Promise<string>;
+export type Post = (url: string, key: string, body: unknown) => Promise<string>;
 export interface Providers { groqKey?: string; openrouterKey?: string }
 
 const BATCH = 8;
@@ -40,7 +40,7 @@ export function parseFits(text: string): Map<number, Fit> {
   return out;
 }
 
-type ListModels = (url: string, key: string) => Promise<string[]>;
+export type ListModels = (url: string, key: string) => Promise<string[]>;
 
 const listModels: ListModels = async (url, key) => {
   const res = await fetch(url, { headers: { Authorization: `Bearer ${key}` }, signal: AbortSignal.timeout(20_000) });
@@ -82,33 +82,50 @@ export function listingPayload(items: Opportunity[]) {
  * Attach a qualified/stretch/not_a_fit verdict to each item. Tries Groq, then OpenRouter, per batch.
  * Never throws: on any failure the items simply stay unlabeled.
  */
-export async function assessFit(items: Opportunity[], cfg: Config, keys: Providers, send: Post = post, list: ListModels = listModels): Promise<void> {
-  const chain: { name: string; url: string; key: string; model: string }[] = [];
+export interface Chain { name: string; url: string; key: string; model: string }
+
+/** Providers in priority order (Groq, then OpenRouter), each with a model it actually serves. */
+export async function buildChain(cfg: Config, keys: Providers, list: ListModels = listModels): Promise<Chain[]> {
+  const chain: Chain[] = [];
   const add = async (name: string, base: string, key: string, preferred: string[], anyOf: RegExp[] = []) => {
-    const available = await list(`${base}/models`, key).catch((e) => { console.warn(`AI fit (${name}) model list failed: ${e.message}`); return []; });
+    const available = await list(`${base}/models`, key).catch((e) => { console.warn(`AI (${name}) model list failed: ${e.message}`); return []; });
     const model = pickModel(available, preferred, anyOf);
-    console.log(`AI fit: ${name} → ${model}`);
+    console.log(`AI: ${name} → ${model}`);
     chain.push({ name, url: `${base}/chat/completions`, key, model });
   };
   if (keys.groqKey) await add("groq", "https://api.groq.com/openai/v1", keys.groqKey, [cfg.ai.groqModel, ...GROQ_FALLBACK]);
   if (keys.openrouterKey) await add("openrouter", "https://openrouter.ai/api/v1", keys.openrouterKey, [cfg.ai.openrouterModel], [/(gemma|llama|qwen|gpt-oss).*:free$/]);
+  return chain;
+}
+
+/** First provider that answers wins; returns null if all fail. Never throws. */
+export async function complete(chain: Chain[], messages: { role: string; content: string }[], send: Post = post, json = false): Promise<string | null> {
+  for (const p of chain) {
+    try {
+      const reply = await send(p.url, p.key, { model: p.model, temperature: json ? 0.1 : 0.6, messages, ...(json ? { response_format: { type: "json_object" } } : {}) });
+      if (reply.trim()) return reply;
+      throw new Error("empty reply");
+    } catch (e) {
+      console.warn(`AI (${p.name}) failed: ${(e as Error).message}`);
+    }
+  }
+  return null;
+}
+
+/**
+ * Attach a qualified/stretch/not_a_fit verdict to each item. Tries Groq, then OpenRouter, per batch.
+ * Never throws: on any failure the items simply stay unlabeled.
+ */
+export async function assessFit(items: Opportunity[], cfg: Config, keys: Providers, send: Post = post, list: ListModels = listModels): Promise<void> {
+  const chain = await buildChain(cfg, keys, list);
   if (!chain.length) { console.warn("AI fit: no GROQ_API_KEY / OPENROUTER_API_KEY set, skipping"); return; }
 
   const system = systemPrompt(cfg.profile);
   for (let start = 0; start < items.length; start += BATCH) {
     const batch = items.slice(start, start + BATCH);
-    const messages = [{ role: "system", content: system }, { role: "user", content: JSON.stringify(listingPayload(batch)) }];
-    for (const p of chain) {
-      try {
-        const reply = await send(p.url, p.key, { model: p.model, temperature: 0.1, messages, response_format: { type: "json_object" } });
-        const fits = parseFits(reply);
-        if (!fits.size) throw new Error("unparseable reply");
-        fits.forEach((f, i) => { if (batch[i]) batch[i].fit = f; });
-        break;
-      } catch (e) {
-        console.warn(`AI fit (${p.name}) failed: ${(e as Error).message}`);
-      }
-    }
+    const reply = await complete(chain, [{ role: "system", content: system }, { role: "user", content: JSON.stringify(listingPayload(batch)) }], send, true);
+    const fits = reply ? parseFits(reply) : new Map<number, Fit>();
+    fits.forEach((f, i) => { if (batch[i]) batch[i].fit = f; });
   }
 }
 

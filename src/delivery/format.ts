@@ -23,17 +23,18 @@ export function formatDigest(items: Opportunity[], errors: string[], now = new D
     lines.push(`== LAST CALL (${reminders.length}) ==`, "");
     for (const r of reminders) lines.push(`• ${r.lite.title} — closes in ${hoursLeft(r.deadline, now)}h`, `  → ${r.lite.applyUrl ?? r.lite.url}`, "");
   }
+  let num = 0;
   for (const t of ["job", "freelance", "bounty", "hackathon", "grant", "other"]) {
     const list = items.filter((o) => o.type === t);
     if (!list.length) continue;
     lines.push(`== ${TAG[t].toUpperCase()} (${list.length}) ==`, "");
-    list.forEach((o, i) => {
+    list.forEach((o) => {
       const meta = [`${o.type === "job" ? "Rate" : "Prize"}: ${o.prizeLabel}`];
       if (o.deadline) meta.push(`Deadline: ${Math.max(0, Math.round(daysUntil(o.deadline, now)))} days`);
       else if (o.postedAt) meta.push(`Posted: ${ago(o.postedAt, now)}`);
       meta.push(`Match: ${matchLabel(o.score)}`);
       if (o.fit) meta.push(`Fit: ${FIT_TEXT[o.fit.verdict]}`);
-      lines.push(`${i + 1}. ${isNg(o) ? "[NG] " : ""}${o.title}`, `   ${meta.join(" | ")}`, ...(o.fit?.reason ? [`   ${o.fit.reason}`] : []), `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
+      lines.push(`${++num}. ${isNg(o) ? "[NG] " : ""}${o.title}`, `   ${meta.join(" | ")}`, ...(o.fit?.reason ? [`   ${o.fit.reason}`] : []), `   → ${o.applyUrl ?? o.url}${o.applyUrl ? "  (direct apply)" : ""}`, "");
     });
   }
   lines.push("— End of digest —");
@@ -71,6 +72,7 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
     .filter((g) => g.list.length);
 
   const blocks: string[] = [];
+  let n = 0; // numbering runs across sections so "/pitch 3" is unambiguous
   for (const g of groups) {
     g.list.forEach((o, i) => {
       const m = matchLabel(o.score);
@@ -79,7 +81,7 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
       else if (o.postedAt) parts.push(`🕒 ${ago(o.postedAt, now)}`);
       parts.push(`${MATCH_ICON[m]} ${m}`);
       const card = [
-        `${NUM[i] ?? `${i + 1}.`} ${isNg(o) ? "🇳🇬 " : ""}<b>${esc(o.title)}</b>`,
+        `${NUM[n++] ?? `${n}.`} ${isNg(o) ? "🇳🇬 " : ""}<b>${esc(o.title)}</b>`,
         `<i>${esc(o.source)}</i>`,
         parts.filter(Boolean).join("  ·  "),
         ...(o.fit ? [`${FIT_ICON[o.fit.verdict]} <b>${FIT_TEXT[o.fit.verdict]}</b>${o.fit.reason ? ` — ${esc(o.fit.reason)}` : ""}`] : []),

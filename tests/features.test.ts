@@ -210,3 +210,39 @@ describe("full-description filtering", () => {
     expect(readFileSync(join(process.env.DATA_DIR, "history.jsonl"), "utf8")).not.toContain("long text");
   });
 });
+
+import { draftPitch, pitchMessages } from "../src/pitch.js";
+import { saveLastDigest, readLastDigest } from "../src/store.js";
+describe("pitch and letter", () => {
+  const cfg = loadConfig();
+  const now = new Date("2026-10-08T00:00:00Z");
+  const job = { ...opp("p1", null, now, "job"), title: "Backend Engineer @ PayCo", detail: "NestJS, PostgreSQL, payments. Remote Africa." };
+  it("numbers items across sections", () => {
+    const items = [job, { ...opp("b1", 100, now, "bounty") }, { ...opp("b2", 100, now, "bounty") }];
+    const text = formatTelegram(items, [], now);
+    expect(text).toContain("1️⃣ ");
+    expect(text).toContain("2️⃣ ");
+    expect(text).toContain("3️⃣ ");
+  });
+  it("round-trips the latest digest without losing order or detail", () => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    saveLastDigest([job, opp("b1", 100, now, "bounty")]);
+    const d = readLastDigest();
+    expect(d.map((x) => x.id)).toEqual(["p1", "b1"]);
+    expect(d[0].detail).toContain("NestJS");
+  });
+  it("grounds the prompt in the profile and forbids invention", () => {
+    const [sys, usr] = pitchMessages(readLastDigest()[0], "letter", cfg);
+    expect(sys.content).toContain("Solara Pay");
+    expect(sys.content).toMatch(/Never invent/);
+    expect(sys.content).toContain("Victor Shallangwa");
+    expect(usr.content).toContain("PayCo");
+  });
+  it("falls back across providers and returns null when all fail", async () => {
+    const d = readLastDigest()[0];
+    const ok = await draftPitch(d, "pitch", cfg, { groqKey: "g", openrouterKey: "o" }, async (url) => { if (url.includes("groq")) throw new Error("429"); return "Lead with: Solara Pay"; }, async () => []);
+    expect(ok).toContain("Solara Pay");
+    const none = await draftPitch(d, "pitch", cfg, { groqKey: "g" }, async () => { throw new Error("down"); }, async () => []);
+    expect(none).toBeNull();
+  });
+});

@@ -23,7 +23,7 @@ export function applyCommand(text: string, prefs: Prefs): CommandResult | null {
     case "boost": if (!word) return { prefs: prefs, reply: "Usage: /boost <word>  (ranks matches higher)" }; add("boost"); return { prefs: p, reply: `⭐ Boosting “${word}”. Matches rank higher.` };
     case "unboost": del("boost"); return { prefs: p, reply: `Removed boost “${word}”.` };
     case "prefs": return { prefs, reply: `🔇 Muted: ${prefs.mute.join(", ") || "—"}\n⭐ Boosted: ${prefs.boost.join(", ") || "—"}` };
-    case "help": case "start": return { prefs, reply: "Commands:\n/mute <word> — hide titles with it\n/unmute <word>\n/boost <word> — rank higher\n/unboost <word>\n/prefs — show lists\nChanges apply on the next run (≤3h)." };
+    case "help": case "start": return { prefs, reply: "Commands:\n/mute <word> — hide titles with it\n/unmute <word>\n/boost <word> — rank higher\n/unboost <word>\n/prefs — show lists\n/pitch <n> — short pitch for item n of the latest digest\n/letter <n> — cover letter for item n\nChanges apply on the next run (≤3h)." };
     default: return null;
   }
 }
