@@ -376,5 +376,107 @@
    "type": "job",
    "source": "Himalayas"
   }
+ },
+ "himalayas:https://himalayas.app/companies/parqet-fintech-gmbh/jobs/mobile-engineer-react-native": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Mobile Engineer (React Native) @ Parqet Fintech GmbH",
+   "url": "https://himalayas.app/companies/parqet-fintech-gmbh/jobs/mobile-engineer-react-native",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "remoteok:1137411": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Senior .NET Software Engineer @ OkWhen",
+   "url": "https://remoteOK.com/remote-jobs/remote-senior-net-software-engineer-okwhen-1137411",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "RemoteOK"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/opinov8/jobs/senior-software-engineer-node-js-python": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Senior Software Engineer (Node.js/Python) @ Opinov8",
+   "url": "https://himalayas.app/companies/opinov8/jobs/senior-software-engineer-node-js-python",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/opinov8/jobs/senior-software-developer-node-js-python": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Senior Software Developer (Node.js/Python) @ Opinov8",
+   "url": "https://himalayas.app/companies/opinov8/jobs/senior-software-developer-node-js-python",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/novakid-school/jobs/fullstack-developer-frontend-focus": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "FullStack Developer Frontend Focus @ Novakid School",
+   "url": "https://himalayas.app/companies/novakid-school/jobs/fullstack-developer-frontend-focus",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "wn:https://www.workingnomads.com/job/go/1857010/": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Product Lead (Strategy + Full Stack) @ Optimizee Group",
+   "url": "https://www.workingnomads.com/job/go/1857010/",
+   "applyUrl": "https://forms.gle/4yqiWvhiCMnC6xdx7",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Working Nomads"
+  }
+ },
+ "hn:49995549": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Mastra | AI Engineer | REMOTE (AMER or EMEA time zones) | Full-time Mastra is the open-source TypeScript framework for …",
+   "url": "https://news.ycombinator.com/item?id=49995549",
+   "applyUrl": "https://jobs.ashbyhq.com/mastra/531a3fe8-556f-4b83-bee7-20374f67f980",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "HN Who's Hiring"
+  }
+ },
+ "hn:49926228": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Trackerbot | Full-Stack Developer (Node.js) | REMOTE | €35-45k&#x2F;year",
+   "url": "https://news.ycombinator.com/item?id=49926228",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "HN Who's Hiring"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/saas-group/jobs/product-engineer": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Product Engineer @ saas.group",
+   "url": "https://himalayas.app/companies/saas-group/jobs/product-engineer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "evergreen:stellar-community-fund:2026-10": {
+  "t": "2026-10-08T07:25:58.016Z",
+  "o": {
+   "title": "Stellar Community Fund",
+   "url": "https://communityfund.stellar.org/",
+   "prizeLabel": "rolling",
+   "type": "grant",
+   "source": "Grant Programs"
+  }
  }
 }
