@@ -23,6 +23,8 @@ profile:
     maxYearsRequired: 6          # drop jobs asking for more than this many years
   # Fed to the AI fit check. Fill in real projects/results for sharper verdicts.
   portfolio:
+    name: "Victor Shallangwa"
+    site: "https://donvicks.dev"
     strongest: "Backend and full-stack product engineering (NestJS, Node, Laravel, PostgreSQL/MySQL, React/Next.js, Expo)"
     summary: "Victor Shallangwa, full-stack engineer, coding since ~2020-21 and in paid roles since 2023 (Nigeria, remote). Backend and payments/transaction systems are the strength. Solana is working-level: shipped several Solana products and completed Ackee's School of Solana, but is not a protocol or security expert. Rust is being learned (used in side projects), not professional-grade. Open to full-time, contract and partnerships."
     projects:
@@ -48,7 +50,7 @@ digest:
   sendWhenEmpty: false           # runs every 3h; stay quiet if nothing new
 ai:
   enabled: true                  # needs GROQ_API_KEY and/or OPENROUTER_API_KEY (Groq first, OpenRouter fallback; models are auto-picked from what each serves)
-  mode: label                    # label = tag only | hide = drop "not a fit" | strict = keep only "qualified"
+  mode: hide                     # label = tag only | hide = drop "not a fit" | strict = keep only "qualified"
 sources:
   remoteok: true
   weworkremotely: true

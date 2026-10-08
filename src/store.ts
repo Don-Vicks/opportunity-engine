@@ -92,3 +92,13 @@ export const writeHealth = (h: Record<string, Health>) => write(f("health.json")
 export interface Prefs { mute: string[]; boost: string[] }
 export const readPrefs = () => read<Prefs>(f("prefs.json"), { mute: [], boost: [] });
 export const writePrefs = (p: Prefs) => write(f("prefs.json"), p);
+
+/** The most recent digest in display order (index + 1 = the number shown), so /pitch N can refer to it. */
+export type DigestItem = Pick<Opportunity, "id" | "title" | "type" | "source" | "url" | "applyUrl" | "prizeLabel" | "region" | "skills" | "snippet" | "detail" | "fit"> & { deadline: string | null };
+export const readLastDigest = () => read<DigestItem[]>(f("last-digest.json"), []);
+export const saveLastDigest = (items: Opportunity[]) =>
+  write(f("last-digest.json"), items.map((o): DigestItem => ({
+    id: o.id, title: o.title, type: o.type, source: o.source, url: o.url, applyUrl: o.applyUrl, prizeLabel: o.prizeLabel,
+    region: o.region, skills: o.skills, snippet: o.snippet, detail: o.detail?.slice(0, 1500), fit: o.fit,
+    deadline: o.deadline ? o.deadline.toISOString() : null,
+  })));

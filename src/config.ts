@@ -23,6 +23,8 @@ const ConfigSchema = z.object({
       maxYearsRequired: z.number().positive(),
     }).default({ years: 4, allowSenior: true, maxYearsRequired: 5 }),
     portfolio: z.object({
+      name: z.string().default(""),
+      site: z.string().default(""),
       summary: z.string().default(""),
       strongest: z.string().default(""),
       projects: z.array(z.string()).default([]),

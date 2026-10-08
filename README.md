@@ -49,4 +49,5 @@ Listings link back to the original source (required by RemoteOK/Remotive/Jobicy 
 - **📊 Weekly summary:** Mondays after 08:00 WAT — counts by type, best sources, top picks, deadlines in the next 7 days.
 - **Tune from Telegram** (only your chat is obeyed; applied on the next run, ≤3h):
   `/mute <word>` · `/unmute <word>` · `/boost <word>` · `/unboost <word>` · `/prefs` · `/help`. Stored in `data/prefs.json`.
+- **Application help:** `/pitch <n>` (short pitch + which projects to lead with + biggest gap) and `/letter <n>` (cover letter) for item `n` of the latest digest (numbers run 1..N across sections). Needs `GROQ_API_KEY` or `OPENROUTER_API_KEY`. Answered on the next run (≤3h); run **daily-digest** manually for an instant reply. Drafts use only the facts in `config.yaml → portfolio`.
 - Preview locally: `npm run dry` (add `-- --weekly` to see the summary).
