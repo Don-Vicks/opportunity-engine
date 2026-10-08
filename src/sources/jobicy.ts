@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
+import { snippet, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB, detail } from "../helpers.js";
 
 interface Job {
   id: number; url: string; jobTitle: string; companyName: string; jobType?: string[]; jobGeo?: string;
@@ -34,6 +34,7 @@ export const jobicy: Source = {
           // the tag we searched by is a strong signal, plus anything in title/excerpt
           skills: [...new Set([...extractSkills(j.jobTitle, SKILL_VOCAB, text, 1), tag === "nodejs" ? "node" : tag === "react-native" ? "expo" : tag])],
           snippet: snippet(text),
+          detail: detail(text),
           effort: contract ? "medium" : "high",
           postedAt: j.pubDate ? new Date(j.pubDate) : null,
         });

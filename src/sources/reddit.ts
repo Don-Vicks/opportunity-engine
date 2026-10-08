@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import type { Source, RawOpp } from "../schema.js";
 import { getText } from "../http.js";
-import { stripHtml, extractSkills, findApplyUrl, snippet, SKILL_VOCAB } from "../helpers.js";
+import { stripHtml, extractSkills, findApplyUrl, snippet, SKILL_VOCAB, detail } from "../helpers.js";
 
 /** r/forhire "[Hiring]" posts via public Atom feed. Reddit may block datacenter IPs; failures are non-fatal. */
 export const reddit: Source = {
@@ -30,6 +30,7 @@ export const reddit: Source = {
         region: /\b(us|usa|uk|eu|europe)[ -]?only\b/i.test(`${title} ${body}`) ? "US only" : "",
         skills: extractSkills(title, SKILL_VOCAB, body, 2),
         snippet: snippet(body),
+        detail: detail(body),
         effort: "medium",
         postedAt: e.updated ? new Date(e.updated) : null,
       });

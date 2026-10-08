@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import type { Source, RawOpp } from "../schema.js";
 import { getText } from "../http.js";
-import { stripHtml, extractSkills, findApplyUrl, snippet, SKILL_VOCAB } from "../helpers.js";
+import { stripHtml, extractSkills, findApplyUrl, snippet, SKILL_VOCAB, detail } from "../helpers.js";
 
 // Public hashtag RSS (no auth). X/Twitter has no free read access, so Mastodon is the open stand-in.
 const TAGS = ["hiring", "jobopening", "rustjobs", "reactjobs", "remotejobs", "web3jobs"];
@@ -34,6 +34,7 @@ export const mastodon: Source = {
           region: /\b(us|usa|united states|uk|europe|eu)[ -]?only\b/i.test(text) ? "US only" : "",
           skills: extractSkills(text, SKILL_VOCAB, "", 1),
           snippet: snippet(text),
+          detail: detail(text),
           effort: "high",
           postedAt: it.pubDate ? new Date(it.pubDate) : null,
         });

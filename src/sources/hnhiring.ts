@@ -37,6 +37,7 @@ export const hnhiring: Source = {
         region: restrictiveRegion(head),
         skills: extractSkills(head, SKILL_VOCAB, body),
         snippet: body.slice(head.length, head.length + 160).trim(),
+        detail: body.slice(0, 3000),
         effort: "high",
         postedAt: c.created_at ? new Date(c.created_at) : null,
       });

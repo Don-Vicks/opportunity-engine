@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, SKILL_VOCAB, detail } from "../helpers.js";
 
 interface Row {
   id?: string; position?: string; company?: string; tags?: string[]; description?: string;
@@ -27,6 +27,7 @@ export const remoteok: Source = {
         region: r.location ?? "",
         skills: [...new Set([...(r.tags ?? []).map(normSkill), ...extractSkills(r.position ?? "", SKILL_VOCAB, stripHtml(r.description ?? ""))])],
         snippet: snippet(r.description ?? ""),
+        detail: detail(r.description ?? ""),
         effort: "high",
         postedAt: r.epoch ? new Date(r.epoch * 1000) : null,
       };

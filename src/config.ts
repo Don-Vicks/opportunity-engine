@@ -33,8 +33,8 @@ const ConfigSchema = z.object({
     enabled: z.boolean().default(false),
     /** label = tag only, hide = drop "not a fit", strict = keep only "qualified" */
     mode: z.enum(["label", "hide", "strict"]).default("label"),
-    groqModel: z.string().default("llama-3.3-70b-versatile"),
-    openrouterModel: z.string().default("meta-llama/llama-3.3-70b-instruct:free"),
+    groqModel: z.string().default("openai/gpt-oss-120b"),
+    openrouterModel: z.string().default("google/gemma-4-31b-it:free"),
   }).default({}),
   digest: z.object({
     maxResults: z.number().int().positive(),

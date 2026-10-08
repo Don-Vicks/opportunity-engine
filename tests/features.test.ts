@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { saveSent, dueReminders, markReminded, loadSeen, loadSeenMap } from "../src/store.js";
@@ -108,7 +108,7 @@ describe("weekly summary window", () => {
 });
 
 import { overLevel, yearsRequired } from "../src/seniority.js";
-import { parseFits, assessFit, applyFitMode } from "../src/fit.js";
+import { parseFits, assessFit, applyFitMode, pickModel } from "../src/fit.js";
 
 describe("level gate", () => {
   const cfg = loadConfig();
@@ -147,15 +147,20 @@ describe("AI fit", () => {
       calls.push(url);
       if (url.includes("groq")) throw new Error("HTTP 429");
       return '{"results":[{"i":0,"verdict":"qualified","reason":"ok"},{"i":1,"verdict":"stretch","reason":"gap"}]}';
-    });
+    }, async () => []);
     expect(calls).toHaveLength(2);
     expect(items.map((o) => o.fit?.verdict)).toEqual(["qualified", "stretch"]);
   });
   it("never throws and leaves items unlabeled when all providers fail", async () => {
     const items = [mk("a")];
-    await assessFit(items, cfg, { groqKey: "g" }, async () => { throw new Error("down"); });
+    await assessFit(items, cfg, { groqKey: "g" }, async () => { throw new Error("down"); }, async () => { throw new Error("no list"); });
     expect(items[0].fit).toBeUndefined();
     expect(applyFitMode(items, "strict")).toHaveLength(1);
+  });
+  it("picks a served model and survives retired ones", () => {
+    expect(pickModel(["a", "b"], ["x", "b"])).toBe("b");
+    expect(pickModel(["google/gemma-4-31b-it:free"], ["meta/old:free"], [/gemma.*:free$/])).toBe("google/gemma-4-31b-it:free");
+    expect(pickModel([], ["x", "y"])).toBe("x");
   });
   it("modes filter by verdict", () => {
     const [a, b, c] = [mk("a"), mk("b"), mk("c")];
@@ -177,4 +182,31 @@ describe("Nigeria tag and Stellar", () => {
     expect(nigeriaFriendly("", "", "not open to candidates outside Nigeria")).toBe(false);
   });
   it("treats Soroban as Stellar", () => { expect(normSkill("soroban")).toBe("stellar"); });
+});
+
+import { residencyBlock } from "../src/helpers.js";
+describe("full-description filtering", () => {
+  const cfg = loadConfig();
+  const now = new Date("2026-10-08T00:00:00Z");
+  const job = (over: Partial<RawOpp>): RawOpp => ({
+    id: "j1", title: "Backend Engineer @ Acme", type: "job", source: "S", url: "https://x.co/j", amountUsd: null, prizeLabel: "n/a",
+    deadline: null, location: "remote", region: "", skills: ["nestjs"], snippet: "We build payments.", effort: "medium", postedAt: null, ...over,
+  });
+  it("drops a job whose years requirement is only in the full text", () => {
+    expect(keep(job({}), cfg, new Set(), now)).toBe(true);
+    expect(keep(job({ detail: "We build payments. You have 9+ years of experience with distributed systems." }), cfg, new Set(), now)).toBe(false);
+  });
+  it("drops residency-locked jobs but not ones that welcome Africa/worldwide", () => {
+    expect(residencyBlock("Candidates must be based in the US.")).toBeTruthy();
+    expect(residencyBlock("You must be authorized to work in the United States")).toBeTruthy();
+    expect(residencyBlock("US-based candidates only, but we also welcome Africa")).toBeNull();
+    expect(residencyBlock("We hire worldwide. Our HQ is in the US.")).toBeNull();
+    expect(keep(job({ detail: "Applicants must be located in the United States." }), cfg, new Set(), now)).toBe(false);
+  });
+  it("does not store detail in history", () => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    const o = { ...opp("d", null, now, "job"), detail: "long text" };
+    saveSent([o], now);
+    expect(readFileSync(join(process.env.DATA_DIR, "history.jsonl"), "utf8")).not.toContain("long text");
+  });
 });

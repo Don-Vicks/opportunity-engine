@@ -40,7 +40,7 @@ export function saveSent(items: Opportunity[], now = new Date()) {
     };
   }
   write(f("seen.json"), m);
-  for (const o of items) appendFileSync(f("history.jsonl"), JSON.stringify(o) + "\n");
+  for (const o of items) { const { detail: _d, ...rest } = o; appendFileSync(f("history.jsonl"), JSON.stringify(rest) + "\n"); }
 }
 
 export interface Reminder { id: string; deadline: Date; lite: Lite }

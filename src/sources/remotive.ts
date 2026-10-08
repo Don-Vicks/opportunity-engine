@@ -1,6 +1,6 @@
 import type { Source, RawOpp } from "../schema.js";
 import { getJson } from "../http.js";
-import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, parseSalaryUsd, SKILL_VOCAB } from "../helpers.js";
+import { snippet, normSkill, stripHtml, extractSkills, findApplyUrl, parseSalaryUsd, SKILL_VOCAB, detail } from "../helpers.js";
 
 interface Job {
   id: number; url: string; title: string; company_name: string; tags?: string[]; job_type?: string;
@@ -28,6 +28,7 @@ export const remotive: Source = {
         region: j.candidate_required_location ?? "",
         skills: [...new Set([...(j.tags ?? []).map(normSkill), ...extractSkills(j.title, SKILL_VOCAB, stripHtml(j.description ?? ""))])],
         snippet: snippet(j.description ?? ""),
+        detail: detail(j.description ?? ""),
         effort: freelance ? "medium" : "high",
         postedAt: j.publication_date ? new Date(j.publication_date + "Z") : null,
       };
