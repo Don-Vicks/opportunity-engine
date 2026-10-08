@@ -108,7 +108,7 @@ describe("weekly summary window", () => {
 });
 
 import { overLevel, yearsRequired } from "../src/seniority.js";
-import { parseFits, assessFit, applyFitMode, pickModel } from "../src/fit.js";
+import { parseFits, assessFit, applyFitMode, pickModel, retryAfterMs, complete } from "../src/fit.js";
 
 describe("level gate", () => {
   const cfg = loadConfig();
@@ -161,6 +161,25 @@ describe("AI fit", () => {
     expect(pickModel(["a", "b"], ["x", "b"])).toBe("b");
     expect(pickModel(["google/gemma-4-31b-it:free"], ["meta/old:free"], [/gemma.*:free$/])).toBe("google/gemma-4-31b-it:free");
     expect(pickModel([], ["x", "y"])).toBe("x");
+  });
+  it("waits out a stated rate limit once, then moves on", async () => {
+    expect(retryAfterMs("HTTP 429 ... Please try again in 4.2s. Need 900")).toBe(4700);
+    expect(retryAfterMs("HTTP 429 try again in 350ms")).toBe(850);
+    expect(retryAfterMs("HTTP 429 retry shortly")).toBeNull();
+    expect(retryAfterMs("try again in 10m")).toBe(25_000);
+    const chain = [{ name: "groq", url: "u", key: "k", model: "openai/gpt-oss-120b" }];
+    const waits: number[] = [];
+    let calls = 0;
+    const send = async (_u: string, _k: string, body: unknown) => {
+      calls++;
+      expect((body as { reasoning_effort?: string }).reasoning_effort).toBe("low");
+      if (calls === 1) throw new Error("HTTP 429 Please try again in 2s.");
+      return "ok";
+    };
+    expect(await complete(chain, [], send, false, async (ms) => { waits.push(ms); })).toBe("ok");
+    expect(waits).toEqual([2500]);
+    const always = async () => { throw new Error("HTTP 429 Please try again in 1s."); };
+    expect(await complete(chain, [], always, false, async () => {})).toBeNull();
   });
   it("modes filter by verdict", () => {
     const [a, b, c] = [mk("a"), mk("b"), mk("c")];

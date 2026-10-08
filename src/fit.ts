@@ -5,8 +5,8 @@ type Fit = NonNullable<Opportunity["fit"]>;
 export type Post = (url: string, key: string, body: unknown) => Promise<string>;
 export interface Providers { groqKey?: string; openrouterKey?: string }
 
-const BATCH = 8;
-const TEXT_CAP = 1500;
+const BATCH = 6;
+const TEXT_CAP = 1000;
 
 export function systemPrompt(p: Config["profile"]): string {
   const pf = p.portfolio;
@@ -78,10 +78,6 @@ export function listingPayload(items: Opportunity[]) {
   }));
 }
 
-/**
- * Attach a qualified/stretch/not_a_fit verdict to each item. Tries Groq, then OpenRouter, per batch.
- * Never throws: on any failure the items simply stay unlabeled.
- */
 export interface Chain { name: string; url: string; key: string; model: string }
 
 /** Providers in priority order (Groq, then OpenRouter), each with a model it actually serves. */
@@ -98,15 +94,41 @@ export async function buildChain(cfg: Config, keys: Providers, list: ListModels 
   return chain;
 }
 
-/** First provider that answers wins; returns null if all fail. Never throws. */
-export async function complete(chain: Chain[], messages: { role: string; content: string }[], send: Post = post, json = false): Promise<string | null> {
+/** "Please try again in 4.2s" / "in 350ms" from a provider's rate-limit message, in ms (capped), or null. */
+export function retryAfterMs(message: string): number | null {
+  const m = message.match(/try again in\s+(\d+(?:\.\d+)?)\s*(ms|s|m)\b/i);
+  if (!m) return null;
+  const n = Number(m[1]) * (m[2].toLowerCase() === "ms" ? 1 : m[2].toLowerCase() === "s" ? 1000 : 60_000);
+  return Math.min(Math.ceil(n) + 500, 25_000);
+}
+
+const sleepMs = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+/**
+ * First provider that answers wins; returns null if all fail. Never throws.
+ * A rate-limited provider that says how long to wait gets one retry before we move on.
+ */
+export async function complete(
+  chain: Chain[], messages: { role: string; content: string }[], send: Post = post, json = false, sleep: (ms: number) => Promise<void> = sleepMs,
+): Promise<string | null> {
   for (const p of chain) {
-    try {
-      const reply = await send(p.url, p.key, { model: p.model, temperature: json ? 0.1 : 0.6, messages, ...(json ? { response_format: { type: "json_object" } } : {}) });
-      if (reply.trim()) return reply;
-      throw new Error("empty reply");
-    } catch (e) {
-      console.warn(`AI (${p.name}) failed: ${(e as Error).message}`);
+    const body = {
+      model: p.model, temperature: json ? 0.1 : 0.6, messages,
+      ...(json ? { response_format: { type: "json_object" } } : {}),
+      ...(p.name === "groq" && /gpt-oss/.test(p.model) ? { reasoning_effort: "low" } : {}), // reasoning tokens count toward the TPM limit
+    };
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const reply = await send(p.url, p.key, body);
+        if (reply.trim()) return reply;
+        throw new Error("empty reply");
+      } catch (e) {
+        const msg = (e as Error).message;
+        const wait = attempt === 0 && /HTTP 429/.test(msg) ? retryAfterMs(msg) : null;
+        if (wait == null) { console.warn(`AI (${p.name}) failed: ${msg.slice(0, 160)}`); break; }
+        console.warn(`AI (${p.name}) rate-limited, retrying in ${Math.round(wait / 1000)}s`);
+        await sleep(wait);
+      }
     }
   }
   return null;
