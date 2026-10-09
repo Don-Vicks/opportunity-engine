@@ -19,7 +19,8 @@
    "prizeLabel": "2,000 USDG",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "superteam:00360512-10ed-4910-97be-b68563a8efc6": {
   "t": "2026-10-08T08:28:33.075Z",
@@ -30,7 +31,8 @@
    "prizeLabel": "2,000 USDG",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "superteam:3c12a2d7-88af-40cb-add1-79546e76b8a2": {
   "t": "2026-10-08T08:28:33.075Z",
