@@ -681,5 +681,36 @@
    "type": "bounty",
    "source": "Superteam Earn"
   }
+ },
+ "jobicy:154903": {
+  "t": "2026-10-09T09:48:38.644Z",
+  "o": {
+   "title": "Product Support Engineer - EMEA @ Ashby",
+   "url": "https://jobicy.com/jobs/154903-product-support-engineer-emea",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:152811": {
+  "t": "2026-10-09T09:48:38.644Z",
+  "o": {
+   "title": "Support Engineer (EMEA - Weekends) @ Supabase",
+   "url": "https://jobicy.com/jobs/152811-support-engineer-emea-weekends",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "superteam:e3bcf553-958f-4b26-8c1b-799476ceb873": {
+  "t": "2026-10-09T09:48:38.644Z",
+  "d": "2026-10-31T21:59:59.000Z",
+  "o": {
+   "title": "Vaultline Security Audit Grants for Colosseum Projects: Up to 4,000 USDC Each (Vaultline Security)",
+   "url": "https://earn.superteam.fun/listing/vaultline-security-audit-grants-for-colosseum-projects-up-to-4000-usdc-each",
+   "prizeLabel": "40,000 USDC",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  }
 }
