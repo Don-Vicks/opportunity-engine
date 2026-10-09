@@ -660,5 +660,26 @@
    "type": "job",
    "source": "Working Nomads"
   }
+ },
+ "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/software-developer-remote-contract": {
+  "t": "2026-10-09T00:50:13.571Z",
+  "o": {
+   "title": "🌎 Software Developer, Remote - Contract @ Xperteez Technology",
+   "url": "https://himalayas.app/companies/xperteez-technology/jobs/software-developer-remote-contract",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Himalayas"
+  }
+ },
+ "superteam:295e002a-a509-4bca-9b5c-ae3886fb9759": {
+  "t": "2026-10-09T00:50:13.571Z",
+  "d": "2026-10-17T02:59:59.000Z",
+  "o": {
+   "title": "Get your Seeker app to Mainnet 📱🇧🇷 Solana Mobile Brazil special track (Superteam Brasil)",
+   "url": "https://earn.superteam.fun/listing/mobile",
+   "prizeLabel": "1,600 USDG",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  }
 }
