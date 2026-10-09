@@ -1,59 +1,48 @@
 [
  {
-  "id": "jobicy:154903",
-  "title": "Product Support Engineer - EMEA @ Ashby",
+  "id": "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-react-full-stack-developer-7",
+  "title": "Lemon.io: Senior React Full-stack Developer",
   "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/154903-product-support-engineer-emea",
+  "source": "WeWorkRemotely",
+  "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-react-full-stack-developer-7",
   "prizeLabel": "n/a",
-  "region": "EMEA",
+  "region": "Anywhere in the World",
   "skills": [
-   "rust"
+   "typescript",
+   "react",
+   "node",
+   "python",
+   "php",
+   "full-stack",
+   "ai",
+   "javascript",
+   "nextjs",
+   "expo"
   ],
-  "snippet": "Hello! I’m Allie, Head of Support at Ashby. I’m excited to share that we’re hiring a Product Support Engineer in EMEA We’re expanding our global Support team to provide 24/7 coverage across time zones. You’ll join a global team while establishing the technical Support Engineering presence in EMEA, with the ownership and visibility that&hellip;",
-  "detail": "Hello! I’m Allie, Head of Support at Ashby. I’m excited to share that we’re hiring a Product Support Engineer in EMEA We’re expanding our global Support team to provide 24/7 coverage across time zones. You’ll join a global team while establishing the technical Support Engineering presence in EMEA, with the ownership and visibility that&hellip;",
+  "snippet": "<img src=\"https://we-work-remotely.imgix.net/logos/0099/5988/logo.gif?ixlib=rails-4.0.0&w=50&h=50&dpr=2&fit=fill&auto=compress\" /> <p> <strong>Headquarters:</strong> New York, NY <br /><strong>URL:</strong> <a href=\"https://lemon.io\">https://lemon.io</a> </p> <p>Are you a talented Senior Developer looking for a remote job that lets you show your skills and get decent compensation? Look no further than <a href=\"https://lemon.io/for-developers/?ut…",
+  "detail": "<img src=\"https://we-work-remotely.imgix.net/logos/0099/5988/logo.gif?ixlib=rails-4.0.0&w=50&h=50&dpr=2&fit=fill&auto=compress\" /> <p> <strong>Headquarters:</strong> New York, NY <br /><strong>URL:</strong> <a href=\"https://lemon.io\">https://lemon.io</a> </p> <p>Are you a talented Senior Developer looking for a remote job that lets you show your skills and get decent compensation? Look no further than <a href=\"https://lemon.io/for-developers/?utm_source=weworkremotely&amp;utm_medium=job_ad&amp;utm_campaign=supply_en_react_node/python/ruby_oct_2026_job_ad\">Lemon.io</a> — the marketplace that connects you with hand-picked startups in the US and Europe.</p> <p><strong>What we offer:</strong></p> <ul> <li>The rate depends on your seniority level, skills and experience. We've already paid out over $11M to our engineers.</li> <li>No more hunting for clients or negotiating rates — let us handle the business side of things so you can focus on what you do best.</li> <li>We'll manually find the best project for you according to your skills and preferences.</li> <li>Choose a schedule that works best for you. It’s possible to communicate async or minimally overlap within team working hours.</li> <li>We respect your seniority so you can expect no micromanagement or screen trackers.</li> <li>Communicate directly with the clients. Most of them have technical backgrounds. Sounds good, yeah?</li> <li>We will support you from the time you submit the application throughout all cooperation stage",
   "fit": {
-   "verdict": "stretch",
-   "reason": "has some Rust experience but not professional-level expertise"
+   "verdict": "qualified",
+   "reason": "Matches core stack (TS, React, Node, Next.js, Expo) and has senior-level experience"
   },
   "deadline": null
  },
  {
-  "id": "jobicy:152811",
-  "title": "Support Engineer (EMEA - Weekends) @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/152811-support-engineer-emea-weekends",
-  "prizeLabel": "n/a",
-  "region": "EMEA",
-  "skills": [
-   "backend",
-   "rust"
-  ],
-  "snippet": "Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. We are seeking Support Engineers to provide world-class developer support for anyone experiencing issues or seeking guidance when using&hellip;",
-  "detail": "Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. We are seeking Support Engineers to provide world-class developer support for anyone experiencing issues or seeking guidance when using&hellip;",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "has backend experience and some Rust knowledge but not at professional level"
-  },
-  "deadline": null
- },
- {
-  "id": "superteam:e3bcf553-958f-4b26-8c1b-799476ceb873",
-  "title": "Vaultline Security Audit Grants for Colosseum Projects: Up to 4,000 USDC Each (Vaultline Security)",
+  "id": "superteam:5283711b-8163-473c-82c9-ca5ff90c4dfc",
+  "title": "Arf × Superteam Türkiye — University Track (Superteam Turkey)",
   "type": "bounty",
   "source": "Superteam Earn",
-  "url": "https://earn.superteam.fun/listing/vaultline-security-audit-grants-for-colosseum-projects-up-to-4000-usdc-each",
-  "prizeLabel": "40,000 USDC",
+  "url": "https://earn.superteam.fun/listing/arf-superteam-turkiye-university-track",
+  "prizeLabel": "2,500 USDG",
   "skills": [
    "solana",
    "web3"
   ],
-  "snippet": "Vaultline Security",
+  "snippet": "Superteam Turkey",
   "fit": {
-   "verdict": "stretch",
-   "reason": "has Solana development experience but not specialized security audit expertise"
+   "verdict": "qualified",
+   "reason": "Has proven Solana and web3 experience suitable for the bounty"
   },
-  "deadline": "2026-10-31T21:59:59.000Z"
+  "deadline": "2026-10-14T20:59:59.000Z"
  }
 ]

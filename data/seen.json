@@ -712,5 +712,26 @@
    "type": "bounty",
    "source": "Superteam Earn"
   }
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/lemon-io-senior-react-full-stack-developer-7": {
+  "t": "2026-10-09T17:43:55.075Z",
+  "o": {
+   "title": "Lemon.io: Senior React Full-stack Developer",
+   "url": "https://weworkremotely.com/remote-jobs/lemon-io-senior-react-full-stack-developer-7",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
+ },
+ "superteam:5283711b-8163-473c-82c9-ca5ff90c4dfc": {
+  "t": "2026-10-09T17:43:55.075Z",
+  "d": "2026-10-14T20:59:59.000Z",
+  "o": {
+   "title": "Arf × Superteam Türkiye — University Track (Superteam Turkey)",
+   "url": "https://earn.superteam.fun/listing/arf-superteam-turkiye-university-track",
+   "prizeLabel": "2,500 USDG",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  }
 }
