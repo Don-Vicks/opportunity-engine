@@ -1,37 +1,19 @@
 [
  {
-  "id": "remoteok:1137475",
-  "title": "Senior React Full stack Developer @ Lemon.io",
-  "type": "job",
-  "source": "RemoteOK",
-  "url": "https://remoteOK.com/remote-jobs/remote-senior-react-full-stack-developer-lemon-io-1137475",
-  "prizeLabel": "$200k/yr",
-  "region": "",
+  "id": "devpost:31586",
+  "title": "CodeRED: Orion",
+  "type": "hackathon",
+  "source": "Devpost",
+  "url": "https://codered-orion-ccs.devpost.com/",
+  "prizeLabel": "$2,100",
   "skills": [
-   "dev",
-   "engineer",
-   "remote",
-   "python",
-   "aws",
-   "gcp",
-   "javascript",
-   "react",
-   "node",
-   "ruby",
-   "typescript",
-   "full time",
-   "full stack",
-   "php",
-   "ai",
-   "nextjs",
-   "expo"
+   "devops"
   ],
-  "snippet": "Are you a talented Senior Developer looking for a remote job that lets you show your skills and get decent compensation? Look no further than Lemon.io â the marketplace that connects you with hand-picked startups in the US and Europe. What we offer: The rate depends on your seniority level, skills and experience. We've already paid out over $11M to our engineers. No more hunting for clients or negotiating rates â let us handle the business s…",
-  "detail": "Are you a talented Senior Developer looking for a remote job that lets you show your skills and get decent compensation? Look no further than Lemon.io â the marketplace that connects you with hand-picked startups in the US and Europe. What we offer: The rate depends on your seniority level, skills and experience. We've already paid out over $11M to our engineers. No more hunting for clients or negotiating rates â let us handle the business side of things so you can focus on what you do best. We'll manually find the best project for you according to your skills and preferences. Choose a schedule that works best for you. Itâs possible to communicate async or minimally overlap within team working hours. We respect your seniority so you can expect no micromanagement or screen trackers. Communicate directly with the clients. Most of them have technical backgrounds. Sounds good, yeah? We will support you from the time you submit the application throughout all cooperation stages. Most of our projects involve working in a fast-paced startup environment. We hope you like it as much as we do. Through our community, we will connect you with the best developers from more than 75 countries. Requirements for the Senior React & Python Position: 4+ years of software development experience. Commercial experience: React.js 3+ years & Python 3+ years OR React.js 2+ years & Python 5+ years OR React.js 5+ years & Python 2+ years Experience with AWS, GCP, or Azure is required. Requirements f",
+  "snippet": "CougarCS · Beginner Friendly, DevOps, Web",
   "fit": {
    "verdict": "stretch",
-   "reason": "Has React/Next.js/Node/TypeScript but lacks required Python/AWS/GCP/Ruby experience"
+   "reason": "has backend infrastructure experience but no explicit devops focus"
   },
-  "deadline": null
+  "deadline": "2026-10-11T23:59:59.000Z"
  }
 ]

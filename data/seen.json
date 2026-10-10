@@ -43,7 +43,8 @@
    "prizeLabel": "1,000 USDC",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "superteam:5f02bd4a-3670-48ae-9882-3f72759bfba3": {
   "t": "2026-10-05T18:52:40.113Z"
@@ -744,6 +745,17 @@
    "prizeLabel": "$200k/yr",
    "type": "job",
    "source": "RemoteOK"
+  }
+ },
+ "devpost:31586": {
+  "t": "2026-10-10T20:53:23.108Z",
+  "d": "2026-10-11T23:59:59.000Z",
+  "o": {
+   "title": "CodeRED: Orion",
+   "url": "https://codered-orion-ccs.devpost.com/",
+   "prizeLabel": "$2,100",
+   "type": "hackathon",
+   "source": "Devpost"
   }
  }
 }
