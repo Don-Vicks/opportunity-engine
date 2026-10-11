@@ -800,5 +800,16 @@
    "type": "job",
    "source": "Himalayas"
   }
+ },
+ "devpost:31609": {
+  "t": "2026-10-11T21:13:57.293Z",
+  "d": "2026-10-31T23:59:59.000Z",
+  "o": {
+   "title": "InternWell Hack2.0",
+   "url": "https://interwell-hack2-0.devpost.com/",
+   "prizeLabel": "$1,000",
+   "type": "hackathon",
+   "source": "Devpost"
+  }
  }
 }

@@ -1,22 +1,19 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/arionkoder/jobs/rust-engineer-3322578274",
-  "title": "Rust Engineer @ Arionkoder",
-  "type": "job",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/arionkoder/jobs/rust-engineer-3322578274",
-  "prizeLabel": "n/a",
-  "region": "",
+  "id": "devpost:31609",
+  "title": "InternWell Hack2.0",
+  "type": "hackathon",
+  "source": "Devpost",
+  "url": "https://interwell-hack2-0.devpost.com/",
+  "prizeLabel": "$1,000",
   "skills": [
-   "rust",
    "ai"
   ],
-  "snippet": "Arionkoder is an AI consulting firm helping companies build, embed, and own AI systems that drive real business outcomes. We combine Product Development, Artificial Intelligence, and Team Augmentation to craft digital products and solutions that create lasting impact — guided by a human-centric approach and a commitment to pushing the boundaries of what technology can do. We are looking for a Rust Engineer to join Arion's team! Our remote Tech T…",
-  "detail": "Arionkoder is an AI consulting firm helping companies build, embed, and own AI systems that drive real business outcomes. We combine Product Development, Artificial Intelligence, and Team Augmentation to craft digital products and solutions that create lasting impact — guided by a human-centric approach and a commitment to pushing the boundaries of what technology can do. We are looking for a Rust Engineer to join Arion's team! Our remote Tech Tribe team is expanding, and we are seeking a skilled Rust Engineer to join us. If you thrive in a fast-paced, collaborative environment and appreciate leveraging your team's expertise to deliver high-quality solutions, this role might be for you! WHAT WE NEED FROM YOU: Excellent oral and written English communication skills. Advanced proficiency in the Rust programming language. Experience working in Agile environments. Backend developers, as Sr as possible with 1 or 2 years of experience in Rust, and ideally have worked with other technologies such as Node, Python. AWS and its tools. Perks 💵 Monthly USD Service Fee 🌴 20 business days of paid Agreed Time Off—Annual + 6 Local Holidays 🐣Caregiver Time Off 💻A dynamic remote work culture. You can work from anywhere! 🚀An entrepreneurial environment. About us In 2010, our founders dreamed up a company that could positively impact the world. Since then, we've been in permanent evolution: from business consulting to innovation and design, and now to building amazing digital products power",
+  "snippet": "InternWell-SLIET · Communication, Machine Learning/AI, Web",
   "fit": {
    "verdict": "stretch",
-   "reason": "has Rust side-project experience but not professional senior-level depth"
+   "reason": "AI focus; candidate has no demonstrated AI skills but could attempt"
   },
-  "deadline": null
+  "deadline": "2026-10-31T23:59:59.000Z"
  }
 ]
