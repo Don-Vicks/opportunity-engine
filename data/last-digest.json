@@ -1,19 +1,41 @@
 [
  {
-  "id": "devpost:31586",
-  "title": "CodeRED: Orion",
-  "type": "hackathon",
-  "source": "Devpost",
-  "url": "https://codered-orion-ccs.devpost.com/",
-  "prizeLabel": "$2,100",
+  "id": "remoteok:1137478",
+  "title": "Product Engineering Lead @ Tether Operations Limited",
+  "type": "job",
+  "source": "RemoteOK",
+  "url": "https://remoteOK.com/remote-jobs/remote-product-engineering-lead-tether-operations-limited-1137478",
+  "applyUrl": "https://tether.recruitee.com/",
+  "prizeLabel": "n/a",
+  "region": "",
   "skills": [
-   "devops"
+   "design",
+   "bitcoin",
+   "react",
+   "exec",
+   "technical",
+   "recruiter",
+   "marketing",
+   "dev",
+   "virtual assistant",
+   "javascript",
+   "finance",
+   "education",
+   "cloud",
+   "api",
+   "mobile",
+   "ops",
+   "sys admin",
+   "engineer",
+   "digital nomad",
+   "ai"
   ],
-  "snippet": "CougarCS · Beginner Friendly, DevOps, Web",
+  "snippet": "Join Tether and Shape the Future of Digital Finance At Tether, weâre not just building products, weâre pioneering a global financial revolution. Our cutting-edge solutions empower businessesâfrom exchanges and wallets to payment processors and ATMsâto seamlessly integrate reserve-backed tokens across blockchains. By harnessing the power of blockchain technology, Tether enables you to store, send, and receive digital tokens instantly, sec…",
+  "detail": "Join Tether and Shape the Future of Digital Finance At Tether, weâre not just building products, weâre pioneering a global financial revolution. Our cutting-edge solutions empower businessesâfrom exchanges and wallets to payment processors and ATMsâto seamlessly integrate reserve-backed tokens across blockchains. By harnessing the power of blockchain technology, Tether enables you to store, send, and receive digital tokens instantly, securely, and globally, all at a fraction of the cost. Transparency is the bedrock of everything we do, ensuring trust in every transaction. Innovate with Tether Tether Finance: Our innovative product suite features the worldâs most trusted stablecoin, USDT , relied upon by hundreds of millions worldwide, alongside pioneering digital asset tokenization services. But thatâs just the beginning: Tether Power: Driving sustainable growth, our energy solutions optimize excess power for Bitcoin mining using eco-friendly practices in state-of-the-art, geo-diverse facilities. Tether Data: Fueling breakthroughs in AI and peer-to-peer technology, we reduce infrastructure costs and enhance global communications with cutting-edge solutions like KEET , our flagship app that redefines secure and private data sharing. Tether Education : Democratizing access to top-tier digital learning, we empower individuals to thrive in the digital and gig economies, driving global growth and opportunity. Tether Evolution : At the intersection of technology and hum",
   "fit": {
    "verdict": "stretch",
-   "reason": "has backend infrastructure experience but no explicit devops focus"
+   "reason": "relevant backend and blockchain payment experience but missing senior product leadership and broader finance expertise"
   },
-  "deadline": "2026-10-11T23:59:59.000Z"
+  "deadline": null
  }
 ]
