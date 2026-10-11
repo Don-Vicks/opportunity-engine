@@ -1,40 +1,43 @@
 [
  {
-  "id": "remoteok:1137478",
-  "title": "Product Engineering Lead @ Tether Operations Limited",
+  "id": "wwr:https://weworkremotely.com/remote-jobs/vercel-software-engineer-backend",
+  "title": "Vercel: Software Engineer, Backend",
   "type": "job",
-  "source": "RemoteOK",
-  "url": "https://remoteOK.com/remote-jobs/remote-product-engineering-lead-tether-operations-limited-1137478",
-  "applyUrl": "https://tether.recruitee.com/",
+  "source": "WeWorkRemotely",
+  "url": "https://weworkremotely.com/remote-jobs/vercel-software-engineer-backend",
   "prizeLabel": "n/a",
-  "region": "",
+  "region": "Anywhere in the World",
+  "skills": [
+   "typescript",
+   "node",
+   "backend",
+   "javascript"
+  ],
+  "snippet": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run softwa…",
+  "detail": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run software, built in the open and trusted by OpenAI, PayPal, Ramp, Supreme, and millions of developers worldwide.</span></p></div><h2>About the Role:</h2> <p>We are seeking a Backend leaning Software Engineer. In this role, you will play a pivotal role in designing, building, and maintaining scalable, high-performance systems. Leveraging JavaScript/TypeScript, Node.js, SQL and NoSQL cloud-native databases, and AWS, you will develop innovative solutions for user, group, and membership management while ensuring the highest levels of security and reliability.</p> <p>If you’re based within a pre-determined commuting distance of one of our offices (SF, NY, London, or Berlin), the role includes in-office anchor days on Monday, Tuesday, and Friday. If you're located beyond that distance, the role is fully remote. For location-specific details, please connect with our recruiting team.</p> <h2>What You Will Do:</h2> <ul> <li>Enable us to deliver secure, reliable, and scalable services that exceed industry standards and customer expectations.</li> <li>C",
+  "fit": {
+   "verdict": "qualified",
+   "reason": "strong backend Node/TS experience matches role"
+  },
+  "deadline": null
+ },
+ {
+  "id": "wwr:https://weworkremotely.com/remote-jobs/vercel-software-engineer-data-platform",
+  "title": "Vercel: Software Engineer - Data Platform",
+  "type": "job",
+  "source": "WeWorkRemotely",
+  "url": "https://weworkremotely.com/remote-jobs/vercel-software-engineer-data-platform",
+  "prizeLabel": "n/a",
+  "region": "Anywhere in the World",
   "skills": [
    "design",
-   "bitcoin",
-   "react",
-   "exec",
-   "technical",
-   "recruiter",
-   "marketing",
-   "dev",
-   "virtual assistant",
-   "javascript",
-   "finance",
-   "education",
-   "cloud",
-   "api",
-   "mobile",
-   "ops",
-   "sys admin",
-   "engineer",
-   "digital nomad",
-   "ai"
+   "nextjs"
   ],
-  "snippet": "Join Tether and Shape the Future of Digital Finance At Tether, weâre not just building products, weâre pioneering a global financial revolution. Our cutting-edge solutions empower businessesâfrom exchanges and wallets to payment processors and ATMsâto seamlessly integrate reserve-backed tokens across blockchains. By harnessing the power of blockchain technology, Tether enables you to store, send, and receive digital tokens instantly, sec…",
-  "detail": "Join Tether and Shape the Future of Digital Finance At Tether, weâre not just building products, weâre pioneering a global financial revolution. Our cutting-edge solutions empower businessesâfrom exchanges and wallets to payment processors and ATMsâto seamlessly integrate reserve-backed tokens across blockchains. By harnessing the power of blockchain technology, Tether enables you to store, send, and receive digital tokens instantly, securely, and globally, all at a fraction of the cost. Transparency is the bedrock of everything we do, ensuring trust in every transaction. Innovate with Tether Tether Finance: Our innovative product suite features the worldâs most trusted stablecoin, USDT , relied upon by hundreds of millions worldwide, alongside pioneering digital asset tokenization services. But thatâs just the beginning: Tether Power: Driving sustainable growth, our energy solutions optimize excess power for Bitcoin mining using eco-friendly practices in state-of-the-art, geo-diverse facilities. Tether Data: Fueling breakthroughs in AI and peer-to-peer technology, we reduce infrastructure costs and enhance global communications with cutting-edge solutions like KEET , our flagship app that redefines secure and private data sharing. Tether Education : Democratizing access to top-tier digital learning, we empower individuals to thrive in the digital and gig economies, driving global growth and opportunity. Tether Evolution : At the intersection of technology and hum",
+  "snippet": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run softwa…",
+  "detail": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run software, built in the open and trusted by OpenAI, PayPal, Ramp, Supreme, and millions of developers worldwide.</span></p></div><h2>About the Role</h2> <p>We're looking for a Staff level Engineer to lead the design and development of a next-generation Data Platform at Vercel. This is a unique opportunity to architect a foundational system that will power data across our products and business, supporting everything from real-time analytics to AI/ML initiatives.</p> <p>Reporting directly to the Senior Director of Data Engineering, you'll define the technical vision for our data ecosystem, work across the organization to align engineering strategy with product goals, and build scalable, reliable systems using modern technologies like Kafka, ClickHouse, Tinybird, and Snowflake.</p> <p>You'll lead from the front, writing production-grade code, setting high standards for design and data governance, and mentoring a team of engineers as the organization grows. If you're excited by the challenge of building scalable data systems that drive product in",
   "fit": {
    "verdict": "stretch",
-   "reason": "relevant backend and blockchain payment experience but missing senior product leadership and broader finance expertise"
+   "reason": "has Next.js but not staff-level data platform expertise"
   },
   "deadline": null
  }

@@ -8,7 +8,8 @@
    "prizeLabel": "5,000 USDC",
    "type": "hackathon",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "superteam:73dce3a4-26f5-4f69-8315-786483c59a89": {
   "t": "2026-10-08T08:28:33.075Z",
@@ -756,7 +757,8 @@
    "prizeLabel": "$2,100",
    "type": "hackathon",
    "source": "Devpost"
-  }
+  },
+  "r": 1
  },
  "remoteok:1137478": {
   "t": "2026-10-11T04:28:08.987Z",
@@ -767,6 +769,26 @@
    "prizeLabel": "n/a",
    "type": "job",
    "source": "RemoteOK"
+  }
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/vercel-software-engineer-backend": {
+  "t": "2026-10-11T11:49:20.843Z",
+  "o": {
+   "title": "Vercel: Software Engineer, Backend",
+   "url": "https://weworkremotely.com/remote-jobs/vercel-software-engineer-backend",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
+  }
+ },
+ "wwr:https://weworkremotely.com/remote-jobs/vercel-software-engineer-data-platform": {
+  "t": "2026-10-11T11:49:20.843Z",
+  "o": {
+   "title": "Vercel: Software Engineer - Data Platform",
+   "url": "https://weworkremotely.com/remote-jobs/vercel-software-engineer-data-platform",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "WeWorkRemotely"
   }
  }
 }
