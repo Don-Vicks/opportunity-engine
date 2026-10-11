@@ -1,43 +1,21 @@
 [
  {
-  "id": "wwr:https://weworkremotely.com/remote-jobs/vercel-software-engineer-backend",
-  "title": "Vercel: Software Engineer, Backend",
+  "id": "himalayas:https://himalayas.app/companies/arionkoder/jobs/rust-engineer-3322578274",
+  "title": "Rust Engineer @ Arionkoder",
   "type": "job",
-  "source": "WeWorkRemotely",
-  "url": "https://weworkremotely.com/remote-jobs/vercel-software-engineer-backend",
+  "source": "Himalayas",
+  "url": "https://himalayas.app/companies/arionkoder/jobs/rust-engineer-3322578274",
   "prizeLabel": "n/a",
-  "region": "Anywhere in the World",
+  "region": "",
   "skills": [
-   "typescript",
-   "node",
-   "backend",
-   "javascript"
+   "rust",
+   "ai"
   ],
-  "snippet": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run softwa…",
-  "detail": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run software, built in the open and trusted by OpenAI, PayPal, Ramp, Supreme, and millions of developers worldwide.</span></p></div><h2>About the Role:</h2> <p>We are seeking a Backend leaning Software Engineer. In this role, you will play a pivotal role in designing, building, and maintaining scalable, high-performance systems. Leveraging JavaScript/TypeScript, Node.js, SQL and NoSQL cloud-native databases, and AWS, you will develop innovative solutions for user, group, and membership management while ensuring the highest levels of security and reliability.</p> <p>If you’re based within a pre-determined commuting distance of one of our offices (SF, NY, London, or Berlin), the role includes in-office anchor days on Monday, Tuesday, and Friday. If you're located beyond that distance, the role is fully remote. For location-specific details, please connect with our recruiting team.</p> <h2>What You Will Do:</h2> <ul> <li>Enable us to deliver secure, reliable, and scalable services that exceed industry standards and customer expectations.</li> <li>C",
-  "fit": {
-   "verdict": "qualified",
-   "reason": "strong backend Node/TS experience matches role"
-  },
-  "deadline": null
- },
- {
-  "id": "wwr:https://weworkremotely.com/remote-jobs/vercel-software-engineer-data-platform",
-  "title": "Vercel: Software Engineer - Data Platform",
-  "type": "job",
-  "source": "WeWorkRemotely",
-  "url": "https://weworkremotely.com/remote-jobs/vercel-software-engineer-data-platform",
-  "prizeLabel": "n/a",
-  "region": "Anywhere in the World",
-  "skills": [
-   "design",
-   "nextjs"
-  ],
-  "snippet": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run softwa…",
-  "detail": "<p> <strong>Headquarters:</strong> Remote - United States </p> <div class=\"content-intro\"><h2>About Vercel:</h2> <p><span>Vercel is the agentic infrastructure company, freeing people and agents to ship what's next. For more than a decade we've helped builders move from idea to production with speed, security, and exceptional developer experience.</span></p> <p><span>Now we're scaling our products for both agents and people to ship and run software, built in the open and trusted by OpenAI, PayPal, Ramp, Supreme, and millions of developers worldwide.</span></p></div><h2>About the Role</h2> <p>We're looking for a Staff level Engineer to lead the design and development of a next-generation Data Platform at Vercel. This is a unique opportunity to architect a foundational system that will power data across our products and business, supporting everything from real-time analytics to AI/ML initiatives.</p> <p>Reporting directly to the Senior Director of Data Engineering, you'll define the technical vision for our data ecosystem, work across the organization to align engineering strategy with product goals, and build scalable, reliable systems using modern technologies like Kafka, ClickHouse, Tinybird, and Snowflake.</p> <p>You'll lead from the front, writing production-grade code, setting high standards for design and data governance, and mentoring a team of engineers as the organization grows. If you're excited by the challenge of building scalable data systems that drive product in",
+  "snippet": "Arionkoder is an AI consulting firm helping companies build, embed, and own AI systems that drive real business outcomes. We combine Product Development, Artificial Intelligence, and Team Augmentation to craft digital products and solutions that create lasting impact — guided by a human-centric approach and a commitment to pushing the boundaries of what technology can do. We are looking for a Rust Engineer to join Arion's team! Our remote Tech T…",
+  "detail": "Arionkoder is an AI consulting firm helping companies build, embed, and own AI systems that drive real business outcomes. We combine Product Development, Artificial Intelligence, and Team Augmentation to craft digital products and solutions that create lasting impact — guided by a human-centric approach and a commitment to pushing the boundaries of what technology can do. We are looking for a Rust Engineer to join Arion's team! Our remote Tech Tribe team is expanding, and we are seeking a skilled Rust Engineer to join us. If you thrive in a fast-paced, collaborative environment and appreciate leveraging your team's expertise to deliver high-quality solutions, this role might be for you! WHAT WE NEED FROM YOU: Excellent oral and written English communication skills. Advanced proficiency in the Rust programming language. Experience working in Agile environments. Backend developers, as Sr as possible with 1 or 2 years of experience in Rust, and ideally have worked with other technologies such as Node, Python. AWS and its tools. Perks 💵 Monthly USD Service Fee 🌴 20 business days of paid Agreed Time Off—Annual + 6 Local Holidays 🐣Caregiver Time Off 💻A dynamic remote work culture. You can work from anywhere! 🚀An entrepreneurial environment. About us In 2010, our founders dreamed up a company that could positively impact the world. Since then, we've been in permanent evolution: from business consulting to innovation and design, and now to building amazing digital products power",
   "fit": {
    "verdict": "stretch",
-   "reason": "has Next.js but not staff-level data platform expertise"
+   "reason": "has Rust side-project experience but not professional senior-level depth"
   },
   "deadline": null
  }

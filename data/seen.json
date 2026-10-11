@@ -790,5 +790,15 @@
    "type": "job",
    "source": "WeWorkRemotely"
   }
+ },
+ "himalayas:https://himalayas.app/companies/arionkoder/jobs/rust-engineer-3322578274": {
+  "t": "2026-10-11T17:01:31.725Z",
+  "o": {
+   "title": "Rust Engineer @ Arionkoder",
+   "url": "https://himalayas.app/companies/arionkoder/jobs/rust-engineer-3322578274",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
  }
 }
