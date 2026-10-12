@@ -486,7 +486,8 @@
    "prizeLabel": "500 USDC",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "superteam:0e403583-36b6-42c1-a4be-f23a53f083e5": {
   "t": "2026-10-06T17:36:39.277Z",
@@ -736,7 +737,8 @@
    "prizeLabel": "2,500 USDG",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "remoteok:1137475": {
   "t": "2026-10-10T16:36:18.489Z",
@@ -820,6 +822,17 @@
    "prizeLabel": "n/a",
    "type": "job",
    "source": "Himalayas"
+  }
+ },
+ "reddit:t3_1x4axyt": {
+  "t": "2026-10-12T22:19:06.343Z",
+  "o": {
+   "title": "Full-Stack Developer for Independent Animation Streaming Platform | $1,500 Fixed | No AI",
+   "url": "https://www.reddit.com/r/forhire/comments/1x4axyt/hiring_fullstack_developer_for_independent/",
+   "applyUrl": "https://pulptv.org/",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Reddit"
   }
  }
 }

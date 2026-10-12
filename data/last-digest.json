@@ -1,21 +1,23 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/lorgarithm/jobs/react-native-engineer",
-  "title": "React Native Engineer @ Lorgarithm",
-  "type": "job",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/lorgarithm/jobs/react-native-engineer",
+  "id": "reddit:t3_1x4axyt",
+  "title": "Full-Stack Developer for Independent Animation Streaming Platform | $1,500 Fixed | No AI",
+  "type": "freelance",
+  "source": "Reddit",
+  "url": "https://www.reddit.com/r/forhire/comments/1x4axyt/hiring_fullstack_developer_for_independent/",
+  "applyUrl": "https://pulptv.org/",
   "prizeLabel": "n/a",
-  "region": "Nigeria",
+  "region": "",
   "skills": [
-   "react",
-   "expo"
+   "full-stack",
+   "ai",
+   "nextjs"
   ],
-  "snippet": "Position: React Native Engineer Company Overview: Lorgarithm offers intelligent HR solutions with access to top tech and non-tech talents worldwide. We empower businesses and professionals alike, transforming the way HR is managed. Our team is made up of talented and passionate individuals who are dedicated to delivering high-quality products to our clients. We are seeking a skilled React Native Engineer to join our team and help us continue to …",
-  "detail": "Position: React Native Engineer Company Overview: Lorgarithm offers intelligent HR solutions with access to top tech and non-tech talents worldwide. We empower businesses and professionals alike, transforming the way HR is managed. Our team is made up of talented and passionate individuals who are dedicated to delivering high-quality products to our clients. We are seeking a skilled React Native Engineer to join our team and help us continue to grow and succeed. Job Overview: As a React Native Engineer at Lorgarithm , you will be responsible for developing and maintaining our mobile applications using React Native. You will work closely with our team of designers and developers to create user-friendly, high-performance, and scalable mobile apps. This is a full-time position that offers the opportunity to work on exciting projects and make a significant impact on our company's success. Key Responsibilities: Develop and maintain mobile applications using React Native Collaborate with designers and developers to create user-friendly and visually appealing apps Optimize app performance for maximum speed and scalability Ensure the technical feasibility of UI/UX designs Troubleshoot and debug issues with existing apps Stay up-to-date with the latest trends and best practices in mobile app development Participate in code reviews and provide constructive feedback Communicate effectively with team members and stakeholders Continuously improve app functionality and user experience Work",
+  "snippet": "Hey everyone! We're PULP , an independent animation organization working to create a new home for independent animated films and shows. We've built an audience of roughly 50,000 followers on Instagram and established relationships with over 150 independent animators. We're now looking for an experienced developer to help us take the next step: launching our own streaming platform. Our long-term goal is to make independent animation more accessib…",
+  "detail": "Hey everyone! We're PULP , an independent animation organization working to create a new home for independent animated films and shows. We've built an audience of roughly 50,000 followers on Instagram and established relationships with over 150 independent animators. We're now looking for an experienced developer to help us take the next step: launching our own streaming platform. Our long-term goal is to make independent animation more accessible while creating a sustainable distribution model that financially supports the artists behind the work. What we're hiring for We're looking for a full-stack developer to build the first functional version of our website, with an emphasis on clean architecture, thoughtful design, and long-term maintainability. The initial platform should include: A custom-branded, mobile-responsive website incorporating artwork from an artist we're collaborating with A homepage featuring selected animations and curated collections An on-demand Browse section featuring independent animated shorts and series Individual film and series pages with video playback, descriptions, and creator credits Search and filtering functionality An administrative interface allowing our team to upload, organize, and manage content independently Configurable pages and navigation for our festivals, organization, and social platforms 'About' Subpage & 'Donate,' button imbedded to Patreon We want a solid technical foundation that can eventually support user accounts, live pr",
   "fit": {
    "verdict": "qualified",
-   "reason": "Has required React and Expo experience for mobile development"
+   "reason": "candidate has strong Next.js, React, Node/TS full-stack experience matching the project"
   },
   "deadline": null
  }
