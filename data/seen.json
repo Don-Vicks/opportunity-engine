@@ -811,5 +811,15 @@
    "type": "hackathon",
    "source": "Devpost"
   }
+ },
+ "himalayas:https://himalayas.app/companies/lorgarithm/jobs/react-native-engineer": {
+  "t": "2026-10-12T03:19:45.601Z",
+  "o": {
+   "title": "React Native Engineer @ Lorgarithm",
+   "url": "https://himalayas.app/companies/lorgarithm/jobs/react-native-engineer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
  }
 }

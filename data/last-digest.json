@@ -1,19 +1,22 @@
 [
  {
-  "id": "devpost:31609",
-  "title": "InternWell Hack2.0",
-  "type": "hackathon",
-  "source": "Devpost",
-  "url": "https://interwell-hack2-0.devpost.com/",
-  "prizeLabel": "$1,000",
+  "id": "himalayas:https://himalayas.app/companies/lorgarithm/jobs/react-native-engineer",
+  "title": "React Native Engineer @ Lorgarithm",
+  "type": "job",
+  "source": "Himalayas",
+  "url": "https://himalayas.app/companies/lorgarithm/jobs/react-native-engineer",
+  "prizeLabel": "n/a",
+  "region": "Nigeria",
   "skills": [
-   "ai"
+   "react",
+   "expo"
   ],
-  "snippet": "InternWell-SLIET · Communication, Machine Learning/AI, Web",
+  "snippet": "Position: React Native Engineer Company Overview: Lorgarithm offers intelligent HR solutions with access to top tech and non-tech talents worldwide. We empower businesses and professionals alike, transforming the way HR is managed. Our team is made up of talented and passionate individuals who are dedicated to delivering high-quality products to our clients. We are seeking a skilled React Native Engineer to join our team and help us continue to …",
+  "detail": "Position: React Native Engineer Company Overview: Lorgarithm offers intelligent HR solutions with access to top tech and non-tech talents worldwide. We empower businesses and professionals alike, transforming the way HR is managed. Our team is made up of talented and passionate individuals who are dedicated to delivering high-quality products to our clients. We are seeking a skilled React Native Engineer to join our team and help us continue to grow and succeed. Job Overview: As a React Native Engineer at Lorgarithm , you will be responsible for developing and maintaining our mobile applications using React Native. You will work closely with our team of designers and developers to create user-friendly, high-performance, and scalable mobile apps. This is a full-time position that offers the opportunity to work on exciting projects and make a significant impact on our company's success. Key Responsibilities: Develop and maintain mobile applications using React Native Collaborate with designers and developers to create user-friendly and visually appealing apps Optimize app performance for maximum speed and scalability Ensure the technical feasibility of UI/UX designs Troubleshoot and debug issues with existing apps Stay up-to-date with the latest trends and best practices in mobile app development Participate in code reviews and provide constructive feedback Communicate effectively with team members and stakeholders Continuously improve app functionality and user experience Work",
   "fit": {
-   "verdict": "stretch",
-   "reason": "AI focus; candidate has no demonstrated AI skills but could attempt"
+   "verdict": "qualified",
+   "reason": "Has required React and Expo experience for mobile development"
   },
-  "deadline": "2026-10-31T23:59:59.000Z"
+  "deadline": null
  }
 ]
