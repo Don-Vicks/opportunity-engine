@@ -1,24 +1,20 @@
 [
  {
-  "id": "reddit:t3_1x4axyt",
-  "title": "Full-Stack Developer for Independent Animation Streaming Platform | $1,500 Fixed | No AI",
-  "type": "freelance",
-  "source": "Reddit",
-  "url": "https://www.reddit.com/r/forhire/comments/1x4axyt/hiring_fullstack_developer_for_independent/",
-  "applyUrl": "https://pulptv.org/",
-  "prizeLabel": "n/a",
-  "region": "",
+  "id": "superteam:60d20763-152d-4f92-8b55-e1ffa44ae9e4",
+  "title": "Panta x NectarFi Trading Competition Bounty (Panta )",
+  "type": "bounty",
+  "source": "Superteam Earn",
+  "url": "https://earn.superteam.fun/listing/panta-x-nectarfi-trading-competition-bounty",
+  "prizeLabel": "500 USDC",
   "skills": [
-   "full-stack",
-   "ai",
-   "nextjs"
+   "solana",
+   "web3"
   ],
-  "snippet": "Hey everyone! We're PULP , an independent animation organization working to create a new home for independent animated films and shows. We've built an audience of roughly 50,000 followers on Instagram and established relationships with over 150 independent animators. We're now looking for an experienced developer to help us take the next step: launching our own streaming platform. Our long-term goal is to make independent animation more accessib…",
-  "detail": "Hey everyone! We're PULP , an independent animation organization working to create a new home for independent animated films and shows. We've built an audience of roughly 50,000 followers on Instagram and established relationships with over 150 independent animators. We're now looking for an experienced developer to help us take the next step: launching our own streaming platform. Our long-term goal is to make independent animation more accessible while creating a sustainable distribution model that financially supports the artists behind the work. What we're hiring for We're looking for a full-stack developer to build the first functional version of our website, with an emphasis on clean architecture, thoughtful design, and long-term maintainability. The initial platform should include: A custom-branded, mobile-responsive website incorporating artwork from an artist we're collaborating with A homepage featuring selected animations and curated collections An on-demand Browse section featuring independent animated shorts and series Individual film and series pages with video playback, descriptions, and creator credits Search and filtering functionality An administrative interface allowing our team to upload, organize, and manage content independently Configurable pages and navigation for our festivals, organization, and social platforms 'About' Subpage & 'Donate,' button imbedded to Patreon We want a solid technical foundation that can eventually support user accounts, live pr",
+  "snippet": "Panta ",
   "fit": {
    "verdict": "qualified",
-   "reason": "candidate has strong Next.js, React, Node/TS full-stack experience matching the project"
+   "reason": "has Solana and web3 background"
   },
-  "deadline": null
+  "deadline": "2026-11-12T22:59:59.000Z"
  }
 ]

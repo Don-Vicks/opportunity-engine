@@ -834,5 +834,16 @@
    "type": "freelance",
    "source": "Reddit"
   }
+ },
+ "superteam:60d20763-152d-4f92-8b55-e1ffa44ae9e4": {
+  "t": "2026-10-13T13:11:19.238Z",
+  "d": "2026-11-12T22:59:59.000Z",
+  "o": {
+   "title": "Panta x NectarFi Trading Competition Bounty (Panta )",
+   "url": "https://earn.superteam.fun/listing/panta-x-nectarfi-trading-competition-bounty",
+   "prizeLabel": "500 USDC",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
  }
 }
