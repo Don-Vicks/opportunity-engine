@@ -1,20 +1,22 @@
 [
  {
-  "id": "superteam:60d20763-152d-4f92-8b55-e1ffa44ae9e4",
-  "title": "Panta x NectarFi Trading Competition Bounty (Panta )",
-  "type": "bounty",
-  "source": "Superteam Earn",
-  "url": "https://earn.superteam.fun/listing/panta-x-nectarfi-trading-competition-bounty",
-  "prizeLabel": "500 USDC",
+  "id": "reddit:t3_1x52r73",
+  "title": "Playwright, Node.js, Automation Developer",
+  "type": "freelance",
+  "source": "Reddit",
+  "url": "https://www.reddit.com/r/forhire/comments/1x52r73/hiring_playwright_nodejs_automation_developer/",
+  "prizeLabel": "n/a",
+  "region": "",
   "skills": [
-   "solana",
-   "web3"
+   "node",
+   "javascript"
   ],
-  "snippet": "Panta ",
+  "snippet": "Looking for a hands-on Node.js developer to write automated workflow modules for a local user-interface performance testing and simulation suite. The core application logic is already designed; I just need a clean implementation for the browser interaction and logging layers. The full step-by-step documentation, database schemas, and expected validation loops are completely detailed. Please drop me a DM with your GitHub profile or a brief mentio…",
+  "detail": "Looking for a hands-on Node.js developer to write automated workflow modules for a local user-interface performance testing and simulation suite. The core application logic is already designed; I just need a clean implementation for the browser interaction and logging layers. The full step-by-step documentation, database schemas, and expected validation loops are completely detailed. Please drop me a DM with your GitHub profile or a brief mention of your experience handling Playwright CDP connections if you are availab!e to start immediately! Budget > $15 &#32; submitted by &#32; /u/Naive_Area6965 [link] &#32; [comments]",
   "fit": {
    "verdict": "qualified",
-   "reason": "has Solana and web3 background"
+   "reason": "has Node.js and JavaScript background suitable for Playwright automation"
   },
-  "deadline": "2026-11-12T22:59:59.000Z"
+  "deadline": null
  }
 ]
