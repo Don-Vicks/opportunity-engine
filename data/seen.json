@@ -59,7 +59,8 @@
    "prizeLabel": "1,800 USDG",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "devpost:29114": {
   "t": "2026-10-08T08:28:33.075Z",
@@ -81,7 +82,8 @@
    "prizeLabel": "$30,000",
    "type": "hackathon",
    "source": "Devpost"
-  }
+  },
+  "r": 1
  },
  "devpost:30588": {
   "t": "2026-10-08T08:28:33.075Z",
