@@ -857,5 +857,15 @@
    "type": "freelance",
    "source": "Reddit"
   }
+ },
+ "himalayas:https://himalayas.app/companies/nextalpha-nu-dawn/jobs/frontend-engineer-react-nextjs-git-responsive-design": {
+  "t": "2026-10-14T08:11:48.811Z",
+  "o": {
+   "title": "Frontend Engineer (React/NextJS, Git, Responsive Design) @ NextAlpha (Nu Dawn)",
+   "url": "https://himalayas.app/companies/nextalpha-nu-dawn/jobs/frontend-engineer-react-nextjs-git-responsive-design",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
  }
 }

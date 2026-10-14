@@ -1,21 +1,23 @@
 [
  {
-  "id": "reddit:t3_1x52r73",
-  "title": "Playwright, Node.js, Automation Developer",
-  "type": "freelance",
-  "source": "Reddit",
-  "url": "https://www.reddit.com/r/forhire/comments/1x52r73/hiring_playwright_nodejs_automation_developer/",
+  "id": "himalayas:https://himalayas.app/companies/nextalpha-nu-dawn/jobs/frontend-engineer-react-nextjs-git-responsive-design",
+  "title": "Frontend Engineer (React/NextJS, Git, Responsive Design) @ NextAlpha (Nu Dawn)",
+  "type": "job",
+  "source": "Himalayas",
+  "url": "https://himalayas.app/companies/nextalpha-nu-dawn/jobs/frontend-engineer-react-nextjs-git-responsive-design",
   "prizeLabel": "n/a",
   "region": "",
   "skills": [
-   "node",
-   "javascript"
+   "react",
+   "nextjs",
+   "frontend",
+   "design"
   ],
-  "snippet": "Looking for a hands-on Node.js developer to write automated workflow modules for a local user-interface performance testing and simulation suite. The core application logic is already designed; I just need a clean implementation for the browser interaction and logging layers. The full step-by-step documentation, database schemas, and expected validation loops are completely detailed. Please drop me a DM with your GitHub profile or a brief mentio…",
-  "detail": "Looking for a hands-on Node.js developer to write automated workflow modules for a local user-interface performance testing and simulation suite. The core application logic is already designed; I just need a clean implementation for the browser interaction and logging layers. The full step-by-step documentation, database schemas, and expected validation loops are completely detailed. Please drop me a DM with your GitHub profile or a brief mention of your experience handling Playwright CDP connections if you are availab!e to start immediately! Budget > $15 &#32; submitted by &#32; /u/Naive_Area6965 [link] &#32; [comments]",
+  "snippet": "Position Overview: We’re hiring a Frontend Engineer to design and implement a scalable, high-performance user interface for an innovative platform. Key Responsibilities: Design and build a user-friendly, responsive UI. Lead frontend architecture and optimization. Implement UI/UX best practices. Integrate with backend APIs. Required Skills: Proficient in React/NextJS. Experience with web development (design, development, deployment). Strong knowl…",
+  "detail": "Position Overview: We’re hiring a Frontend Engineer to design and implement a scalable, high-performance user interface for an innovative platform. Key Responsibilities: Design and build a user-friendly, responsive UI. Lead frontend architecture and optimization. Implement UI/UX best practices. Integrate with backend APIs. Required Skills: Proficient in React/NextJS. Experience with web development (design, development, deployment). Strong knowledge of Git and responsive design. Good communication and problem-solving skills. Preferred Qualifications: Experience in startups. Familiarity with no/low-code platforms. Knowledge of web performance optimization. Experience with backend frameworks like Python FastAPI. Company Overview: The company develops tools for creating custom AI workflows, empowering users with a no-code platform and offering APIs for developers. Originally posted on Himalayas",
   "fit": {
    "verdict": "qualified",
-   "reason": "has Node.js and JavaScript background suitable for Playwright automation"
+   "reason": "strong React/Next.js and full-stack background"
   },
   "deadline": null
  }
