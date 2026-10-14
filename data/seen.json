@@ -867,5 +867,25 @@
    "type": "job",
    "source": "Himalayas"
   }
+ },
+ "himalayas:https://himalayas.app/companies/draftboard/jobs/backend-engineer-nestjs-go": {
+  "t": "2026-10-14T14:11:36.261Z",
+  "o": {
+   "title": "Backend Engineer (NestJS / Go) @ Draftboard",
+   "url": "https://himalayas.app/companies/draftboard/jobs/backend-engineer-nestjs-go",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/micro1/jobs/software-engineer-open-source-contributor": {
+  "t": "2026-10-14T14:11:36.261Z",
+  "o": {
+   "title": "Software Engineer (Open Source Contributor) @ micro1",
+   "url": "https://himalayas.app/companies/micro1/jobs/software-engineer-open-source-contributor",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Himalayas"
+  }
  }
 }
