@@ -887,5 +887,15 @@
    "type": "freelance",
    "source": "Himalayas"
   }
+ },
+ "himalayas:https://himalayas.app/companies/micro1/jobs/software-engineer-github-contributor": {
+  "t": "2026-10-14T23:32:56.070Z",
+  "o": {
+   "title": "Software Engineer (GitHub Contributor) @ micro1",
+   "url": "https://himalayas.app/companies/micro1/jobs/software-engineer-github-contributor",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Himalayas"
+  }
  }
 }

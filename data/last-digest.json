@@ -1,33 +1,10 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/draftboard/jobs/backend-engineer-nestjs-go",
-  "title": "Backend Engineer (NestJS / Go) @ Draftboard",
-  "type": "job",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/draftboard/jobs/backend-engineer-nestjs-go",
-  "prizeLabel": "n/a",
-  "region": "",
-  "skills": [
-   "nestjs",
-   "go",
-   "backend",
-   "ai",
-   "javascript"
-  ],
-  "snippet": "What we do & why Cold outbound is collapsing - and the way sales has been done for decades is being dragged along with it. AI & automation have made sending emails free & easy, which means everyone’s inbox is now full of garbage. In this world, relationships become exponentially more important. Because who you know dictates who you can sell to. Draftboard is the world’s first autonomous warm-intro engine - it identifies who in your network is be…",
-  "detail": "What we do & why Cold outbound is collapsing - and the way sales has been done for decades is being dragged along with it. AI & automation have made sending emails free & easy, which means everyone’s inbox is now full of garbage. In this world, relationships become exponentially more important. Because who you know dictates who you can sell to. Draftboard is the world’s first autonomous warm-intro engine - it identifies who in your network is best positioned to make an intro to your prospects. And early users are already telling us it’s the most effective outreach tool they’ve ever used. The spark is there. Now we need to nurture it with even more incredible engineers. We’re looking for an experienced Backend Engineer who enjoys autonomy, solves problems end-to-end, and moves fast in a small startup team. Tech Stack Service-oriented / microservices architecture Node.js (NestJS) , Go , a bit of Python PostgreSQL as the primary database gRPC for internal service communication Hosted on Google Cloud Platform Integrations with AI assistants and AI agent systems Client applications: Next.js web app + Chrome Extension What You’ll Do Build and evolve backend services & APIs powering Draftboard ’s AI-driven networking experience Design and implement new product functionality end-to-end Improve, refactor and support existing services Collaborate closely with the team and contribute to product decisions Own solutions from idea to deployment with minimal supervision Requirements Russian",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "strong NestJS background but missing professional Go experience"
-  },
-  "deadline": null
- },
- {
-  "id": "himalayas:https://himalayas.app/companies/micro1/jobs/software-engineer-open-source-contributor",
-  "title": "Software Engineer (Open Source Contributor) @ micro1",
+  "id": "himalayas:https://himalayas.app/companies/micro1/jobs/software-engineer-github-contributor",
+  "title": "Software Engineer (GitHub Contributor) @ micro1",
   "type": "freelance",
   "source": "Himalayas",
-  "url": "https://himalayas.app/companies/micro1/jobs/software-engineer-open-source-contributor",
+  "url": "https://himalayas.app/companies/micro1/jobs/software-engineer-github-contributor",
   "prizeLabel": "n/a",
   "region": "",
   "skills": [
@@ -37,11 +14,11 @@
    "java",
    "ai"
   ],
-  "snippet": "Role Title: Software Engineer (Open Source Contributor) Role Type: Contractor Location: Anywhere in the world, remote Opportunity Snapshot Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If yo…",
-  "detail": "Role Title: Software Engineer (Open Source Contributor) Role Type: Contractor Location: Anywhere in the world, remote Opportunity Snapshot Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. We care about your human judgment: our interview and assessment stages are designed to see how you think, so we ask that you complete them on your own, without AI assistants or help from others. Job Description In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required — your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that acc",
+  "snippet": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contractor Location: Anywhere in the world, remote Opportunity Snapshot Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don…",
+  "detail": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contractor Location: Anywhere in the world, remote Opportunity Snapshot Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. We care about your human judgment: our interview and assessment stages are designed to see how you think, so we ask that you complete them on your own, without AI assistants or help from others. Job Description In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required — your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that accept r",
   "fit": {
    "verdict": "stretch",
-   "reason": "has Rust side projects but limited professional-grade contributions"
+   "reason": "has Rust and TypeScript experience but limited open‑source contributions"
   },
   "deadline": null
  }
