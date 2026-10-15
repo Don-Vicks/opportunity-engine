@@ -1,25 +1,17 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/micro1/jobs/software-engineer-github-contributor",
-  "title": "Software Engineer (GitHub Contributor) @ micro1",
-  "type": "freelance",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/micro1/jobs/software-engineer-github-contributor",
+  "id": "devfolio:syntax-error-6",
+  "title": "Syntax Error 2026",
+  "type": "hackathon",
+  "source": "Devfolio",
+  "url": "https://syntax-error-6.devfolio.co",
   "prizeLabel": "n/a",
-  "region": "",
-  "skills": [
-   "rust",
-   "typescript",
-   "go",
-   "java",
-   "ai"
-  ],
-  "snippet": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contractor Location: Anywhere in the world, remote Opportunity Snapshot Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don…",
-  "detail": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contractor Location: Anywhere in the world, remote Opportunity Snapshot Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. We care about your human judgment: our interview and assessment stages are designed to see how you think, so we ask that you complete them on your own, without AI assistants or help from others. Job Description In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required — your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that accept r",
+  "skills": [],
+  "snippet": "Explore. Learn. Build.",
   "fit": {
-   "verdict": "stretch",
-   "reason": "has Rust and TypeScript experience but limited open‑source contributions"
+   "verdict": "qualified",
+   "reason": "no specific requirements, candidate can participate"
   },
-  "deadline": null
+  "deadline": "2026-10-22T18:30:00.000Z"
  }
 ]

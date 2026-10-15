@@ -687,7 +687,8 @@
    "prizeLabel": "1,600 USDG",
    "type": "bounty",
    "source": "Superteam Earn"
-  }
+  },
+  "r": 1
  },
  "jobicy:154903": {
   "t": "2026-10-09T09:48:38.644Z",
@@ -896,6 +897,17 @@
    "prizeLabel": "n/a",
    "type": "freelance",
    "source": "Himalayas"
+  }
+ },
+ "devfolio:syntax-error-6": {
+  "t": "2026-10-15T07:50:55.991Z",
+  "d": "2026-10-22T18:30:00.000Z",
+  "o": {
+   "title": "Syntax Error 2026",
+   "url": "https://syntax-error-6.devfolio.co",
+   "prizeLabel": "n/a",
+   "type": "hackathon",
+   "source": "Devfolio"
   }
  }
 }
