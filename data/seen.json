@@ -909,5 +909,55 @@
    "type": "hackathon",
    "source": "Devfolio"
   }
+ },
+ "himalayas:https://himalayas.app/companies/tether-operations-limited/jobs/mobile-engineer-react-native-100-remote": {
+  "t": "2026-10-15T18:46:25.704Z",
+  "o": {
+   "title": "Mobile Engineer - React Native (100% Remote) @ Tether Operations Limited",
+   "url": "https://himalayas.app/companies/tether-operations-limited/jobs/mobile-engineer-react-native-100-remote",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "himalayas:https://himalayas.app/companies/holiday-world/jobs/software-engineer-internship-unpaid": {
+  "t": "2026-10-15T18:46:25.704Z",
+  "o": {
+   "title": "Software Engineer Internship (UNPAID) @ Holiday World",
+   "url": "https://himalayas.app/companies/holiday-world/jobs/software-engineer-internship-unpaid",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Himalayas"
+  }
+ },
+ "jobicy:155391": {
+  "t": "2026-10-15T18:46:25.704Z",
+  "o": {
+   "title": "Site Reliability Engineer @ Supabase",
+   "url": "https://jobicy.com/jobs/155391-site-reliability-engineer-4",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:155389": {
+  "t": "2026-10-15T18:46:25.704Z",
+  "o": {
+   "title": "Platform Engineer, Managed Postgres @ Supabase",
+   "url": "https://jobicy.com/jobs/155389-platform-engineer-managed-postgres",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:155385": {
+  "t": "2026-10-15T18:46:25.704Z",
+  "o": {
+   "title": "AI Platform Engineer @ Supabase",
+   "url": "https://jobicy.com/jobs/155385-ai-platform-engineer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
  }
 }
