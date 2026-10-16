@@ -1043,5 +1043,37 @@
    "type": "bounty",
    "source": "Superteam Earn"
   }
+ },
+ "himalayas:https://himalayas.app/companies/somnio-software/jobs/sr-react-native-deazy": {
+  "t": "2026-10-16T18:31:51.690Z",
+  "o": {
+   "title": "Sr REACT NATIVE (Deazy) @ Somnio Software",
+   "url": "https://himalayas.app/companies/somnio-software/jobs/sr-react-native-deazy",
+   "prizeLabel": "n/a",
+   "type": "freelance",
+   "source": "Himalayas"
+  }
+ },
+ "superteam:f4336524-b7ef-412c-bdb8-05f8420a0c2e": {
+  "t": "2026-10-16T18:31:51.690Z",
+  "d": "2026-10-23T18:29:59.999Z",
+  "o": {
+   "title": "Redesign Your Favourite App on Solana (Superteam India)",
+   "url": "https://earn.superteam.fun/listing/redesign-your-favourite-app-on-solana",
+   "prizeLabel": "1,500 USDC",
+   "type": "bounty",
+   "source": "Superteam Earn"
+  }
+ },
+ "devpost:31139": {
+  "t": "2026-10-16T18:31:51.690Z",
+  "d": "2026-10-24T23:59:59.000Z",
+  "o": {
+   "title": "Neighborhood Hacks",
+   "url": "https://neighborhood-hacks-2026.devpost.com/",
+   "prizeLabel": "$57,866",
+   "type": "hackathon",
+   "source": "Devpost"
+  }
  }
 }
