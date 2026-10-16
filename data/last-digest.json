@@ -1,59 +1,59 @@
 [
  {
-  "id": "jobicy:153321",
-  "title": "Postgres Engineer @ Supabase",
+  "id": "himalayas:https://himalayas.app/companies/spotter-labs/jobs/remote-fullstack-engineer-react-django-ai-systems-2947975802",
+  "title": "Remote FullStack Engineer – React + Django – AI Systems @ Spotter Labs",
   "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/153321-postgres-engineer",
+  "source": "Himalayas",
+  "url": "https://himalayas.app/companies/spotter-labs/jobs/remote-fullstack-engineer-react-django-ai-systems-2947975802",
   "prizeLabel": "n/a",
-  "region": "Anywhere",
+  "region": "",
   "skills": [
-   "backend",
-   "rust"
-  ],
-  "snippet": "Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We’re looking for a Senior Postgres Engineer to join our Postgres Team and help maintain and&hellip;",
-  "detail": "Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We’re looking for a Senior Postgres Engineer to join our Postgres Team and help maintain and&hellip;",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "has strong Postgres background but only learning Rust"
-  },
-  "deadline": null
- },
- {
-  "id": "jobicy:153326",
-  "title": "Multigres Deployment Engineer @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/153326-multigres-deployment-engineer",
-  "prizeLabel": "n/a",
-  "region": "Anywhere",
-  "skills": [
-   "backend",
-   "rust"
-  ],
-  "snippet": "Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. We're looking for an engineer to own the deployment and operational infrastructure of Multigres, our distributed Postgres platform. You'll&hellip;",
-  "detail": "Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. We're looking for an engineer to own the deployment and operational infrastructure of Multigres, our distributed Postgres platform. You'll&hellip;",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "has Postgres expertise; Rust experience is limited to side projects"
-  },
-  "deadline": null
- },
- {
-  "id": "devpost:31684",
-  "title": "NTU x ST Engineering Hackathon",
-  "type": "hackathon",
-  "source": "Devpost",
-  "url": "https://ntu-x-st-engineering-hackathon.devpost.com/",
-  "prizeLabel": "$2,500",
-  "skills": [
+   "react",
+   "fullstack",
    "ai"
   ],
-  "snippet": "nanyang technological university · Cybersecurity, Education, Machine Learning/AI",
+  "snippet": "We're a remote, product-focused startup building AI- and algorithm-driven systems. We're looking for a FullStack Engineer who can move fluidly between React frontends and Django backends. You'll own features end-to-end: from designing the data model, building the API, to crafting the UI that brings it all together. You'll work with a small distributed team across several countries, shipping fast and iterating based on real feedback. What You'll …",
+  "detail": "We're a remote, product-focused startup building AI- and algorithm-driven systems. We're looking for a FullStack Engineer who can move fluidly between React frontends and Django backends. You'll own features end-to-end: from designing the data model, building the API, to crafting the UI that brings it all together. You'll work with a small distributed team across several countries, shipping fast and iterating based on real feedback. What You'll Do Build and ship complete features across React frontend and Django backend. Develop responsive web apps using React and Material UI (MUI). Design backend services and APIs using Python + Django (DRF or similar). Create clean, responsive UIs with React that connect to our services. Implement algorithmic/AI logic (scoring, ranking, decision rules) and surface it in the UI. Write pragmatic, production-ready code that ships fast and iterates easily. What We're Looking For Strong proficiency in React and Material UI. Attention to detail: You care about alignment, spacing, and how the app feels to the user. Comfortable designing and building RESTful APIs (bonus if you’ve used DRF or similar frameworks). Experience working on non-trivial business logic or algorithms (e.g., decision flows, scoring rules, optimization logic). Good instincts around performance : understanding query behavior, avoiding obvious pitfalls, and using caching when it counts. Ability to work independently in a remote environment and communicate clearly. Bonus Points F",
   "fit": {
    "verdict": "stretch",
-   "reason": "no explicit AI background but could contribute as full-stack developer"
+   "reason": "has React and some Python backend experience but no Django specific background"
   },
-  "deadline": "2026-10-17T23:59:59.000Z"
+  "deadline": null
+ },
+ {
+  "id": "superteam:266cbaf7-4ec3-410d-a9fe-257d1d3433ef",
+  "title": "Rumbo a Breakpoint 2026: gana una entrada y apoyo para tu viaje (La Familia)",
+  "type": "bounty",
+  "source": "Superteam Earn",
+  "url": "https://earn.superteam.fun/listing/rumbo-a-breakpoint-2026-gana-una-entrada-y-apoyo-para-tu-viaje",
+  "prizeLabel": "5,000 USDG",
+  "skills": [
+   "solana",
+   "web3"
+  ],
+  "snippet": "La Familia",
+  "fit": {
+   "verdict": "qualified",
+   "reason": "strong Solana and web3 experience"
+  },
+  "deadline": "2026-10-25T21:59:59.000Z"
+ },
+ {
+  "id": "superteam:4d3f8675-639a-476e-aa2c-c9cb49a1748c",
+  "title": "HackYeah - Superteam Poland Track (Superteam Poland)",
+  "type": "bounty",
+  "source": "Superteam Earn",
+  "url": "https://earn.superteam.fun/listing/hackyeah-superteam-poland-track",
+  "prizeLabel": "3,000 USDG",
+  "skills": [
+   "solana",
+   "web3"
+  ],
+  "snippet": "Superteam Poland",
+  "fit": {
+   "verdict": "qualified",
+   "reason": "strong Solana and web3 experience"
+  },
+  "deadline": "2026-10-30T21:59:59.000Z"
  }
 ]
