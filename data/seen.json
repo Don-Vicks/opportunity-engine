@@ -533,7 +533,8 @@
    "prizeLabel": "n/a",
    "type": "hackathon",
    "source": "Devfolio"
-  }
+  },
+  "r": 1
  },
  "himalayas:https://himalayas.app/companies/consensys-io/jobs/staff-software-engineer-perpetuals": {
   "t": "2026-10-07T20:19:33.120Z",
@@ -1010,7 +1011,8 @@
    "prizeLabel": "$2,500",
    "type": "hackathon",
    "source": "Devpost"
-  }
+  },
+  "r": 1
  },
  "himalayas:https://himalayas.app/companies/spotter-labs/jobs/remote-fullstack-engineer-react-django-ai-systems-2947975802": {
   "t": "2026-10-16T13:37:58.097Z",
