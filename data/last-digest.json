@@ -1,10 +1,10 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/tether-operations-limited/jobs/mobile-engineer-react-native-100-remote",
-  "title": "Mobile Engineer - React Native (100% Remote) @ Tether Operations Limited",
+  "id": "himalayas:https://himalayas.app/companies/tether-operations-limited/jobs/mobile-engineer-react-native-100-remote-worldwide",
+  "title": "Mobile Engineer - React Native (100% Remote) - Worldwide @ Tether Operations Limited",
   "type": "job",
   "source": "Himalayas",
-  "url": "https://himalayas.app/companies/tether-operations-limited/jobs/mobile-engineer-react-native-100-remote",
+  "url": "https://himalayas.app/companies/tether-operations-limited/jobs/mobile-engineer-react-native-100-remote-worldwide",
   "prizeLabel": "n/a",
   "region": "",
   "skills": [
@@ -15,94 +15,34 @@
   "detail": "Join Tether and Shape the Future of Digital Finance At Tether, we’re not just building products, we’re pioneering a global financial revolution. Our cutting-edge solutions empower businesses—from exchanges and wallets to payment processors and ATMs—to seamlessly integrate reserve-backed tokens across blockchains. By harnessing the power of blockchain technology, Tether enables you to store, send, and receive digital tokens instantly, securely, and globally, all at a fraction of the cost. Transparency is the bedrock of everything we do, ensuring trust in every transaction. Innovate with Tether Tether Finance: Our innovative product suite features the world’s most trusted stablecoin, USDT , relied upon by hundreds of millions worldwide, alongside pioneering digital asset tokenization services. But that’s just the beginning: Tether Power: Driving sustainable growth, our energy solutions optimize excess power for Bitcoin mining using eco-friendly practices in state-of-the-art, geo-diverse facilities. Tether Data: Fueling breakthroughs in AI and peer-to-peer technology, we reduce infrastructure costs and enhance global communications with cutting-edge solutions like KEET , our flagship app that redefines secure and private data sharing. Tether Education : Democratizing access to top-tier digital learning, we empower individuals to thrive in the digital and gig economies, driving global growth and opportunity. Tether Evolution : At the intersection of technology and human potential",
   "fit": {
    "verdict": "qualified",
-   "reason": "Has React and Expo experience for mobile engineering"
+   "reason": "Has required React and Expo experience for mobile role"
   },
   "deadline": null
  },
  {
-  "id": "himalayas:https://himalayas.app/companies/holiday-world/jobs/software-engineer-internship-unpaid",
-  "title": "Software Engineer Internship (UNPAID) @ Holiday World",
+  "id": "remoteok:1137523",
+  "title": "Sr REACT NATIVE @ Somnio Software",
   "type": "job",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/holiday-world/jobs/software-engineer-internship-unpaid",
+  "source": "RemoteOK",
+  "url": "https://remoteOK.com/remote-jobs/remote-sr-react-native-somnio-software-1137523",
   "prizeLabel": "n/a",
   "region": "",
   "skills": [
-   "typescript",
+   "expo",
    "react",
-   "node",
-   "full-stack",
-   "design",
+   "dev",
+   "python",
    "javascript",
-   "nextjs",
-   "express"
+   "c",
+   "flutter",
+   "node",
+   "digital nomad"
   ],
-  "snippet": "Who We Are Holiday Channel is a forward-thinking startup focused on creating innovative solutions like Digital Magazines, Marketplace and Streaming Platform to enhance holiday experiences. Holiday World is a digital media and entertainment company building the world’s first platform for ALL THINGS HOLIDAY where consumers can conveniently find all their holiday needs 24x7x365 — entertainment, shopping, trends, traditions, food, travel, DIY, and t…",
-  "detail": "Who We Are Holiday Channel is a forward-thinking startup focused on creating innovative solutions like Digital Magazines, Marketplace and Streaming Platform to enhance holiday experiences. Holiday World is a digital media and entertainment company building the world’s first platform for ALL THINGS HOLIDAY where consumers can conveniently find all their holiday needs 24x7x365 — entertainment, shopping, trends, traditions, food, travel, DIY, and the best deals. We created Holiday World to inspire, celebrate, and unite people through holidays, as well as all the traditions and rituals that accompany them. As the first inclusive destination devoted to sharing a global lens on holiday celebrations and preparation, Holiday World is a catalyst for more diverse storytelling and cross-cultural education. Our mission is to give millions of people a reason to celebrate and savor every day, every moment, all year by uniting communities with more joy, more fun, and more compassion. Holiday World is a for-profit company that holds its social mission at its core. What We Offer Immediate opportunity to make an impact on our team, product, and business. A chance to work with a startup that has over 110K users. A get-stuff-done and fun and caring culture. Meaningful work and a strong shared sense of mission. A remote first working environment with an office in Colorado Springs, CO. A platform to lead and innovate within a dynamic startup environment, offering substantial opportunities for prof",
-  "fit": {
-   "verdict": "qualified",
-   "reason": "Meets full-stack TypeScript/React/Node requirements"
-  },
-  "deadline": null
- },
- {
-  "id": "jobicy:155391",
-  "title": "Site Reliability Engineer @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/155391-site-reliability-engineer-4",
-  "prizeLabel": "n/a",
-  "region": "Anywhere",
-  "skills": [
-   "backend",
-   "rust"
-  ],
-  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role Supabase manages millions of Postgres instances and is growing. We have strong teams across&hellip;",
-  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role Supabase manages millions of Postgres instances and is growing. We have strong teams across&hellip;",
+  "snippet": "QuÃ© es Deazy Deazy es una plataforma/marketplace de UK que conecta empresas que necesitan desarrollo de software con agencias de desarrollo en todo el mundo. Ellos consiguen el cliente, definen el proyecto y luego lo asignan a una agencia como Somnio para ejecutarlo. BÃ¡sicamente son un intermediario entre el cliente final y nosotros. CÃ³mo funciona el modelo Deazy factura al cliente final a su propia tarifa (en este caso estÃ¡n hablando de EUR…",
+  "detail": "QuÃ© es Deazy Deazy es una plataforma/marketplace de UK que conecta empresas que necesitan desarrollo de software con agencias de desarrollo en todo el mundo. Ellos consiguen el cliente, definen el proyecto y luego lo asignan a una agencia como Somnio para ejecutarlo. BÃ¡sicamente son un intermediario entre el cliente final y nosotros. CÃ³mo funciona el modelo Deazy factura al cliente final a su propia tarifa (en este caso estÃ¡n hablando de EUR 47/h, aunque todavÃ­a hay que confirmar si ese es el rate al cliente o lo que pagan al proveedor). Nosotros le facturamos a Deazy a un rate mÃ¡s bajo, y la diferencia es su margen. Por eso la tarifa introductoria que les estamos ofreciendo es USD 45/h - USD 40/h â pensada para que Deazy tenga margen cÃ³modo y nos priorice y abrir la cuenta Si la relaciÃ³n funciona, Deazy nos puede asignar proyectos de forma recurrente sin que nosotros tengamos que salir a conseguirlos. Es un canal de ventas indirecto, ellos traen el cliente, nosotros entregamos. El volumen potencial es importante si nos posicionamos bien con ellos. Deazy nos conoce principalmente como agencia Flutter. El trabajo ahora es mostrarles que tambiÃ©n somos fuertes en React Native, React, Node.js , Python y AI Please mention the word **JOYOUSLY** and tag RNDguMjE3LjE0Ny4xNjM= when applying to show you read the job post completely (#RNDguMjE3LjE0Ny4xNjM=). This is a beta feature to avoid spam applicants. Companies can search these words to find applicants that read this and",
   "fit": {
    "verdict": "stretch",
-   "reason": "Rust experience is limited to side projects, not proven SRE expertise"
-  },
-  "deadline": null
- },
- {
-  "id": "jobicy:155389",
-  "title": "Platform Engineer, Managed Postgres @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/155389-platform-engineer-managed-postgres",
-  "prizeLabel": "n/a",
-  "region": "Anywhere",
-  "skills": [
-   "backend",
-   "rust"
-  ],
-  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We are seeking a Platform Software Engineer with deep experience in distributed systems to&hellip;",
-  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We are seeking a Platform Software Engineer with deep experience in distributed systems to&hellip;",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "Rust skills are developing, but lacks demonstrated platform engineering depth"
-  },
-  "deadline": null
- },
- {
-  "id": "jobicy:155385",
-  "title": "AI Platform Engineer @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/155385-ai-platform-engineer",
-  "prizeLabel": "n/a",
-  "region": "Anywhere",
-  "skills": [
-   "backend",
-   "ai",
-   "rust"
-  ],
-  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We are hiring a AI Platform Engineer to build the execution layer for Supabase's&hellip;",
-  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We are hiring a AI Platform Engineer to build the execution layer for Supabase's&hellip;",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "has backend experience and is learning Rust but lacks AI expertise"
+   "reason": "Matches core React/Expo skills but missing Flutter/C and extensive React Native experience"
   },
   "deadline": null
  }
