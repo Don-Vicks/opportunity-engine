@@ -979,5 +979,36 @@
    "type": "job",
    "source": "RemoteOK"
   }
+ },
+ "jobicy:153321": {
+  "t": "2026-10-16T07:41:15.245Z",
+  "o": {
+   "title": "Postgres Engineer @ Supabase",
+   "url": "https://jobicy.com/jobs/153321-postgres-engineer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:153326": {
+  "t": "2026-10-16T07:41:15.245Z",
+  "o": {
+   "title": "Multigres Deployment Engineer @ Supabase",
+   "url": "https://jobicy.com/jobs/153326-multigres-deployment-engineer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "devpost:31684": {
+  "t": "2026-10-16T07:41:15.245Z",
+  "d": "2026-10-17T23:59:59.000Z",
+  "o": {
+   "title": "NTU x ST Engineering Hackathon",
+   "url": "https://ntu-x-st-engineering-hackathon.devpost.com/",
+   "prizeLabel": "$2,500",
+   "type": "hackathon",
+   "source": "Devpost"
+  }
  }
 }
