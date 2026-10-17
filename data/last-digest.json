@@ -1,84 +1,47 @@
 [
  {
-  "id": "jobicy:150846",
-  "title": "Software engineer @ Sticker Mule",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/150846-software-engineer-3",
-  "prizeLabel": "$250k/yr",
-  "region": "Anywhere",
-  "skills": [
-   "ai",
-   "react"
-  ],
-  "snippet": "Sticker Mule is building the Internet's most lucrative commerce platform by combining software, manufacturing, and AI into one fully integrated stack. No print company, or pure software company for that matter, can match what we're doing. We're privately owned, profitable, and doing 9-figures in annual revenue with no meddlesome investors. How we work Small, autonomous&hellip;",
-  "detail": "Sticker Mule is building the Internet's most lucrative commerce platform by combining software, manufacturing, and AI into one fully integrated stack. No print company, or pure software company for that matter, can match what we're doing. We're privately owned, profitable, and doing 9-figures in annual revenue with no meddlesome investors. How we work Small, autonomous&hellip;",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "lacks AI experience"
-  },
-  "deadline": null
- },
- {
-  "id": "jobicy:153452",
-  "title": "Edge Functions Engineer @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/153452-edge-functions-engineer",
+  "id": "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-open-source-contributor-remote-contract",
+  "title": "🌎 Software Engineer (Open Source Contributor), Remote- Contract @ Xperteez Technology",
+  "type": "freelance",
+  "source": "Himalayas",
+  "url": "https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-open-source-contributor-remote-contract",
   "prizeLabel": "n/a",
-  "region": "Anywhere",
+  "region": "",
   "skills": [
-   "typescript",
-   "backend",
-   "rust"
-  ],
-  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. Edge Functions are server-side TypeScript functions, distributed globally at the edge - close to your users. They&hellip;",
-  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. Edge Functions are server-side TypeScript functions, distributed globally at the edge - close to your users. They&hellip;",
-  "fit": {
-   "verdict": "qualified",
-   "reason": "matches TypeScript, backend, and has Rust experience"
-  },
-  "deadline": null
- },
- {
-  "id": "jobicy:153449",
-  "title": "Software Engineer - Auth @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/153449-software-engineer-auth",
-  "prizeLabel": "n/a",
-  "region": "Anywhere",
-  "skills": [
+   "rust",
    "typescript",
    "go",
-   "backend",
-   "rust"
+   "java",
+   "ai"
   ],
-  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the role Auth, written in Go (server) and with client libraries for TypeScript, SSR and for&hellip;",
-  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the role Auth, written in Go (server) and with client libraries for TypeScript, SSR and for&hellip;",
+  "snippet": "Role Title: Software Engineer (Open Source Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript Codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to …",
+  "detail": "Role Title: Software Engineer (Open Source Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript Codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. Job Description: In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required — your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that accept reasonable valid so",
   "fit": {
    "verdict": "stretch",
-   "reason": "has TS and Rust but lacks Go experience"
+   "reason": "has Rust and TypeScript but limited professional Rust contributions"
   },
   "deadline": null
  },
  {
-  "id": "jobicy:153446",
-  "title": "Postgres Deployment Engineer (Nix) @ Supabase",
-  "type": "job",
-  "source": "Jobicy",
-  "url": "https://jobicy.com/jobs/153446-postgres-deployment-engineer-nix",
+  "id": "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-github-contributor-remote-contract",
+  "title": "🌎 Software Engineer (GitHub Contributor), Remote- Contract @ Xperteez Technology",
+  "type": "freelance",
+  "source": "Himalayas",
+  "url": "https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-github-contributor-remote-contract",
   "prizeLabel": "n/a",
-  "region": "Anywhere",
+  "region": "",
   "skills": [
-   "backend",
-   "rust"
+   "rust",
+   "typescript",
+   "go",
+   "java",
+   "ai"
   ],
-  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We’re looking for a Postgres Deployment Engineer to join our PostgreSQL team and help&hellip;",
-  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We’re looking for a Postgres Deployment Engineer to join our PostgreSQL team and help&hellip;",
+  "snippet": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get s…",
+  "detail": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. Job Description: In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required - your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that accept reasonable valid solutio",
   "fit": {
    "verdict": "stretch",
-   "reason": "has backend experience and some Rust work but lacks professional Rust/Nix expertise"
+   "reason": "has Rust and TypeScript but limited professional Rust contributions"
   },
   "deadline": null
  }
