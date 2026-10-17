@@ -2,7 +2,8 @@ import { createHash } from "node:crypto";
 import type { Config } from "./config.js";
 import { env as realEnv } from "./config.js";
 import { esc } from "./delivery/format.js";
-import { sendApplication, type MailFn } from "./delivery/email.js";
+import { smtpMailer, type MailFn } from "./delivery/email.js";
+import { gmailApiMailer, composeUrl, type GoogleCreds } from "./delivery/gmailapi.js";
 import { draftPitch } from "./pitch.js";
 import type { Providers } from "./fit.js";
 import { readLastDigest, type DigestItem } from "./store.js";
@@ -14,15 +15,19 @@ import {
 export interface ApplyDeps {
   cfg: Config;
   keys: Providers;
-  gmail?: { user?: string; pass?: string };
   now?: Date;
-  /** injectable for tests */
+  // ---- everything below is injectable for tests ----
+  /** SMTP app-password credentials (defaults to GMAIL_USER / GMAIL_APP_PASSWORD) */
+  gmail?: { user?: string; pass?: string };
   draft?: (item: DigestItem, cfg: Config, keys: Providers) => Promise<string | null>;
-  mail?: MailFn;
+  /** undefined = pick from the environment; null = no sender configured */
+  mail?: MailFn | null;
   fetchResume?: (url: string) => Promise<Buffer>;
-  /** true = repo is public, false = private, null = unknown (e.g. running locally). Injectable for tests. */
+  /** true = repo is public, false = private, null = unknown (e.g. running locally) */
   repoPublic?: () => Promise<boolean | null>;
 }
+
+// ---------------------------------------------------------------- guards and helpers
 
 /** Asks GitHub whether the repo this workflow runs in is public. Null when not running in Actions or the call fails. */
 export async function isRepoPublic(): Promise<boolean | null> {
@@ -42,8 +47,18 @@ const PUBLIC_REPO_MSG = "This GitHub repo is public, and drafts and your applica
 const publicGuard = async (d: ApplyDeps): Promise<string | null> =>
   d.cfg.apply.requirePrivateRepo && (await (d.repoPublic ?? isRepoPublic)()) === true ? esc(PUBLIC_REPO_MSG) : null;
 
-const MAX_RESUME_BYTES = 5_000_000;
+/** Gmail API (send-only token) if configured, else SMTP app password, else null (compose-link only). */
+export function resolveMailer(d: ApplyDeps): MailFn | null {
+  if (d.mail !== undefined) return d.mail;
+  const e = realEnv;
+  if (e.googleClientId && e.googleClientSecret && e.googleRefreshToken && e.gmailUser) {
+    return gmailApiMailer({ clientId: e.googleClientId, clientSecret: e.googleClientSecret, refreshToken: e.googleRefreshToken } satisfies GoogleCreds, e.gmailUser);
+  }
+  const s = d.gmail ?? { user: e.gmailUser, pass: e.gmailPass };
+  return s.user && s.pass ? smtpMailer(s.user, s.pass) : null;
+}
 
+const MAX_RESUME_BYTES = 5_000_000;
 export async function fetchResumePdf(url: string): Promise<Buffer> {
   const res = await fetch(url, { signal: AbortSignal.timeout(20_000), redirect: "follow" });
   if (!res.ok) throw new Error(`resume HTTP ${res.status}`);
@@ -55,6 +70,16 @@ export async function fetchResumePdf(url: string): Promise<Buffer> {
 
 const code = (itemId: string, now: Date) => createHash("sha1").update(itemId + now.getTime()).digest("hex").slice(0, 4);
 const roleOf = (title: string) => title.split(/\s+@\s+/)[0].replace(/\s+/g, " ").trim().slice(0, 80);
+
+/** Compose link for people without an automatic sender; the resume is a link line because Gmail links cannot attach files. */
+export function composeLink(p: Pick<Pending, "to" | "subject" | "body">, resumeUrl: string): string {
+  let body = p.body + (resumeUrl ? `\n\nResume: ${resumeUrl}` : "");
+  let url = composeUrl(p.to, p.subject, body);
+  while (url.length > 1900 && body.length > 300) { body = body.slice(0, body.length - 120); url = composeUrl(p.to, p.subject, body + "…"); }
+  return url;
+}
+
+// ---------------------------------------------------------------- /apply, /send, /sent, /cancel
 
 /** "/apply N": draft an email application for item N of the latest digest and show a preview. Sends nothing. */
 export async function applyPreview(n: number, d: ApplyDeps): Promise<string> {
@@ -74,24 +99,28 @@ export async function applyPreview(n: number, d: ApplyDeps): Promise<string> {
   if (!body?.trim()) return esc(`Couldn't draft #${n} right now (AI providers unavailable). Try again later.`);
 
   const pf = d.cfg.profile.portfolio;
-  const subject = `Application: ${roleOf(item.title)}${pf.name ? ` - ${pf.name}` : ""}`;
   const pending: Pending = {
     code: code(item.id, now), itemId: item.id, title: item.title, source: item.source, type: item.type, url: item.applyUrl ?? item.url,
-    to: item.contactEmail, subject, body: body.trim(), createdAt: now.toISOString(),
+    to: item.contactEmail, subject: `Application: ${roleOf(item.title)}${pf.name ? ` - ${pf.name}` : ""}`, body: body.trim(),
+    createdAt: now.toISOString(),
   };
   const keep = readPending().filter((p) => p.itemId !== item.id && now.getTime() - new Date(p.createdAt).getTime() < PENDING_TTL_HOURS * 3_600_000);
   writePending([...keep, pending]);
 
+  const link = `<a href="${esc(composeLink(pending, d.cfg.apply.resumeUrl))}">Open in Gmail</a>`;
+  const hasSender = resolveMailer(d) !== null;
   return [
     `<b>✉️ Draft application — not sent</b>`,
     `<b>To:</b> ${esc(pending.to)}`,
     `<b>Subject:</b> ${esc(pending.subject)}`,
-    `<b>Attachment:</b> ${d.cfg.apply.resumeUrl ? "resume (PDF)" : "none (set apply.resumeUrl)"}`,
+    `<b>Attachment:</b> ${hasSender ? (d.cfg.apply.resumeUrl ? "resume (PDF)" : "none (set apply.resumeUrl)") : "none; the compose link adds a resume link line"}`,
     "",
     esc(pending.body),
     "",
-    `Send it: /send ${pending.code}   ·   Discard: /cancel ${pending.code}`,
-    `<i>Expires in ${PENDING_TTL_HOURS}h. Exactly this text will be sent.</i>`,
+    hasSender
+      ? `Send it: /send ${pending.code}   ·   Discard: /cancel ${pending.code}\nOr send it yourself: ${link}`
+      : `No automatic sender is set up. ${link} (recipient, subject and body prefilled), then tap Send.\nAfter sending, log it: /sent ${pending.code}   ·   Discard: /cancel ${pending.code}`,
+    `<i>Expires in ${PENDING_TTL_HOURS}h.</i>`,
   ].join("\n");
 }
 
@@ -107,8 +136,10 @@ export async function applySend(codeArg: string, d: ApplyDeps): Promise<string> 
     writePending(pend.filter((x) => x.code !== p.code));
     return esc(`Draft ${p.code} expired. Run /apply again.`);
   }
-  const g = d.gmail ?? { user: realEnv.gmailUser, pass: realEnv.gmailPass };
-  if (!g.user || !g.pass) return esc("Gmail isn't configured. Add the GMAIL_USER and GMAIL_APP_PASSWORD repo secrets, then /send again.");
+  const mail = resolveMailer(d);
+  if (!mail) {
+    return `${esc("No automatic sender is configured, so I can't send this for you.")} <a href="${esc(composeLink(p, d.cfg.apply.resumeUrl))}">Open in Gmail</a>, tap Send, then /sent ${p.code}.`;
+  }
   if (!d.cfg.apply.resumeUrl) return esc("Set apply.resumeUrl in config.yaml so the resume can be attached.");
 
   const apps = readApps();
@@ -121,8 +152,8 @@ export async function applySend(codeArg: string, d: ApplyDeps): Promise<string> 
   catch (e) { return esc(`Couldn't fetch the resume (${(e as Error).message}). Nothing was sent.`); }
 
   try {
-    await (d.mail ?? sendApplication)({
-      user: g.user, pass: g.pass, fromName: d.cfg.apply.fromName || undefined, replyTo: d.cfg.apply.replyTo || undefined,
+    await mail({
+      fromName: d.cfg.apply.fromName || undefined, replyTo: d.cfg.apply.replyTo || undefined,
       to: p.to, subject: p.subject, text: p.body,
       attachment: { filename: `${(d.cfg.profile.portfolio.name || "Resume").replace(/\s+/g, "")}-Resume.pdf`, content: pdf },
     });
@@ -139,12 +170,30 @@ export async function applySend(codeArg: string, d: ApplyDeps): Promise<string> 
   return `✅ <b>Sent</b> to ${esc(p.to)} — logged as <b>${rec.id}</b>.\nTrack it: /interview ${rec.id} · /rejected ${rec.id} · /replied ${rec.id}`;
 }
 
+/** "/sent CODE": you sent a drafted email yourself (e.g. via the Gmail compose link); log it. */
+export function applyMarkSent(codeArg: string, d: ApplyDeps): string {
+  const now = d.now ?? new Date();
+  const pend = readPending();
+  const p = pend.find((x) => x.code === codeArg.toLowerCase());
+  if (!p) return esc(`No pending draft with code ${codeArg}.`);
+  const apps = readApps();
+  const rec: AppRecord = {
+    id: nextAppId(apps), itemId: p.itemId, title: p.title, source: p.source, type: p.type, url: p.url,
+    via: "email", to: p.to, subject: p.subject, body: p.body, status: "sent", at: now.toISOString(), updated: now.toISOString(),
+  };
+  writeApps([...apps, rec]);
+  writePending(pend.filter((x) => x.code !== p.code));
+  return `📝 Logged <b>${rec.id}</b>: ${esc(p.title.slice(0, 70))}`;
+}
+
 export function applyCancel(codeArg: string): string {
   const pend = readPending();
   if (!pend.some((x) => x.code === codeArg.toLowerCase())) return esc(`No pending draft with code ${codeArg}.`);
   writePending(pend.filter((x) => x.code !== codeArg.toLowerCase()));
-  return esc(`Discarded draft ${codeArg}.`);
+  return esc(`Discarded draft ${codeArg}. Nothing was sent.`);
 }
+
+// ---------------------------------------------------------------- tracker
 
 /** "/applied N": log an application you made yourself (form/ATS) for item N of the latest digest. */
 export function markApplied(n: number, now = new Date()): string {
@@ -204,6 +253,7 @@ export async function routeApplyCommand(text: string, d: ApplyDeps): Promise<str
   switch (cmd) {
     case "apply": return /^\d+$/.test(arg) ? applyPreview(Number(arg), d) : esc("Usage: /apply <n>  (n = number of the item in the latest digest)");
     case "send": return arg ? applySend(arg, d) : esc("Usage: /send <code>  (code from the draft preview)");
+    case "sent": return arg ? applyMarkSent(arg, d) : esc("Usage: /sent <code>  (after you sent a draft yourself)");
     case "cancel": return arg ? applyCancel(arg) : esc("Usage: /cancel <code>");
     case "applied": return /^\d+$/.test(arg) ? markApplied(Number(arg), d.now) : esc("Usage: /applied <n>  (logs an application you made yourself)");
     case "apps": return listApps(d.now);

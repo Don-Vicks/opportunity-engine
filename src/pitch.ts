@@ -4,7 +4,7 @@ import type { DigestItem } from "./store.js";
 
 export type PitchKind = "pitch" | "letter" | "email";
 
-function profileBlock(p: Config["profile"]): string {
+export function profileBlock(p: Config["profile"]): string {
   const pf = p.portfolio;
   return [
     `Candidate: ${pf.name || "the candidate"}${pf.site ? ` (${pf.site})` : ""}. About ${p.experience.years} years of experience. Strongest: ${pf.strongest}.`,

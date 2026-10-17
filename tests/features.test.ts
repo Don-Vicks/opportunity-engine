@@ -353,7 +353,10 @@ describe("email applications", () => {
     setup(); sent.length = 0;
     await applyPreview(1, deps());
     const [p] = readPending();
-    expect(await applySend(p.code, deps({ gmail: {} }))).toContain("Gmail isn't configured");
+    const noSender = await applySend(p.code, deps({ mail: null }));
+    expect(noSender).toContain("No automatic sender");
+    expect(noSender).toContain("mail.google.com/mail/?view=cm");
+    expect(readPending()).toHaveLength(1); // still pending, nothing sent
     expect(await applySend(p.code, deps({ now: new Date(now.getTime() + 49 * 3_600_000) }))).toContain("expired");
     await applyPreview(1, deps());
     const [p2] = readPending();
@@ -399,5 +402,80 @@ describe("email applications", () => {
     expect(await routeApplyCommand("/apply x", deps())).toContain("Usage");
     expect(await routeApplyCommand("/send", deps())).toContain("Usage");
     expect(await routeApplyCommand("/apps", deps())).toContain("No applications");
+  });
+});
+
+
+import { gmailApiMailer, accessToken, buildRaw, composeUrl, authUrl, GMAIL_SEND_SCOPE } from "../src/delivery/gmailapi.js";
+import { composeLink, applyMarkSent, resolveMailer } from "../src/apply.js";
+describe("senders: Gmail API and compose link", () => {
+  const creds = { clientId: "cid", clientSecret: "sec", refreshToken: "rt" };
+  const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
+
+  it("requests a token with the refresh token, then sends a base64url RFC822 message with the resume attached", async () => {
+    const calls: { url: string; init: RequestInit }[] = [];
+    const f = (async (url: string, init: RequestInit) => {
+      calls.push({ url, init });
+      return String(url).includes("oauth2") ? json(200, { access_token: "AT" }) : json(200, { id: "m1" });
+    }) as unknown as typeof fetch;
+    await gmailApiMailer(creds, "me@gmail.com", f)({
+      fromName: "Victor Shallangwa", to: "jobs@payco.io", subject: "Application: Backend Engineer", text: "Hi,\n\nHello there.",
+      attachment: { filename: "Resume.pdf", content: Buffer.from("%PDF-1.4 fake") },
+    });
+    expect(calls).toHaveLength(2);
+    const tok = new URLSearchParams(String(calls[0].init.body));
+    expect(Object.fromEntries(tok)).toMatchObject({ client_id: "cid", client_secret: "sec", refresh_token: "rt", grant_type: "refresh_token" });
+    expect((calls[1].init.headers as Record<string, string>).Authorization).toBe("Bearer AT");
+    const raw = Buffer.from(JSON.parse(String(calls[1].init.body)).raw, "base64url").toString();
+    expect(raw).toContain("To: jobs@payco.io");
+    expect(raw).toContain("Subject: Application: Backend Engineer");
+    expect(raw).toContain("Victor Shallangwa");
+    expect(raw).toMatch(/Content-Disposition: attachment; filename="?Resume\.pdf"?/);
+    expect(raw).toContain("application/pdf");
+  });
+  it("explains an expired or revoked token and surfaces API errors", async () => {
+    const bad = (async () => json(400, { error: "invalid_grant" })) as unknown as typeof fetch;
+    await expect(accessToken(creds, bad)).rejects.toThrow(/gmail-auth/);
+    const sendFails = (async (url: string) => (String(url).includes("oauth2") ? json(200, { access_token: "AT" }) : new Response("quota", { status: 403 }))) as unknown as typeof fetch;
+    await expect(gmailApiMailer(creds, "me@gmail.com", sendFails)({ to: "a@b.co", subject: "s", text: "t" })).rejects.toThrow(/Gmail API 403/);
+  });
+  it("asks only for the send scope", () => {
+    const u = new URL(authUrl("cid", "http://127.0.0.1:53682/callback", "st"));
+    expect(u.searchParams.get("scope")).toBe(GMAIL_SEND_SCOPE);
+    expect(GMAIL_SEND_SCOPE).toBe("https://www.googleapis.com/auth/gmail.send");
+    expect(u.searchParams.get("access_type")).toBe("offline");
+  });
+  it("builds a Gmail compose link with the resume as a link line, and keeps it short enough", () => {
+    const u = new URL(composeUrl("jobs@payco.io", "Application: X", "Hi,\nthere"));
+    expect(u.searchParams.get("to")).toBe("jobs@payco.io");
+    expect(u.searchParams.get("body")).toBe("Hi,\nthere");
+    const link = new URL(composeLink({ to: "jobs@payco.io", subject: "S", body: "Hi,\nthere" }, "https://donvicks.dev/r.pdf"));
+    expect(link.searchParams.get("body")).toContain("Resume: https://donvicks.dev/r.pdf");
+    const long = composeLink({ to: "a@b.co", subject: "S", body: "word ".repeat(1000) }, "https://x.co/r.pdf");
+    expect(long.length).toBeLessThanOrEqual(2200);
+  });
+  it("shows the compose link when no sender is configured, and /sent logs a manual send", async () => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    const now = new Date("2026-10-17T12:00:00Z");
+    const job = { ...opp("hn1", null, now, "job"), title: "Backend Engineer @ PayCo", detail: "Send CV to jobs@payco.io", snippet: "x" };
+    saveLastDigest([job]);
+    const d: ApplyDeps = { cfg: loadConfig(), keys: {}, now, mail: null, draft: async () => "Hi,\n\nBody.\n\nVictor", repoPublic: async () => false };
+    const preview = await applyPreview(1, d);
+    expect(preview).toContain("No automatic sender");
+    expect(preview).toContain("Open in Gmail");
+    expect(preview).toContain("/sent ");
+    const [p] = readPending();
+    expect(applyMarkSent(p.code, d)).toContain("A1");
+    expect(readApps()).toMatchObject([{ id: "A1", status: "sent", to: "jobs@payco.io" }]);
+    expect(readPending()).toHaveLength(0);
+    expect(applyMarkSent("zzzz", d)).toContain("No pending");
+  });
+  it("prefers an injected sender, and falls back to none without credentials", () => {
+    const cfg = loadConfig();
+    const stub = async () => {};
+    expect(resolveMailer({ cfg, keys: {}, mail: stub })).toBe(stub);
+    expect(resolveMailer({ cfg, keys: {}, mail: null })).toBeNull();
+    expect(resolveMailer({ cfg, keys: {}, gmail: {} })).toBeNull();
+    expect(resolveMailer({ cfg, keys: {}, gmail: { user: "u@gmail.com", pass: "pw" } })).toBeTypeOf("function");
   });
 });
