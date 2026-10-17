@@ -17,6 +17,20 @@ TELEGRAM_BOT_TOKEN=... TELEGRAM_CHAT_ID=... npm start -- --force
    Optional email: `GMAIL_USER`, `GMAIL_APP_PASSWORD` (Google app password), `EMAIL_TO`.
 4. Actions tab → **daily-digest** → Run workflow to test. Cron runs every 3 hours; only new items are sent.
 
+## Set up email applications (`/apply`, `/send`)
+Do these once. Until step 1 is done, `/apply` and `/send` refuse to run.
+1. **Make the repo private:** GitHub → repo → Settings → General → Danger Zone → *Change repository visibility* → Private. (Drafts and your application log are committed to `data/`.)
+2. **Pick the sending address.** A dedicated Gmail account for applications is safest (an app password can read and send mail on its account). Set `apply.replyTo` in `config.yaml` if replies should go to a different address.
+3. **Turn on 2-Step Verification** for that Google account (Google Account → Security).
+4. **Create an app password:** Google Account → Security → 2-Step Verification → *App passwords* → name it `opportunity-engine` → copy the 16 characters (shown once). If the option is missing, the account uses Advanced Protection or a Workspace admin has disabled it.
+5. **Add two repo secrets:** repo → Settings → Secrets and variables → Actions → *New repository secret*:
+   - `GMAIL_USER` = the Gmail address
+   - `GMAIL_APP_PASSWORD` = the 16-character app password (spaces optional)
+6. Check `apply.resumeUrl` in `config.yaml` points to your public resume PDF.
+7. **Test:** run the **telegram-commands** workflow (Actions tab → Run workflow), send `/apply <n>` on an `✉️ Email-ready` card, read the preview, then `/send <code>`. To revoke access later, delete the app password in your Google account.
+
+Never put the app password in a file or commit it; it belongs only in the repo secrets.
+
 ## Configure
 Edit `config.yaml`: skills, types, per-type minimums, remote-only, max results, min score, source flags.
 

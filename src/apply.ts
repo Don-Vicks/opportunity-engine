@@ -20,7 +20,27 @@ export interface ApplyDeps {
   draft?: (item: DigestItem, cfg: Config, keys: Providers) => Promise<string | null>;
   mail?: MailFn;
   fetchResume?: (url: string) => Promise<Buffer>;
+  /** true = repo is public, false = private, null = unknown (e.g. running locally). Injectable for tests. */
+  repoPublic?: () => Promise<boolean | null>;
 }
+
+/** Asks GitHub whether the repo this workflow runs in is public. Null when not running in Actions or the call fails. */
+export async function isRepoPublic(): Promise<boolean | null> {
+  const repo = process.env.GITHUB_REPOSITORY, token = process.env.GITHUB_TOKEN;
+  if (!repo || !token) return null;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "User-Agent": "opportunity-engine" },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) return null;
+    return (await res.json() as { private?: boolean }).private === false;
+  } catch { return null; }
+}
+
+const PUBLIC_REPO_MSG = "This GitHub repo is public, and drafts and your application log are saved in it. Make it private first (Settings → General → Danger Zone → Change visibility), then try again. (Override: apply.requirePrivateRepo: false.)";
+const publicGuard = async (d: ApplyDeps): Promise<string | null> =>
+  d.cfg.apply.requirePrivateRepo && (await (d.repoPublic ?? isRepoPublic)()) === true ? esc(PUBLIC_REPO_MSG) : null;
 
 const MAX_RESUME_BYTES = 5_000_000;
 
@@ -39,6 +59,8 @@ const roleOf = (title: string) => title.split(/\s+@\s+/)[0].replace(/\s+/g, " ")
 /** "/apply N": draft an email application for item N of the latest digest and show a preview. Sends nothing. */
 export async function applyPreview(n: number, d: ApplyDeps): Promise<string> {
   const now = d.now ?? new Date();
+  const blocked = await publicGuard(d);
+  if (blocked) return blocked;
   const item = readLastDigest()[n - 1];
   if (!item) return esc(`No item #${n} in the latest digest.`);
   if (item.type !== "job" && item.type !== "freelance") return esc(`#${n} is a ${item.type}; email applications are for jobs and freelance gigs. Use the link: ${item.applyUrl ?? item.url}`);
@@ -76,6 +98,8 @@ export async function applyPreview(n: number, d: ApplyDeps): Promise<string> {
 /** "/send CODE": send a previously previewed application, exactly as previewed. */
 export async function applySend(codeArg: string, d: ApplyDeps): Promise<string> {
   const now = d.now ?? new Date();
+  const blocked = await publicGuard(d);
+  if (blocked) return blocked;
   const pend = readPending();
   const p = pend.find((x) => x.code === codeArg.toLowerCase());
   if (!p) return esc(`No pending draft with code ${codeArg}. Drafts expire after ${PENDING_TTL_HOURS}h; run /apply again.`);

@@ -308,6 +308,7 @@ describe("email applications", () => {
     draft: async () => "Hi,\n\nI'm applying for the Backend Engineer role.\n\nVictor Shallangwa",
     mail: async (a) => { sent.push({ to: a.to, subject: a.subject, text: a.text, bytes: a.attachment?.content.length ?? 0 }); },
     fetchResume: async () => Buffer.from("%PDF-1.4 fake"),
+    repoPublic: async () => false,
     ...over,
   });
 
@@ -359,6 +360,16 @@ describe("email applications", () => {
     writeApps(Array.from({ length: cfg.apply.dailyCap }, (_, i) => ({ id: `A${i + 1}`, itemId: `x${i}`, title: "t", source: "s", type: "job" as const, url: "u", via: "email" as const, to: `a@c${i}.io`, status: "sent" as const, at: now.toISOString(), updated: now.toISOString() })));
     expect(await applySend(p2.code, deps())).toContain("Daily cap");
     expect(sent).toHaveLength(0);
+  });
+  it("refuses to draft or send while the repo is public, but allows private or unknown", async () => {
+    setup(); sent.length = 0;
+    expect(await applyPreview(1, deps({ repoPublic: async () => true }))).toContain("repo is public");
+    expect(readPending()).toHaveLength(0);
+    await applyPreview(1, deps());
+    const [p] = readPending();
+    expect(await applySend(p.code, deps({ repoPublic: async () => true }))).toContain("repo is public");
+    expect(sent).toHaveLength(0);
+    expect(await applySend(p.code, deps({ repoPublic: async () => null }))).toContain("Sent");
   });
   it("keeps the draft pending when sending or fetching the resume fails", async () => {
     setup();

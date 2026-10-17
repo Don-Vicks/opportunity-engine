@@ -39,6 +39,8 @@ const ConfigSchema = z.object({
     fromName: z.string().default(""),
     /** Optional Reply-To; replies go to the Gmail sender if empty */
     replyTo: z.string().default(""),
+    /** Refuse /apply and /send while the GitHub repo is public (drafts and the tracker are committed to it) */
+    requirePrivateRepo: z.boolean().default(true),
   }).default({}),
   ai: z.object({
     enabled: z.boolean().default(false),
