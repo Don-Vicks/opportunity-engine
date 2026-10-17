@@ -1,56 +1,85 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/somnio-software/jobs/sr-react-native-deazy",
-  "title": "Sr REACT NATIVE (Deazy) @ Somnio Software",
-  "type": "freelance",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/somnio-software/jobs/sr-react-native-deazy",
-  "prizeLabel": "n/a",
-  "region": "",
+  "id": "jobicy:150846",
+  "title": "Software engineer @ Sticker Mule",
+  "type": "job",
+  "source": "Jobicy",
+  "url": "https://jobicy.com/jobs/150846-software-engineer-3",
+  "prizeLabel": "$250k/yr",
+  "region": "Anywhere",
   "skills": [
-   "react",
-   "expo"
+   "ai",
+   "react"
   ],
-  "snippet": "Qué es Deazy Deazy es una plataforma/marketplace de UK que conecta empresas que necesitan desarrollo de software con agencias de desarrollo en todo el mundo. Ellos consiguen el cliente, definen el proyecto y luego lo asignan a una agencia como Somnio para ejecutarlo. Básicamente son un intermediario entre el cliente final y nosotros. Cómo funciona el modelo Deazy factura al cliente final a su propia tarifa (en este caso están hablando de EUR 47/…",
-  "detail": "Qué es Deazy Deazy es una plataforma/marketplace de UK que conecta empresas que necesitan desarrollo de software con agencias de desarrollo en todo el mundo. Ellos consiguen el cliente, definen el proyecto y luego lo asignan a una agencia como Somnio para ejecutarlo. Básicamente son un intermediario entre el cliente final y nosotros. Cómo funciona el modelo Deazy factura al cliente final a su propia tarifa (en este caso están hablando de EUR 47/h, aunque todavía hay que confirmar si ese es el rate al cliente o lo que pagan al proveedor). Nosotros le facturamos a Deazy a un rate más bajo, y la diferencia es su margen. Por eso la tarifa introductoria que les estamos ofreciendo es USD 45/h - USD 40/h — pensada para que Deazy tenga margen cómodo y nos priorice y abrir la cuenta Si la relación funciona, Deazy nos puede asignar proyectos de forma recurrente sin que nosotros tengamos que salir a conseguirlos. Es un canal de ventas indirecto, ellos traen el cliente, nosotros entregamos. El volumen potencial es importante si nos posicionamos bien con ellos. Deazy nos conoce principalmente como agencia Flutter. El trabajo ahora es mostrarles que también somos fuertes en React Native, React, , Python y AI Highlights Tienen un proyecto de React Native de aprox 40 horas por mes, para soporte. Con ingles, perfil fuerte que abra la cuenta. Originally posted on Himalayas",
+  "snippet": "Sticker Mule is building the Internet's most lucrative commerce platform by combining software, manufacturing, and AI into one fully integrated stack. No print company, or pure software company for that matter, can match what we're doing. We're privately owned, profitable, and doing 9-figures in annual revenue with no meddlesome investors. How we work Small, autonomous&hellip;",
+  "detail": "Sticker Mule is building the Internet's most lucrative commerce platform by combining software, manufacturing, and AI into one fully integrated stack. No print company, or pure software company for that matter, can match what we're doing. We're privately owned, profitable, and doing 9-figures in annual revenue with no meddlesome investors. How we work Small, autonomous&hellip;",
   "fit": {
-   "verdict": "qualified",
-   "reason": "has React and Expo experience suitable for React Native work"
+   "verdict": "stretch",
+   "reason": "lacks AI experience"
   },
   "deadline": null
  },
  {
-  "id": "superteam:f4336524-b7ef-412c-bdb8-05f8420a0c2e",
-  "title": "Redesign Your Favourite App on Solana (Superteam India)",
-  "type": "bounty",
-  "source": "Superteam Earn",
-  "url": "https://earn.superteam.fun/listing/redesign-your-favourite-app-on-solana",
-  "prizeLabel": "1,500 USDC",
+  "id": "jobicy:153452",
+  "title": "Edge Functions Engineer @ Supabase",
+  "type": "job",
+  "source": "Jobicy",
+  "url": "https://jobicy.com/jobs/153452-edge-functions-engineer",
+  "prizeLabel": "n/a",
+  "region": "Anywhere",
   "skills": [
-   "solana",
-   "web3",
-   "solana"
+   "typescript",
+   "backend",
+   "rust"
   ],
-  "snippet": "Superteam India",
+  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. Edge Functions are server-side TypeScript functions, distributed globally at the edge - close to your users. They&hellip;",
+  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. Edge Functions are server-side TypeScript functions, distributed globally at the edge - close to your users. They&hellip;",
   "fit": {
    "verdict": "qualified",
-   "reason": "proven Solana development background"
+   "reason": "matches TypeScript, backend, and has Rust experience"
   },
-  "deadline": "2026-10-23T18:29:59.999Z"
+  "deadline": null
  },
  {
-  "id": "devpost:31139",
-  "title": "Neighborhood Hacks",
-  "type": "hackathon",
-  "source": "Devpost",
-  "url": "https://neighborhood-hacks-2026.devpost.com/",
-  "prizeLabel": "$57,866",
-  "skills": [],
-  "snippet": "Student Organization · Beginner Friendly, Social Good",
+  "id": "jobicy:153449",
+  "title": "Software Engineer - Auth @ Supabase",
+  "type": "job",
+  "source": "Jobicy",
+  "url": "https://jobicy.com/jobs/153449-software-engineer-auth",
+  "prizeLabel": "n/a",
+  "region": "Anywhere",
+  "skills": [
+   "typescript",
+   "go",
+   "backend",
+   "rust"
+  ],
+  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the role Auth, written in Go (server) and with client libraries for TypeScript, SSR and for&hellip;",
+  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the role Auth, written in Go (server) and with client libraries for TypeScript, SSR and for&hellip;",
   "fit": {
-   "verdict": "qualified",
-   "reason": "no specific requirements; candidate can participate"
+   "verdict": "stretch",
+   "reason": "has TS and Rust but lacks Go experience"
   },
-  "deadline": "2026-10-24T23:59:59.000Z"
+  "deadline": null
+ },
+ {
+  "id": "jobicy:153446",
+  "title": "Postgres Deployment Engineer (Nix) @ Supabase",
+  "type": "job",
+  "source": "Jobicy",
+  "url": "https://jobicy.com/jobs/153446-postgres-deployment-engineer-nix",
+  "prizeLabel": "n/a",
+  "region": "Anywhere",
+  "skills": [
+   "backend",
+   "rust"
+  ],
+  "snippet": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We’re looking for a Postgres Deployment Engineer to join our PostgreSQL team and help&hellip;",
+  "detail": "About Supabase Supabase is the Postgres development platform, built by developers for developers. We provide a complete backend solution including Database, Auth, Storage, Edge Functions, Realtime, and Vector Search. All services are deeply integrated and designed for growth. About the Role We’re looking for a Postgres Deployment Engineer to join our PostgreSQL team and help&hellip;",
+  "fit": {
+   "verdict": "stretch",
+   "reason": "has backend experience and some Rust work but lacks professional Rust/Nix expertise"
+  },
+  "deadline": null
  }
 ]

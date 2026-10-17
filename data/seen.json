@@ -1077,5 +1077,45 @@
    "type": "hackathon",
    "source": "Devpost"
   }
+ },
+ "jobicy:150846": {
+  "t": "2026-10-17T12:34:50.242Z",
+  "o": {
+   "title": "Software engineer @ Sticker Mule",
+   "url": "https://jobicy.com/jobs/150846-software-engineer-3",
+   "prizeLabel": "$250k/yr",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:153452": {
+  "t": "2026-10-17T12:34:50.242Z",
+  "o": {
+   "title": "Edge Functions Engineer @ Supabase",
+   "url": "https://jobicy.com/jobs/153452-edge-functions-engineer",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:153449": {
+  "t": "2026-10-17T12:34:50.242Z",
+  "o": {
+   "title": "Software Engineer - Auth @ Supabase",
+   "url": "https://jobicy.com/jobs/153449-software-engineer-auth",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
+ },
+ "jobicy:153446": {
+  "t": "2026-10-17T12:34:50.242Z",
+  "o": {
+   "title": "Postgres Deployment Engineer (Nix) @ Supabase",
+   "url": "https://jobicy.com/jobs/153446-postgres-deployment-engineer-nix",
+   "prizeLabel": "n/a",
+   "type": "job",
+   "source": "Jobicy"
+  }
  }
 }
