@@ -31,6 +31,17 @@ const ConfigSchema = z.object({
       achievements: z.array(z.string()).default([]),
     }).default({}),
   }),
+  apply: z.object({
+    /** Public PDF fetched at send time and attached to email applications (never committed) */
+    resumeUrl: z.string().default(""),
+    /** Max email applications per rolling 24h */
+    dailyCap: z.number().int().positive().default(5),
+    fromName: z.string().default(""),
+    /** Optional Reply-To; replies go to the Gmail sender if empty */
+    replyTo: z.string().default(""),
+    /** Refuse /apply and /send while the GitHub repo is public (drafts and the tracker are committed to it) */
+    requirePrivateRepo: z.boolean().default(true),
+  }).default({}),
   ai: z.object({
     enabled: z.boolean().default(false),
     /** label = tag only, hide = drop "not a fit", strict = keep only "qualified" */

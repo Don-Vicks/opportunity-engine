@@ -36,7 +36,7 @@ async function main() {
   const now = new Date();
 
   // 1. owner commands (/mute, /boost) sent to the bot since the last run
-  const prefs = !dry && tgReady ? await pollCommands(env.tgToken!, env.tgChat!, cfg.ai.enabled ? { cfg, keys: { groqKey: env.groqKey, openrouterKey: env.openrouterKey } } : undefined).catch((e) => { console.error("commands:", e.message); return readPrefs(); }) : readPrefs();
+  const prefs = !dry && tgReady ? await pollCommands(env.tgToken!, env.tgChat!, { cfg, keys: { groqKey: env.groqKey, openrouterKey: env.openrouterKey } }).catch((e) => { console.error("commands:", e.message); return readPrefs(); }) : readPrefs();
 
   // 2. fetch
   const active = Object.entries(registry).filter(([k]) => cfg.sources[k]);

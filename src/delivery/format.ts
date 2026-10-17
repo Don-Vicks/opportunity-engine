@@ -1,5 +1,5 @@
 import type { Opportunity } from "../schema.js";
-import { daysUntil, nigeriaFriendly } from "../helpers.js";
+import { daysUntil, nigeriaFriendly, findEmail } from "../helpers.js";
 import { matchLabel } from "../ranking.js";
 import type { Reminder } from "../store.js";
 
@@ -85,7 +85,7 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
         `<i>${esc(o.source)}</i>`,
         parts.filter(Boolean).join("  ·  "),
         ...(o.fit ? [`${FIT_ICON[o.fit.verdict]} <b>${FIT_TEXT[o.fit.verdict]}</b>${o.fit.reason ? ` — ${esc(o.fit.reason)}` : ""}`] : []),
-        linkLine(o),
+        linkLine(o) + emailHint(o, n),
       ].join("\n");
       // header rides with the first card so a message split never strands it
       blocks.push(i === 0 ? `<b>${SECTION[g.t]}  ·  ${g.list.length}</b>\n━━━━━━━━━━━━━━\n${card}` : card);
@@ -96,14 +96,36 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
   return `${head}\n\n${blocks.join("\n\n")}\n\n<i>— ${summary || "reminders only"} —</i>${warn}`;
 }
 
+const GCAL_DATE = (d: Date) => d.toISOString().replace(/[-:]|\.\d{3}/g, ""); // 20261018T225900Z
+
+/**
+ * One-tap "add to Google Calendar" link: a 30-minute block that ends at the deadline, so it shows up
+ * right where the cutoff is. Plain URL, no login or API needed; the user taps Save in Calendar.
+ */
+export function calendarUrl(title: string, deadline: Date, url: string): string {
+  const start = new Date(deadline.getTime() - 30 * 60_000);
+  const q = new URLSearchParams({
+    action: "TEMPLATE",
+    text: `⏰ Deadline: ${title}`.slice(0, 120),
+    dates: `${GCAL_DATE(start)}/${GCAL_DATE(deadline)}`,
+    details: `Apply: ${url}`,
+  });
+  return `https://calendar.google.com/calendar/render?${q}`;
+}
+
+/** Jobs/freelance whose listing contains an email address can be applied to from Telegram. */
+const emailHint = (o: Opportunity, num: number) =>
+  (o.type === "job" || o.type === "freelance") && findEmail(`${o.detail ?? ""} ${o.snippet}`) ? `\n✉️ Email-ready: <code>/apply ${num}</code>` : "";
+
 const hostOf = (u: string) => { try { return new URL(u).host.replace(/^www\./, ""); } catch { return ""; } };
 
 /** Direct apply link first (with its domain), listing/source link second so attribution stays intact. */
 function linkLine(o: Opportunity): string {
+  const cal = o.deadline ? `\n📅 <a href="${esc(calendarUrl(o.title, o.deadline, o.applyUrl ?? o.url))}">Add deadline to calendar</a>` : "";
   if (o.applyUrl) {
-    return `🚀 <a href="${esc(o.applyUrl)}">Apply directly</a> <i>(${esc(hostOf(o.applyUrl))})</i>  ·  <a href="${esc(o.url)}">via ${esc(o.source)}</a>`;
+    return `🚀 <a href="${esc(o.applyUrl)}">Apply directly</a> <i>(${esc(hostOf(o.applyUrl))})</i>  ·  <a href="${esc(o.url)}">via ${esc(o.source)}</a>${cal}`;
   }
-  return `🔗 <a href="${esc(o.url)}">Open listing</a>`;
+  return `🔗 <a href="${esc(o.url)}">Open listing</a>${cal}`;
 }
 
 const hoursLeft = (d: Date, now: Date) => Math.max(1, Math.round((d.getTime() - now.getTime()) / 3_600_000));

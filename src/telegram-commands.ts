@@ -1,4 +1,5 @@
 import { applyCommand } from "./prefs.js";
+import { routeApplyCommand } from "./apply.js";
 import { draftPitch, type PitchKind } from "./pitch.js";
 import type { Config } from "./config.js";
 import type { Providers } from "./fit.js";
@@ -23,6 +24,10 @@ export async function pollCommands(token: string, chatId: string, ai?: { cfg: Co
   for (const u of result) {
     last = Math.max(last, u.update_id + 1);
     if (String(u.message?.chat?.id) !== chatId || !u.message?.text) continue; // owner only
+    if (ai) {
+      const r = await routeApplyCommand(u.message.text, { cfg: ai.cfg, keys: ai.keys }).catch((e) => esc(`Command failed: ${(e as Error).message}`));
+      if (r) { replies.push(r); continue; }
+    }
     const pitch = u.message.text.trim().match(/^\/(pitch|letter)(?:@\w+)?\s+(\d+)\b/i);
     if (pitch) { replies.push(await pitchReply(pitch[1].toLowerCase() as PitchKind, Number(pitch[2]), ai)); continue; }
     const out = applyCommand(u.message.text, prefs);

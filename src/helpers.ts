@@ -144,3 +144,15 @@ export function findApplyUrl(raw: string, ownHosts: string[] = [], lenient = fal
   const best = [...cands].sort((a, b) => b[1] - a[1])[0];
   return best && best[1] >= (lenient ? 2 : 5) ? best[0] : undefined;
 }
+
+// ---------- contact email for email-based applications ----------
+const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g;
+const EMAIL_SKIP = /^(no-?reply|do-?not-?reply|donotreply|noreply|abuse|privacy|legal|support|press|billing)@|@(example\.|sentry\.|users\.noreply\.github)/i;
+const EMAIL_HIRING = /^(jobs?|careers?|hiring|hr|recruit\w*|talent|apply|applications?|people|work|join|team|founders?|hello|hi|contact)@/i;
+
+/** Best email address to send an application to, found in the listing text; null if none looks usable. */
+export function findEmail(text: string): string | null {
+  const found = [...new Set((text.match(EMAIL) ?? []).map((e) => e.toLowerCase().replace(/[.,;:]+$/, "")))]
+    .filter((e) => !EMAIL_SKIP.test(e) && !/\.(png|jpe?g|gif|svg|webp)$/i.test(e));
+  return found.find((e) => EMAIL_HIRING.test(e)) ?? found[0] ?? null;
+}

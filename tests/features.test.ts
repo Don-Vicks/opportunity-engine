@@ -268,3 +268,136 @@ describe("pitch and letter", () => {
     expect(none).toBeNull();
   });
 });
+
+import { calendarUrl } from "../src/delivery/format.js";
+describe("calendar link", () => {
+  const now = new Date("2026-10-08T00:00:00Z");
+  it("builds a 30-minute Google Calendar block ending at the deadline", () => {
+    const u = new URL(calendarUrl("Arkiv & Friends: Hack", new Date("2026-10-18T22:59:00Z"), "https://x.co/a?b=1&c=2"));
+    expect(u.origin + u.pathname).toBe("https://calendar.google.com/calendar/render");
+    expect(u.searchParams.get("action")).toBe("TEMPLATE");
+    expect(u.searchParams.get("dates")).toBe("20261018T222900Z/20261018T225900Z");
+    expect(u.searchParams.get("text")).toBe("⏰ Deadline: Arkiv & Friends: Hack");
+    expect(u.searchParams.get("details")).toBe("Apply: https://x.co/a?b=1&c=2");
+  });
+  it("shows the link only on cards that have a deadline, with & escaped for Telegram HTML", () => {
+    const withD = formatTelegram([opp("a", 100, now, "hackathon")], [], now);
+    expect(withD).toContain("Add deadline to calendar");
+    expect(withD).toContain("action=TEMPLATE&amp;text=");
+    expect(withD).not.toMatch(/href="[^"]*&(?!amp;)/);
+    const noD = formatTelegram([opp("b", null, now, "job")], [], now);
+    expect(noD).not.toContain("calendar");
+  });
+});
+
+import { findEmail } from "../src/helpers.js";
+import { applyPreview, applySend, applyCancel, routeApplyCommand, markApplied, setStatus, statsText, type ApplyDeps } from "../src/apply.js";
+import { readApps, readPending, writeApps, funnel } from "../src/applications.js";
+
+describe("email applications", () => {
+  const cfg = loadConfig();
+  const now = new Date("2026-10-17T12:00:00Z");
+  const base = { ...opp("hn1", null, now, "job"), title: "Backend Engineer @ PayCo", source: "HN Who's Hiring", detail: "NestJS payments. Send CV to jobs@payco.io", snippet: "NestJS payments" };
+  const setup = () => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    saveLastDigest([base, { ...base, id: "hn2", title: "Designer @ NoMail", detail: "no address here", snippet: "x" }, { ...opp("b1", 100, now, "bounty") }]);
+  };
+  const sent: { to: string; subject: string; text: string; bytes: number }[] = [];
+  const deps = (over: Partial<ApplyDeps> = {}): ApplyDeps => ({
+    cfg, keys: {}, now, gmail: { user: "me@gmail.com", pass: "pw" },
+    draft: async () => "Hi,\n\nI'm applying for the Backend Engineer role.\n\nVictor Shallangwa",
+    mail: async (a) => { sent.push({ to: a.to, subject: a.subject, text: a.text, bytes: a.attachment?.content.length ?? 0 }); },
+    fetchResume: async () => Buffer.from("%PDF-1.4 fake"),
+    repoPublic: async () => false,
+    ...over,
+  });
+
+  it("finds a usable contact email and skips noreply/image/asset addresses", () => {
+    expect(findEmail("Send CV to Jobs@PayCo.io.")).toBe("jobs@payco.io");
+    expect(findEmail("noreply@x.com or hello@x.com")).toBe("hello@x.com");
+    expect(findEmail("logo@2x.png and nothing else")).toBeNull();
+    expect(findEmail("no address")).toBeNull();
+  });
+  it("stores the contact email on the latest digest and shows the card hint", () => {
+    setup();
+    expect(readLastDigest()[0].contactEmail).toBe("jobs@payco.io");
+    expect(readLastDigest()[1].contactEmail).toBeUndefined();
+    const card = formatTelegram([base], [], now);
+    expect(card).toContain("/apply 1");
+    expect(formatTelegram([{ ...base, detail: "", snippet: "none" }], [], now)).not.toContain("/apply");
+  });
+  it("previews without sending, then sends exactly the previewed text and logs it", async () => {
+    setup(); sent.length = 0;
+    const preview = await applyPreview(1, deps());
+    expect(preview).toContain("not sent");
+    expect(preview).toContain("jobs@payco.io");
+    expect(sent).toHaveLength(0);
+    const [p] = readPending();
+    expect(p.subject).toBe("Application: Backend Engineer - Victor Shallangwa");
+    const out = await applySend(p.code, deps());
+    expect(out).toContain("Sent");
+    expect(sent).toEqual([{ to: "jobs@payco.io", subject: p.subject, text: p.body, bytes: 13 }]);
+    expect(readPending()).toHaveLength(0);
+    expect(readApps()).toMatchObject([{ id: "A1", status: "sent", via: "email", to: "jobs@payco.io" }]);
+  });
+  it("refuses duplicates, listings without email, non-jobs, and unknown numbers", async () => {
+    setup(); sent.length = 0;
+    const [p0] = (await applyPreview(1, deps()), readPending());
+    await applySend(p0.code, deps());
+    expect(await applyPreview(1, deps())).toContain("Already applied");
+    expect(await applyPreview(2, deps())).toContain("no email address");
+    expect(await applyPreview(3, deps())).toContain("bounty");
+    expect(await applyPreview(9, deps())).toContain("No item #9");
+  });
+  it("enforces the daily cap, the draft expiry and missing Gmail config", async () => {
+    setup(); sent.length = 0;
+    await applyPreview(1, deps());
+    const [p] = readPending();
+    expect(await applySend(p.code, deps({ gmail: {} }))).toContain("Gmail isn't configured");
+    expect(await applySend(p.code, deps({ now: new Date(now.getTime() + 49 * 3_600_000) }))).toContain("expired");
+    await applyPreview(1, deps());
+    const [p2] = readPending();
+    writeApps(Array.from({ length: cfg.apply.dailyCap }, (_, i) => ({ id: `A${i + 1}`, itemId: `x${i}`, title: "t", source: "s", type: "job" as const, url: "u", via: "email" as const, to: `a@c${i}.io`, status: "sent" as const, at: now.toISOString(), updated: now.toISOString() })));
+    expect(await applySend(p2.code, deps())).toContain("Daily cap");
+    expect(sent).toHaveLength(0);
+  });
+  it("refuses to draft or send while the repo is public, but allows private or unknown", async () => {
+    setup(); sent.length = 0;
+    expect(await applyPreview(1, deps({ repoPublic: async () => true }))).toContain("repo is public");
+    expect(readPending()).toHaveLength(0);
+    await applyPreview(1, deps());
+    const [p] = readPending();
+    expect(await applySend(p.code, deps({ repoPublic: async () => true }))).toContain("repo is public");
+    expect(sent).toHaveLength(0);
+    expect(await applySend(p.code, deps({ repoPublic: async () => null }))).toContain("Sent");
+  });
+  it("keeps the draft pending when sending or fetching the resume fails", async () => {
+    setup();
+    await applyPreview(1, deps());
+    const [p] = readPending();
+    expect(await applySend(p.code, deps({ mail: async () => { throw new Error("smtp down"); } }))).toContain("Sending failed");
+    expect(await applySend(p.code, deps({ fetchResume: async () => { throw new Error("404"); } }))).toContain("Nothing was sent");
+    expect(readPending()).toHaveLength(1);
+    expect(readApps()).toHaveLength(0);
+    expect(applyCancel(p.code)).toContain("Discarded");
+    expect(readPending()).toHaveLength(0);
+  });
+  it("tracks manual applications and statuses, and computes the funnel", async () => {
+    setup();
+    expect(markApplied(1, now)).toContain("A1");
+    expect(markApplied(1, now)).toContain("Already logged");
+    expect(setStatus("interview", "a1", now)).toContain("interview");
+    expect(setStatus("rejected", "A9", now)).toContain("No application");
+    const f = funnel(readApps());
+    expect(f).toMatchObject({ total: 1, interviews: 1, responded: 1, interviewRate: "100%" });
+    expect(statsText()).toContain("Interviews");
+  });
+  it("routes only application commands", async () => {
+    setup();
+    expect(await routeApplyCommand("/mute foo", deps())).toBeNull();
+    expect(await routeApplyCommand("/pitch 1", deps())).toBeNull();
+    expect(await routeApplyCommand("/apply x", deps())).toContain("Usage");
+    expect(await routeApplyCommand("/send", deps())).toContain("Usage");
+    expect(await routeApplyCommand("/apps", deps())).toContain("No applications");
+  });
+});

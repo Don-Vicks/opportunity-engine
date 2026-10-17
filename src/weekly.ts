@@ -1,5 +1,6 @@
 import type { Opportunity } from "./schema.js";
 import { esc } from "./delivery/format.js";
+import { readApps, funnel } from "./applications.js";
 import { readHistory, readHealth, upcoming, readState } from "./store.js";
 
 const WAT = 3_600_000; // UTC+1
@@ -42,6 +43,8 @@ export function buildWeekly(now = new Date()): string {
       return `• ${d}d — <a href="${esc(r.lite.applyUrl ?? r.lite.url)}">${esc(r.lite.title.slice(0, 70))}</a>`;
     }));
   }
+  const f = funnel(readApps());
+  if (f.total) lines.push("", "<b>Applications (all time)</b>", `${f.total} sent · ${f.responded} replies (${f.responseRate}) · ${f.interviews} interviews (${f.interviewRate}) · ${f.offer} offers`);
   if (sick.length) lines.push("", `⚠️ Sources currently failing: ${esc(sick.join(", "))}`);
   lines.push("", "<i>Tune me: /mute &lt;word&gt; · /boost &lt;word&gt; · /prefs</i>");
   return lines.join("\n");
