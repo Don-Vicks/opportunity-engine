@@ -1,5 +1,5 @@
 import type { Opportunity } from "../schema.js";
-import { daysUntil, nigeriaFriendly } from "../helpers.js";
+import { daysUntil, nigeriaFriendly, findEmail } from "../helpers.js";
 import { matchLabel } from "../ranking.js";
 import type { Reminder } from "../store.js";
 
@@ -85,7 +85,7 @@ export function formatTelegram(items: Opportunity[], errors: string[], now = new
         `<i>${esc(o.source)}</i>`,
         parts.filter(Boolean).join("  ·  "),
         ...(o.fit ? [`${FIT_ICON[o.fit.verdict]} <b>${FIT_TEXT[o.fit.verdict]}</b>${o.fit.reason ? ` — ${esc(o.fit.reason)}` : ""}`] : []),
-        linkLine(o),
+        linkLine(o) + emailHint(o, n),
       ].join("\n");
       // header rides with the first card so a message split never strands it
       blocks.push(i === 0 ? `<b>${SECTION[g.t]}  ·  ${g.list.length}</b>\n━━━━━━━━━━━━━━\n${card}` : card);
@@ -112,6 +112,10 @@ export function calendarUrl(title: string, deadline: Date, url: string): string 
   });
   return `https://calendar.google.com/calendar/render?${q}`;
 }
+
+/** Jobs/freelance whose listing contains an email address can be applied to from Telegram. */
+const emailHint = (o: Opportunity, num: number) =>
+  (o.type === "job" || o.type === "freelance") && findEmail(`${o.detail ?? ""} ${o.snippet}`) ? `\n✉️ Email-ready: <code>/apply ${num}</code>` : "";
 
 const hostOf = (u: string) => { try { return new URL(u).host.replace(/^www\./, ""); } catch { return ""; } };
 

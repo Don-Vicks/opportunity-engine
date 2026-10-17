@@ -30,6 +30,7 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
       - name: Commit history
+        if: always()   # keep the Telegram offset and sent-application log even if a step failed, so nothing is processed twice
         run: |
           git config user.name "opportunity-bot"
           git config user.email "bot@users.noreply.github.com"
