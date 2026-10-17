@@ -41,6 +41,15 @@ const ConfigSchema = z.object({
     replyTo: z.string().default(""),
     /** Refuse /apply and /send while the GitHub repo is public (drafts and the tracker are committed to it) */
     requirePrivateRepo: z.boolean().default(true),
+    /** Morning batch: drafts for strong, email-ready matches are posted together for one review. Nothing is sent until you /send. */
+    batch: z.object({
+      enabled: z.boolean().default(true),
+      /** first digest run at or after this hour (WAT) posts the batch */
+      hourWat: z.number().int().min(0).max(23).default(8),
+      max: z.number().int().positive().default(5),
+      /** qualified = only strong matches; stretch = also include stretch matches */
+      minFit: z.enum(["qualified", "stretch"]).default("qualified"),
+    }).default({}),
   }).default({}),
   ai: z.object({
     enabled: z.boolean().default(false),

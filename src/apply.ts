@@ -44,7 +44,7 @@ export async function isRepoPublic(): Promise<boolean | null> {
 }
 
 const PUBLIC_REPO_MSG = "This GitHub repo is public, and drafts and your application log are saved in it. Make it private first (Settings → General → Danger Zone → Change visibility), then try again. (Override: apply.requirePrivateRepo: false.)";
-const publicGuard = async (d: ApplyDeps): Promise<string | null> =>
+export const publicGuard = async (d: ApplyDeps): Promise<string | null> =>
   d.cfg.apply.requirePrivateRepo && (await (d.repoPublic ?? isRepoPublic)()) === true ? esc(PUBLIC_REPO_MSG) : null;
 
 /** Gmail API (send-only token) if configured, else SMTP app password, else null (compose-link only). */
@@ -79,6 +79,35 @@ export function composeLink(p: Pick<Pending, "to" | "subject" | "body">, resumeU
   return url;
 }
 
+/** Drafts an email application for a digest item (item.contactEmail must be set). Returns the pending draft, or a reason string. */
+export async function makePending(item: DigestItem, d: ApplyDeps, now: Date): Promise<Pending | string> {
+  const body = await (d.draft ?? ((i, c, k) => draftPitch(i, "email", c, k)))(item, d.cfg, d.keys).catch(() => null);
+  if (!body?.trim()) return "AI providers unavailable";
+  const pf = d.cfg.profile.portfolio;
+  return {
+    code: code(item.id, now), itemId: item.id, title: item.title, source: item.source, type: item.type, url: item.applyUrl ?? item.url,
+    to: item.contactEmail!, subject: `Application: ${roleOf(item.title)}${pf.name ? ` - ${pf.name}` : ""}`, body: body.trim(),
+    createdAt: now.toISOString(),
+  };
+}
+
+/** Stores a draft, replacing any older draft for the same listing and dropping expired ones. */
+export function savePending(p: Pending, now: Date): void {
+  const keep = readPending().filter((x) => x.itemId !== p.itemId && now.getTime() - new Date(x.createdAt).getTime() < PENDING_TTL_HOURS * 3_600_000);
+  writePending([...keep, p]);
+}
+
+/** Cheap checks on a draft before a human reads it; a non-empty result is shown as a warning. */
+export function draftProblems(body: string, name: string): string[] {
+  const out: string[] = [];
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  if (words < 60 || words > 260) out.push(`length is ${words} words`);
+  if (/\[[^\]\n]{1,40}\]|\{\{|\}\}|<[A-Za-z][A-Za-z ]{1,30}>|lorem ipsum|\bTODO\b|\bXXX\b/i.test(body)) out.push("contains a placeholder");
+  if (/\bas an ai\b|language model/i.test(body)) out.push("mentions being an AI");
+  if (name && !body.toLowerCase().includes(name.split(" ")[0].toLowerCase())) out.push("candidate name missing");
+  return out;
+}
+
 // ---------------------------------------------------------------- /apply, /send, /sent, /cancel
 
 /** "/apply N": draft an email application for item N of the latest digest and show a preview. Sends nothing. */
@@ -95,17 +124,9 @@ export async function applyPreview(n: number, d: ApplyDeps): Promise<string> {
   const prior = priorApplication(readApps(), item.id, item.contactEmail, now);
   if (prior) return esc(`Already applied: ${prior.id} (${prior.title}) on ${prior.at.slice(0, 10)}. Not drafting another.`);
 
-  const body = await (d.draft ?? ((i, c, k) => draftPitch(i, "email", c, k)))(item, d.cfg, d.keys).catch(() => null);
-  if (!body?.trim()) return esc(`Couldn't draft #${n} right now (AI providers unavailable). Try again later.`);
-
-  const pf = d.cfg.profile.portfolio;
-  const pending: Pending = {
-    code: code(item.id, now), itemId: item.id, title: item.title, source: item.source, type: item.type, url: item.applyUrl ?? item.url,
-    to: item.contactEmail, subject: `Application: ${roleOf(item.title)}${pf.name ? ` - ${pf.name}` : ""}`, body: body.trim(),
-    createdAt: now.toISOString(),
-  };
-  const keep = readPending().filter((p) => p.itemId !== item.id && now.getTime() - new Date(p.createdAt).getTime() < PENDING_TTL_HOURS * 3_600_000);
-  writePending([...keep, pending]);
+  const pending = await makePending(item, d, now);
+  if (typeof pending === "string") return esc(`Couldn't draft #${n} right now (${pending}). Try again later.`);
+  savePending(pending, now);
 
   const link = `<a href="${esc(composeLink(pending, d.cfg.apply.resumeUrl))}">Open in Gmail</a>`;
   const hasSender = resolveMailer(d) !== null;
@@ -168,6 +189,29 @@ export async function applySend(codeArg: string, d: ApplyDeps): Promise<string> 
   writeApps([...apps, rec]);
   writePending(pend.filter((x) => x.code !== p.code));
   return `✅ <b>Sent</b> to ${esc(p.to)} — logged as <b>${rec.id}</b>.\nTrack it: /interview ${rec.id} · /rejected ${rec.id} · /replied ${rec.id}`;
+}
+
+/** "/send all": send every pending draft you have just reviewed, oldest first, stopping at the daily cap. */
+export async function applySendAll(d: ApplyDeps): Promise<string> {
+  const now = d.now ?? new Date();
+  const pend = readPending()
+    .filter((p) => now.getTime() - new Date(p.createdAt).getTime() <= PENDING_TTL_HOURS * 3_600_000)
+    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  if (!pend.length) return esc("No pending drafts. Use /apply <n> or wait for the morning batch.");
+  const out: string[] = [];
+  for (const p of pend) {
+    const r = await applySend(p.code, d);
+    out.push(r);
+    if (/Daily cap|Sending failed|public|Couldn't fetch the resume|No automatic sender/.test(r)) break; // no point continuing
+  }
+  return out.join("\n\n");
+}
+
+/** "/cancel all": discard every pending draft. */
+export function applyCancelAll(): string {
+  const n = readPending().length;
+  writePending([]);
+  return esc(n ? `Discarded ${n} draft${n > 1 ? "s" : ""}. Nothing was sent.` : "No pending drafts.");
 }
 
 /** "/sent CODE": you sent a drafted email yourself (e.g. via the Gmail compose link); log it. */
@@ -252,9 +296,9 @@ export async function routeApplyCommand(text: string, d: ApplyDeps): Promise<str
   const arg = m[2].trim().split(/\s+/)[0] ?? "";
   switch (cmd) {
     case "apply": return /^\d+$/.test(arg) ? applyPreview(Number(arg), d) : esc("Usage: /apply <n>  (n = number of the item in the latest digest)");
-    case "send": return arg ? applySend(arg, d) : esc("Usage: /send <code>  (code from the draft preview)");
+    case "send": return !arg ? esc("Usage: /send <code> or /send all  (codes are in the draft previews)") : arg.toLowerCase() === "all" ? applySendAll(d) : applySend(arg, d);
     case "sent": return arg ? applyMarkSent(arg, d) : esc("Usage: /sent <code>  (after you sent a draft yourself)");
-    case "cancel": return arg ? applyCancel(arg) : esc("Usage: /cancel <code>");
+    case "cancel": return !arg ? esc("Usage: /cancel <code> or /cancel all") : arg.toLowerCase() === "all" ? applyCancelAll() : applyCancel(arg);
     case "applied": return /^\d+$/.test(arg) ? markApplied(Number(arg), d.now) : esc("Usage: /applied <n>  (logs an application you made yourself)");
     case "apps": return listApps(d.now);
     case "stats": case "funnel": return statsText();

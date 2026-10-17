@@ -46,6 +46,13 @@ There are three ways to send, picked automatically in this order. You can run mo
 1. Turn on 2-Step Verification for the Google account, then Google Account → Security → 2-Step Verification → **App passwords** → create one named `opportunity-engine` and copy the 16 characters (shown once).
 2. Add repo secrets `GMAIL_USER` and `GMAIL_APP_PASSWORD`. Prefer a dedicated applications account: an app password can read and send everything in its mailbox. Delete the app password in your Google account to revoke it.
 
+### Morning batch (hands-off, but you approve)
+Once a day (the first digest run at or after `apply.batch.hourWat`, default 08:00 WAT) the bot drafts applications for your strongest email-ready matches (AI fit `qualified`; set `apply.batch.minFit: stretch` to include stretch) and posts them in **one message**. **Nothing is sent.** Read them, then:
+- `/send all`: send every draft (oldest first, stops at `apply.dailyCap`)
+- `/send CODE` / `/cancel CODE`: send or drop one; `/cancel all` drops everything
+- Without a configured sender, each draft has an **Open in Gmail** link; log it with `/sent CODE`.
+Drafts expire after 48h. Weak drafts (too short/long, placeholders) carry a ⚠️ warning. Turn it off with `apply.batch.enabled: false`.
+
 ### Using it
 Run the **telegram-commands** workflow once (Actions tab → Run workflow), then on a card marked `✉️ Email-ready` send `/apply <n>`. Read the preview, then `/send <code>` (or tap *Open in Gmail* and later `/sent <code>`).
 

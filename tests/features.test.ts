@@ -479,3 +479,96 @@ describe("senders: Gmail API and compose link", () => {
     expect(resolveMailer({ cfg, keys: {}, gmail: { user: "u@gmail.com", pass: "pw" } })).toBeTypeOf("function");
   });
 });
+
+import { addCandidates, batchDue, runBatch, readCandidates } from "../src/batch.js";
+import { applySendAll, applyCancelAll } from "../src/apply.js";
+describe("morning batch", () => {
+  const cfg = loadConfig();
+  const now = new Date("2026-10-18T09:00:00Z"); // 10:00 WAT
+  const mkItem = (id: string, over: Record<string, unknown> = {}) => ({
+    ...opp(id, null, now, "job"), title: `Backend Engineer ${id} @ Co${id}`, source: "HN Who's Hiring", detail: `NestJS. jobs@co${id}.io`, snippet: "x",
+    fit: { verdict: "qualified" as const, reason: "match" }, ...over,
+  });
+  const setup = (items: ReturnType<typeof mkItem>[]) => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    saveLastDigest(items);
+    addCandidates(readLastDigest(), cfg, now);
+  };
+  const sent: string[] = [];
+  const deps = (over: Partial<ApplyDeps> = {}): ApplyDeps => ({
+    cfg, keys: {}, now, repoPublic: async () => false,
+    draft: async () => "Hi,\n\n" + "I am applying for the role and have shipped payment systems on NestJS and Node. ".repeat(3) + "\n\nVictor Shallangwa",
+    mail: async (m) => { sent.push(m.to); },
+    fetchResume: async () => Buffer.from("%PDF-1.4"),
+    ...over,
+  });
+
+  it("queues only strong, email-ready jobs", () => {
+    setup([mkItem("a"), mkItem("b", { fit: { verdict: "stretch", reason: "" } }), mkItem("c", { fit: { verdict: "not_a_fit", reason: "" } }), mkItem("d", { detail: "no address", snippet: "x" }), { ...opp("e", 100, now, "bounty") } as never]);
+    expect(readCandidates().map((c) => c.id)).toEqual(["a"]);
+    expect(addCandidates(readLastDigest(), cfg, now)).toBe(0); // no duplicates
+  });
+  it("decides when the morning batch is due, once per WAT day", () => {
+    expect(batchDue(new Date("2026-10-18T06:00:00Z"), undefined, 8)).toBeNull(); // 07:00 WAT
+    expect(batchDue(new Date("2026-10-18T07:00:00Z"), undefined, 8)).toBe("2026-10-18");
+    expect(batchDue(new Date("2026-10-18T12:00:00Z"), "2026-10-18", 8)).toBeNull();
+    expect(batchDue(new Date("2026-10-19T09:00:00Z"), "2026-10-18", 8)).toBe("2026-10-19");
+  });
+  it("drafts without sending, one message, then /send all sends exactly those drafts", async () => {
+    setup([mkItem("a"), mkItem("b")]); sent.length = 0;
+    const [msg, ...rest] = await runBatch(deps());
+    expect(rest).toHaveLength(0);
+    expect(msg).toContain("Morning batch — 2 drafts");
+    expect(msg).toContain("Nothing has been sent");
+    expect(msg).toContain("jobs@coa.io");
+    expect(msg).toContain("/send all");
+    expect(sent).toHaveLength(0);
+    expect(readPending()).toHaveLength(2);
+    expect(readCandidates()).toHaveLength(0);
+    const out = await applySendAll(deps());
+    expect(sent.sort()).toEqual(["jobs@coa.io", "jobs@cob.io"]);
+    expect(out.match(/Sent/g)).toHaveLength(2);
+    expect(readApps()).toHaveLength(2);
+    expect(readPending()).toHaveLength(0);
+  });
+  it("respects the batch size and the daily cap, and leaves the rest waiting", async () => {
+    setup(["a", "b", "c", "d", "e", "f", "g"].map((i) => mkItem(i)));
+    await runBatch(deps());
+    expect(readPending()).toHaveLength(cfg.apply.batch.max);
+    expect(readCandidates()).toHaveLength(7 - cfg.apply.batch.max);
+  });
+  it("shows Gmail links when no sender is configured, and warns about weak drafts", async () => {
+    setup([mkItem("a")]);
+    const [msg] = await runBatch(deps({ mail: null, draft: async () => "Too short [Company]" }));
+    expect(msg).toContain("Open in Gmail");
+    expect(msg).toContain("/sent ");
+    expect(msg).toContain("Check before sending");
+    expect(msg).toContain("placeholder");
+  });
+  it("does nothing while the repo is public, and /cancel all clears drafts", async () => {
+    setup([mkItem("a")]);
+    expect((await runBatch(deps({ repoPublic: async () => true })))[0]).toContain("repo is public");
+    expect(readPending()).toHaveLength(0);
+    await runBatch(deps());
+    expect(readPending()).toHaveLength(1);
+    expect(applyCancelAll()).toContain("Discarded 1 draft");
+    expect(readPending()).toHaveLength(0);
+    expect(await applySendAll(deps())).toContain("No pending drafts");
+  });
+  it("stops /send all at the daily cap and does not re-draft applied listings", async () => {
+    setup(["a", "b"].map((i) => mkItem(i)));
+    await runBatch(deps());
+    const lowCap = { ...cfg, apply: { ...cfg.apply, dailyCap: 1 } };
+    sent.length = 0;
+    const out = await applySendAll(deps({ cfg: lowCap }));
+    expect(sent).toHaveLength(1);
+    expect(out).toContain("Daily cap");
+    // the sent one is applied; a new batch must not draft it again
+    saveLastDigest([mkItem("a"), mkItem("b")]);
+    addCandidates(readLastDigest(), cfg, now);
+    const appliedId = readApps()[0].itemId;
+    expect(appliedId).toBeTruthy();
+    await runBatch(deps({ cfg: lowCap }));
+    expect(readPending().some((p) => p.itemId === appliedId)).toBe(false);
+  });
+});

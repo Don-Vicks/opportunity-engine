@@ -54,6 +54,11 @@ apply:
   fromName: "Victor Shallangwa"
   replyTo: ""                    # optional; replies otherwise go to the Gmail account that sends
   requirePrivateRepo: true       # /apply and /send refuse to run while the GitHub repo is public
+  batch:                         # one morning message with drafts for strong, email-ready matches; nothing is sent until /send
+    enabled: true
+    hourWat: 8                   # first digest run at/after this hour (WAT) posts it
+    max: 5
+    minFit: qualified            # qualified | stretch
 ai:
   enabled: true                  # needs GROQ_API_KEY and/or OPENROUTER_API_KEY (Groq first, OpenRouter fallback; models are auto-picked from what each serves)
   mode: hide                     # label = tag only | hide = drop "not a fit" | strict = keep only "qualified"

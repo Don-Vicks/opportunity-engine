@@ -82,7 +82,7 @@ export function readHistory(sinceDays: number, now = new Date()): Opportunity[] 
 }
 
 // ---- generic state / health / prefs ----
-export interface State { lastSent?: string; lastWeekly?: string; tgOffset?: number }
+export interface State { lastSent?: string; lastWeekly?: string; lastBatch?: string; tgOffset?: number }
 export const readState = () => read<State>(f("state.json"), {});
 export const writeState = (patch: Partial<State>) => write(f("state.json"), { ...readState(), ...patch });
 

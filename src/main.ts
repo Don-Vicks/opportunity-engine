@@ -4,7 +4,8 @@ import { rejectReason } from "./filter.js";
 import { rank } from "./ranking.js";
 import { assessFit, applyFitMode } from "./fit.js";
 import { resolveApplyUrls } from "./resolve.js";
-import { loadSeen, saveSent, saveLastDigest, dueReminders, markReminded, readHealth, writeHealth, readPrefs, writeState } from "./store.js";
+import { addCandidates, batchDue, runBatch } from "./batch.js";
+import { loadSeen, saveSent, saveLastDigest, readLastDigest, readState, dueReminders, markReminded, readHealth, writeHealth, readPrefs, writeState } from "./store.js";
 import { updateHealth, type SourceResult } from "./health.js";
 import { pollCommands } from "./telegram-commands.js";
 import { weeklyDue, buildWeekly } from "./weekly.js";
@@ -105,6 +106,18 @@ async function main() {
   if (items.length) { saveSent(items, now); saveLastDigest(items); }
   markReminded(reminders.map((r) => r.id));
   writeHealth(health);
+  // 8. morning batch of application drafts (nothing is sent; the user reviews and /sends)
+  if (tgReady && cfg.apply.batch.enabled) {
+    try {
+      if (items.length) addCandidates(readLastDigest(), cfg, now);
+      const key = batchDue(now, readState().lastBatch, cfg.apply.batch.hourWat);
+      if (key) {
+        const msgs = await runBatch({ cfg, keys: { groqKey: env.groqKey, openrouterKey: env.openrouterKey }, now });
+        for (const m of msgs) await sendTelegram(env.tgToken!, env.tgChat!, m);
+        if (msgs.length) writeState({ lastBatch: key });
+      }
+    } catch (e) { console.error("batch:", (e as Error).message); }
+  }
   writeState({ ...(items.length ? { lastSent: now.toISOString() } : {}), ...(weekKey ? { lastWeekly: weekKey } : {}) });
 }
 
