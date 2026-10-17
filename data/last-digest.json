@@ -1,47 +1,23 @@
 [
  {
-  "id": "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-open-source-contributor-remote-contract",
-  "title": "🌎 Software Engineer (Open Source Contributor), Remote- Contract @ Xperteez Technology",
+  "id": "himalayas:https://himalayas.app/companies/joinready/jobs/desarrollador-de-software-semi-senior-node-js-typescript",
+  "title": "Desarrollador de Software Semi senior– Node.js & TypeScript @ Ready",
   "type": "freelance",
   "source": "Himalayas",
-  "url": "https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-open-source-contributor-remote-contract",
+  "url": "https://himalayas.app/companies/joinready/jobs/desarrollador-de-software-semi-senior-node-js-typescript",
   "prizeLabel": "n/a",
   "region": "",
   "skills": [
-   "rust",
    "typescript",
-   "go",
-   "java",
-   "ai"
+   "node",
+   "backend",
+   "javascript"
   ],
-  "snippet": "Role Title: Software Engineer (Open Source Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript Codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to …",
-  "detail": "Role Title: Software Engineer (Open Source Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript Codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. Job Description: In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required — your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that accept reasonable valid so",
+  "snippet": "Desarrollador de Software Semi senior– & TypeScript En Ready estamos buscando un Ingeniero Full Stack Semi Senior con equipo MAC para integrarse a un proyecto de 6 meses, con posibilidad de renovación, trabajando de manera 100% remota bajo modalidad freelance. Buscamos un profesional con sólida experiencia en desarrollo backend con y TypeScript, bases de datos NoSQL, arquitecturas de microservicios y soluciones escalables y de alto rendimiento. …",
+  "detail": "Desarrollador de Software Semi senior– & TypeScript En Ready estamos buscando un Ingeniero Full Stack Semi Senior con equipo MAC para integrarse a un proyecto de 6 meses, con posibilidad de renovación, trabajando de manera 100% remota bajo modalidad freelance. Buscamos un profesional con sólida experiencia en desarrollo backend con y TypeScript, bases de datos NoSQL, arquitecturas de microservicios y soluciones escalables y de alto rendimiento. Responsabilidades Diseñar, desarrollar y mantener aplicaciones y servicios backend utilizando y TypeScript. Diseñar e implementar arquitecturas de microservicios eficientes, robustas y escalables. Modelar y optimizar bases de datos, especialmente MongoDB y otras soluciones NoSQL. Diseñar e implementar APIs REST o GraphQL. Desarrollar soluciones basadas en sistemas de comunicación asíncrona y arquitecturas orientadas a eventos. Integrar y trabajar con sistemas de mensajería y eventos como RabbitMQ, Kafka o SQS. Implementar y mantener soluciones sobre infraestructura Cloud, preferiblemente AWS. Trabajar con Kubernetes para la gestión y despliegue de aplicaciones y servicios. Diseñar e implementar pruebas automatizadas, incluyendo pruebas unitarias y de integración. Participar en el análisis y resolución de problemas técnicos complejos. Contribuir al desarrollo de soluciones de alto rendimiento, garantizando escalabilidad, disponibilidad y robustez. Colaborar con otros equipos técnicos para asegurar la correcta integración de los servicio",
   "fit": {
-   "verdict": "stretch",
-   "reason": "has Rust and TypeScript but limited professional Rust contributions"
-  },
-  "deadline": null
- },
- {
-  "id": "himalayas:https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-github-contributor-remote-contract",
-  "title": "🌎 Software Engineer (GitHub Contributor), Remote- Contract @ Xperteez Technology",
-  "type": "freelance",
-  "source": "Himalayas",
-  "url": "https://himalayas.app/companies/xperteez-technology/jobs/software-engineer-github-contributor-remote-contract",
-  "prizeLabel": "n/a",
-  "region": "",
-  "skills": [
-   "rust",
-   "typescript",
-   "go",
-   "java",
-   "ai"
-  ],
-  "snippet": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get s…",
-  "detail": "Role Title: Software Engineer (GitHub Contributor) Role Type: Contract Location: Anywhere in the world, remote Required Skills: Python3 JAVA Rust Algorithms Basics C++ Typescript codebase refactoring GitHub Bug Fixing Feature Implementation Performance Optimization Logical Thinking Opportunity Snapshot: Pay: $50–100/hour Time per task: ~15 hours per run Onboarding: As soon as you’re selected, Talent Ops will send you everything you need to get started You’ll need: clear open source contributions and a profile to showcase them, such as GitHub (preferably with C++, Python, Java, Go, TypeScript, or Rust). If you don’t, you’ll be assessed through a HackerRank assessment instead. Your tasks: Build reproducible Reinforcement Learning Environments that test an AI model’s ability to fix code, add features, refactor, and optimize performance - including a golden reference solution for each problem Bonus: experts who complete the AI interview for this specific role move through the process significantly faster. Job Description: In this role, you'll apply your expertise to help train next-generation AI systems. Your work will shape how models learn, reason, and perform through high-quality, real-world input. No prior experience in AI is required - your domain knowledge is what matters. You'll create realistic, interesting and challenging coding tasks for AI to solve involving feature implementation and bug fixes, and implement deterministic verifiers that accept reasonable valid solutio",
-  "fit": {
-   "verdict": "stretch",
-   "reason": "has Rust and TypeScript but limited professional Rust contributions"
+   "verdict": "qualified",
+   "reason": "strong Node.js/TypeScript backend experience matches requirements"
   },
   "deadline": null
  }
