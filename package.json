@@ -6,6 +6,7 @@
   "scripts": {
     "start": "tsx src/main.ts",
     "chat-id": "tsx scripts/chat-id.ts",
+    "gmail-auth": "tsx scripts/gmail-auth.ts",
     "dry": "tsx src/main.ts --dry-run",
     "commands": "tsx src/commands-only.ts",
     "typecheck": "tsc --noEmit",

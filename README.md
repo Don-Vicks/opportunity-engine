@@ -18,18 +18,43 @@ TELEGRAM_BOT_TOKEN=... TELEGRAM_CHAT_ID=... npm start -- --force
 4. Actions tab → **daily-digest** → Run workflow to test. Cron runs every 3 hours; only new items are sent.
 
 ## Set up email applications (`/apply`, `/send`)
-Do these once. Until step 1 is done, `/apply` and `/send` refuse to run.
-1. **Make the repo private:** GitHub → repo → Settings → General → Danger Zone → *Change repository visibility* → Private. (Drafts and your application log are committed to `data/`.)
-2. **Pick the sending address.** A dedicated Gmail account for applications is safest (an app password can read and send mail on its account). Set `apply.replyTo` in `config.yaml` if replies should go to a different address.
-3. **Turn on 2-Step Verification** for that Google account (Google Account → Security).
-4. **Create an app password:** Google Account → Security → 2-Step Verification → *App passwords* → name it `opportunity-engine` → copy the 16 characters (shown once). If the option is missing, the account uses Advanced Protection or a Workspace admin has disabled it.
-5. **Add two repo secrets:** repo → Settings → Secrets and variables → Actions → *New repository secret*:
-   - `GMAIL_USER` = the Gmail address
-   - `GMAIL_APP_PASSWORD` = the 16-character app password (spaces optional)
-6. Check `apply.resumeUrl` in `config.yaml` points to your public resume PDF.
-7. **Test:** run the **telegram-commands** workflow (Actions tab → Run workflow), send `/apply <n>` on an `✉️ Email-ready` card, read the preview, then `/send <code>`. To revoke access later, delete the app password in your Google account.
+There are three ways to send, picked automatically in this order. You can run more than one setup; `/apply` shows a **Send** command if a sender exists and always offers the **Open in Gmail** link as well.
 
-Never put the app password in a file or commit it; it belongs only in the repo secrets.
+| Sender | Setup | Can it read your mail? | Resume |
+|---|---|---|---|
+| **Gmail API, send-only** (recommended) | Part 2 below | No (send permission only) | attached as a PDF |
+| **App password** (SMTP) | Part 3 below | Yes (full mailbox) | attached as a PDF |
+| **Open in Gmail link** | nothing | No | a "Resume: <link>" line is added (Gmail links cannot attach files) |
+
+### Part 1: always (all three)
+1. **Make the repo private:** repo → Settings → General → Danger Zone → *Change repository visibility* → Private. `/apply` and `/send` refuse to run while it is public, because drafts and your application log are committed to `data/`.
+2. Check `apply.resumeUrl` in `config.yaml` points to your public resume PDF, and set `apply.replyTo` if replies should go to another address.
+
+### Part 2: Gmail API, send-only (recommended)
+1. Go to <https://console.cloud.google.com/> → create a project (e.g. `opportunity-engine`).
+2. **APIs & Services → Library →** search *Gmail API* → **Enable**.
+3. **APIs & Services → OAuth consent screen:** choose **External**, fill the app name and your email, and under **Scopes** add only `.../auth/gmail.send`. Under **Test users** add the Gmail address you will send from.
+4. **Publish the app** (OAuth consent screen → *Publish app* → *In production*). Without this, Google expires the token after 7 days. Google will show an "unverified app" warning once when you approve; that is expected for a personal app. Click *Advanced → Go to opportunity-engine*.
+5. **APIs & Services → Credentials → Create credentials → OAuth client ID →** type **Desktop app**. Copy the client ID and client secret.
+6. On **your own computer** (needs Node 22): clone the repo, `npm ci`, then run
+   `GOOGLE_CLIENT_ID=... GOOGLE_CLIENT_SECRET=... npm run gmail-auth`
+   Open the printed URL, sign in, approve *Send email on your behalf*. The terminal prints a refresh token.
+7. Add four repo secrets (Settings → Secrets and variables → Actions): `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN` (from step 6), and `GMAIL_USER` (the sending address). Never commit these.
+8. **Revoke any time:** <https://myaccount.google.com/permissions> → opportunity-engine → *Remove access*. If sending later fails with "token expired or revoked", repeat step 6 and update `GOOGLE_REFRESH_TOKEN`.
+
+### Part 3: app password (simpler, broader access)
+1. Turn on 2-Step Verification for the Google account, then Google Account → Security → 2-Step Verification → **App passwords** → create one named `opportunity-engine` and copy the 16 characters (shown once).
+2. Add repo secrets `GMAIL_USER` and `GMAIL_APP_PASSWORD`. Prefer a dedicated applications account: an app password can read and send everything in its mailbox. Delete the app password in your Google account to revoke it.
+
+### Morning batch (hands-off, but you approve)
+Once a day (the first digest run at or after `apply.batch.hourWat`, default 08:00 WAT) the bot drafts applications for your strongest email-ready matches (AI fit `qualified`; set `apply.batch.minFit: stretch` to include stretch) and posts them in **one message**. **Nothing is sent.** Read them, then:
+- `/send all`: send every draft (oldest first, stops at `apply.dailyCap`)
+- `/send CODE` / `/cancel CODE`: send or drop one; `/cancel all` drops everything
+- Without a configured sender, each draft has an **Open in Gmail** link; log it with `/sent CODE`.
+Drafts expire after 48h. Weak drafts (too short/long, placeholders) carry a ⚠️ warning. Turn it off with `apply.batch.enabled: false`.
+
+### Using it
+Run the **telegram-commands** workflow once (Actions tab → Run workflow), then on a card marked `✉️ Email-ready` send `/apply <n>`. Read the preview, then `/send <code>` (or tap *Open in Gmail* and later `/sent <code>`).
 
 ## Configure
 Edit `config.yaml`: skills, types, per-type minimums, remote-only, max results, min score, source flags.

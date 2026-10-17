@@ -41,6 +41,15 @@ const ConfigSchema = z.object({
     replyTo: z.string().default(""),
     /** Refuse /apply and /send while the GitHub repo is public (drafts and the tracker are committed to it) */
     requirePrivateRepo: z.boolean().default(true),
+    /** Morning batch: drafts for strong, email-ready matches are posted together for one review. Nothing is sent until you /send. */
+    batch: z.object({
+      enabled: z.boolean().default(true),
+      /** first digest run at or after this hour (WAT) posts the batch */
+      hourWat: z.number().int().min(0).max(23).default(8),
+      max: z.number().int().positive().default(5),
+      /** qualified = only strong matches; stretch = also include stretch matches */
+      minFit: z.enum(["qualified", "stretch"]).default("qualified"),
+    }).default({}),
   }).default({}),
   ai: z.object({
     enabled: z.boolean().default(false),
@@ -71,6 +80,9 @@ export const env = {
   tgChat: clean(process.env.TELEGRAM_CHAT_ID),
   groqKey: clean(process.env.GROQ_API_KEY),
   openrouterKey: clean(process.env.OPENROUTER_API_KEY),
+  googleClientId: clean(process.env.GOOGLE_CLIENT_ID),
+  googleClientSecret: clean(process.env.GOOGLE_CLIENT_SECRET),
+  googleRefreshToken: clean(process.env.GOOGLE_REFRESH_TOKEN),
   gmailUser: process.env.GMAIL_USER,
   gmailPass: process.env.GMAIL_APP_PASSWORD,
   emailTo: process.env.EMAIL_TO,

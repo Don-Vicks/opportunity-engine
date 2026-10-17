@@ -353,7 +353,10 @@ describe("email applications", () => {
     setup(); sent.length = 0;
     await applyPreview(1, deps());
     const [p] = readPending();
-    expect(await applySend(p.code, deps({ gmail: {} }))).toContain("Gmail isn't configured");
+    const noSender = await applySend(p.code, deps({ mail: null }));
+    expect(noSender).toContain("No automatic sender");
+    expect(noSender).toContain("mail.google.com/mail/?view=cm");
+    expect(readPending()).toHaveLength(1); // still pending, nothing sent
     expect(await applySend(p.code, deps({ now: new Date(now.getTime() + 49 * 3_600_000) }))).toContain("expired");
     await applyPreview(1, deps());
     const [p2] = readPending();
@@ -399,5 +402,173 @@ describe("email applications", () => {
     expect(await routeApplyCommand("/apply x", deps())).toContain("Usage");
     expect(await routeApplyCommand("/send", deps())).toContain("Usage");
     expect(await routeApplyCommand("/apps", deps())).toContain("No applications");
+  });
+});
+
+
+import { gmailApiMailer, accessToken, buildRaw, composeUrl, authUrl, GMAIL_SEND_SCOPE } from "../src/delivery/gmailapi.js";
+import { composeLink, applyMarkSent, resolveMailer } from "../src/apply.js";
+describe("senders: Gmail API and compose link", () => {
+  const creds = { clientId: "cid", clientSecret: "sec", refreshToken: "rt" };
+  const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
+
+  it("requests a token with the refresh token, then sends a base64url RFC822 message with the resume attached", async () => {
+    const calls: { url: string; init: RequestInit }[] = [];
+    const f = (async (url: string, init: RequestInit) => {
+      calls.push({ url, init });
+      return String(url).includes("oauth2") ? json(200, { access_token: "AT" }) : json(200, { id: "m1" });
+    }) as unknown as typeof fetch;
+    await gmailApiMailer(creds, "me@gmail.com", f)({
+      fromName: "Victor Shallangwa", to: "jobs@payco.io", subject: "Application: Backend Engineer", text: "Hi,\n\nHello there.",
+      attachment: { filename: "Resume.pdf", content: Buffer.from("%PDF-1.4 fake") },
+    });
+    expect(calls).toHaveLength(2);
+    const tok = new URLSearchParams(String(calls[0].init.body));
+    expect(Object.fromEntries(tok)).toMatchObject({ client_id: "cid", client_secret: "sec", refresh_token: "rt", grant_type: "refresh_token" });
+    expect((calls[1].init.headers as Record<string, string>).Authorization).toBe("Bearer AT");
+    const raw = Buffer.from(JSON.parse(String(calls[1].init.body)).raw, "base64url").toString();
+    expect(raw).toContain("To: jobs@payco.io");
+    expect(raw).toContain("Subject: Application: Backend Engineer");
+    expect(raw).toContain("Victor Shallangwa");
+    expect(raw).toMatch(/Content-Disposition: attachment; filename="?Resume\.pdf"?/);
+    expect(raw).toContain("application/pdf");
+  });
+  it("explains an expired or revoked token and surfaces API errors", async () => {
+    const bad = (async () => json(400, { error: "invalid_grant" })) as unknown as typeof fetch;
+    await expect(accessToken(creds, bad)).rejects.toThrow(/gmail-auth/);
+    const sendFails = (async (url: string) => (String(url).includes("oauth2") ? json(200, { access_token: "AT" }) : new Response("quota", { status: 403 }))) as unknown as typeof fetch;
+    await expect(gmailApiMailer(creds, "me@gmail.com", sendFails)({ to: "a@b.co", subject: "s", text: "t" })).rejects.toThrow(/Gmail API 403/);
+  });
+  it("asks only for the send scope", () => {
+    const u = new URL(authUrl("cid", "http://127.0.0.1:53682/callback", "st"));
+    expect(u.searchParams.get("scope")).toBe(GMAIL_SEND_SCOPE);
+    expect(GMAIL_SEND_SCOPE).toBe("https://www.googleapis.com/auth/gmail.send");
+    expect(u.searchParams.get("access_type")).toBe("offline");
+  });
+  it("builds a Gmail compose link with the resume as a link line, and keeps it short enough", () => {
+    const u = new URL(composeUrl("jobs@payco.io", "Application: X", "Hi,\nthere"));
+    expect(u.searchParams.get("to")).toBe("jobs@payco.io");
+    expect(u.searchParams.get("body")).toBe("Hi,\nthere");
+    const link = new URL(composeLink({ to: "jobs@payco.io", subject: "S", body: "Hi,\nthere" }, "https://donvicks.dev/r.pdf"));
+    expect(link.searchParams.get("body")).toContain("Resume: https://donvicks.dev/r.pdf");
+    const long = composeLink({ to: "a@b.co", subject: "S", body: "word ".repeat(1000) }, "https://x.co/r.pdf");
+    expect(long.length).toBeLessThanOrEqual(2200);
+  });
+  it("shows the compose link when no sender is configured, and /sent logs a manual send", async () => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    const now = new Date("2026-10-17T12:00:00Z");
+    const job = { ...opp("hn1", null, now, "job"), title: "Backend Engineer @ PayCo", detail: "Send CV to jobs@payco.io", snippet: "x" };
+    saveLastDigest([job]);
+    const d: ApplyDeps = { cfg: loadConfig(), keys: {}, now, mail: null, draft: async () => "Hi,\n\nBody.\n\nVictor", repoPublic: async () => false };
+    const preview = await applyPreview(1, d);
+    expect(preview).toContain("No automatic sender");
+    expect(preview).toContain("Open in Gmail");
+    expect(preview).toContain("/sent ");
+    const [p] = readPending();
+    expect(applyMarkSent(p.code, d)).toContain("A1");
+    expect(readApps()).toMatchObject([{ id: "A1", status: "sent", to: "jobs@payco.io" }]);
+    expect(readPending()).toHaveLength(0);
+    expect(applyMarkSent("zzzz", d)).toContain("No pending");
+  });
+  it("prefers an injected sender, and falls back to none without credentials", () => {
+    const cfg = loadConfig();
+    const stub = async () => {};
+    expect(resolveMailer({ cfg, keys: {}, mail: stub })).toBe(stub);
+    expect(resolveMailer({ cfg, keys: {}, mail: null })).toBeNull();
+    expect(resolveMailer({ cfg, keys: {}, gmail: {} })).toBeNull();
+    expect(resolveMailer({ cfg, keys: {}, gmail: { user: "u@gmail.com", pass: "pw" } })).toBeTypeOf("function");
+  });
+});
+
+import { addCandidates, batchDue, runBatch, readCandidates } from "../src/batch.js";
+import { applySendAll, applyCancelAll } from "../src/apply.js";
+describe("morning batch", () => {
+  const cfg = loadConfig();
+  const now = new Date("2026-10-18T09:00:00Z"); // 10:00 WAT
+  const mkItem = (id: string, over: Record<string, unknown> = {}) => ({
+    ...opp(id, null, now, "job"), title: `Backend Engineer ${id} @ Co${id}`, source: "HN Who's Hiring", detail: `NestJS. jobs@co${id}.io`, snippet: "x",
+    fit: { verdict: "qualified" as const, reason: "match" }, ...over,
+  });
+  const setup = (items: ReturnType<typeof mkItem>[]) => {
+    process.env.DATA_DIR = mkdtempSync(join(tmpdir(), "oe-"));
+    saveLastDigest(items);
+    addCandidates(readLastDigest(), cfg, now);
+  };
+  const sent: string[] = [];
+  const deps = (over: Partial<ApplyDeps> = {}): ApplyDeps => ({
+    cfg, keys: {}, now, repoPublic: async () => false,
+    draft: async () => "Hi,\n\n" + "I am applying for the role and have shipped payment systems on NestJS and Node. ".repeat(3) + "\n\nVictor Shallangwa",
+    mail: async (m) => { sent.push(m.to); },
+    fetchResume: async () => Buffer.from("%PDF-1.4"),
+    ...over,
+  });
+
+  it("queues only strong, email-ready jobs", () => {
+    setup([mkItem("a"), mkItem("b", { fit: { verdict: "stretch", reason: "" } }), mkItem("c", { fit: { verdict: "not_a_fit", reason: "" } }), mkItem("d", { detail: "no address", snippet: "x" }), { ...opp("e", 100, now, "bounty") } as never]);
+    expect(readCandidates().map((c) => c.id)).toEqual(["a"]);
+    expect(addCandidates(readLastDigest(), cfg, now)).toBe(0); // no duplicates
+  });
+  it("decides when the morning batch is due, once per WAT day", () => {
+    expect(batchDue(new Date("2026-10-18T06:00:00Z"), undefined, 8)).toBeNull(); // 07:00 WAT
+    expect(batchDue(new Date("2026-10-18T07:00:00Z"), undefined, 8)).toBe("2026-10-18");
+    expect(batchDue(new Date("2026-10-18T12:00:00Z"), "2026-10-18", 8)).toBeNull();
+    expect(batchDue(new Date("2026-10-19T09:00:00Z"), "2026-10-18", 8)).toBe("2026-10-19");
+  });
+  it("drafts without sending, one message, then /send all sends exactly those drafts", async () => {
+    setup([mkItem("a"), mkItem("b")]); sent.length = 0;
+    const [msg, ...rest] = await runBatch(deps());
+    expect(rest).toHaveLength(0);
+    expect(msg).toContain("Morning batch — 2 drafts");
+    expect(msg).toContain("Nothing has been sent");
+    expect(msg).toContain("jobs@coa.io");
+    expect(msg).toContain("/send all");
+    expect(sent).toHaveLength(0);
+    expect(readPending()).toHaveLength(2);
+    expect(readCandidates()).toHaveLength(0);
+    const out = await applySendAll(deps());
+    expect(sent.sort()).toEqual(["jobs@coa.io", "jobs@cob.io"]);
+    expect(out.match(/Sent/g)).toHaveLength(2);
+    expect(readApps()).toHaveLength(2);
+    expect(readPending()).toHaveLength(0);
+  });
+  it("respects the batch size and the daily cap, and leaves the rest waiting", async () => {
+    setup(["a", "b", "c", "d", "e", "f", "g"].map((i) => mkItem(i)));
+    await runBatch(deps());
+    expect(readPending()).toHaveLength(cfg.apply.batch.max);
+    expect(readCandidates()).toHaveLength(7 - cfg.apply.batch.max);
+  });
+  it("shows Gmail links when no sender is configured, and warns about weak drafts", async () => {
+    setup([mkItem("a")]);
+    const [msg] = await runBatch(deps({ mail: null, draft: async () => "Too short [Company]" }));
+    expect(msg).toContain("Open in Gmail");
+    expect(msg).toContain("/sent ");
+    expect(msg).toContain("Check before sending");
+    expect(msg).toContain("placeholder");
+  });
+  it("does nothing while the repo is public, and /cancel all clears drafts", async () => {
+    setup([mkItem("a")]);
+    expect((await runBatch(deps({ repoPublic: async () => true })))[0]).toContain("repo is public");
+    expect(readPending()).toHaveLength(0);
+    await runBatch(deps());
+    expect(readPending()).toHaveLength(1);
+    expect(applyCancelAll()).toContain("Discarded 1 draft");
+    expect(readPending()).toHaveLength(0);
+    expect(await applySendAll(deps())).toContain("No pending drafts");
+  });
+  it("stops /send all at the daily cap and does not re-draft applied listings", async () => {
+    setup(["a", "b"].map((i) => mkItem(i)));
+    await runBatch(deps());
+    const lowCap = { ...cfg, apply: { ...cfg.apply, dailyCap: 1 } };
+    sent.length = 0;
+    const out = await applySendAll(deps({ cfg: lowCap }));
+    expect(sent).toHaveLength(1);
+    expect(out).toContain("Daily cap");
+    // the sent one is applied; a new batch must not draft it again
+    saveLastDigest([mkItem("a"), mkItem("b")]);
+    addCandidates(readLastDigest(), cfg, now);
+    const appliedId = readApps()[0].itemId;
+    expect(appliedId).toBeTruthy();
+    await runBatch(deps({ cfg: lowCap }));
+    expect(readPending().some((p) => p.itemId === appliedId)).toBe(false);
   });
 });
